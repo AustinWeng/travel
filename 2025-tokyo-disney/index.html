@@ -187,6 +187,7 @@ td .sub{display:block; font-size:12px; color:var(--ink-faint)}
 .played ul{margin:6px 0 0; padding:0; list-style:none; display:flex; flex-wrap:wrap; gap:6px}
 .played li{background:var(--card); border:1px solid var(--line); border-radius:999px; padding:3px 12px; font-size:12.5px; color:var(--ink-soft); white-space:nowrap}
 .played li.dpa{border-color:var(--sun); color:var(--sun); font-weight:650}
+#map .mapbox svg{min-width:700px}
 </style>
 
 <div class="wrap">
@@ -219,26 +220,26 @@ td .sub{display:block; font-size:12px; color:var(--ink-faint)}
 <section id="map">
   <div class="sec-head"><h2>全程路線</h2><span class="en">Route Overview</span></div>
   <div class="mapbox">
-    <svg viewBox="0 0 880 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="七天路線圖：成田機場、舞濱迪士尼度假區、豐洲台場、上野、成田機場">
-      <line x1="60" y1="80" x2="820" y2="80" stroke="var(--sea)" stroke-width="5" stroke-linecap="round"/>
+    <svg viewBox="0 0 740 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="七天路線圖：成田機場、舞濱迪士尼度假區、豐洲台場、上野、成田機場">
+      <line x1="55" y1="80" x2="685" y2="80" stroke="var(--sea)" stroke-width="5" stroke-linecap="round"/>
       <g font-family="inherit" text-anchor="middle">
-        <circle cx="60" cy="80" r="9" fill="var(--card)" stroke="var(--sea)" stroke-width="4"/>
-        <text x="60" y="52" font-size="13" font-weight="800" fill="var(--ink)">成田機場</text>
-        <text x="60" y="112" font-size="11" fill="var(--ink-faint)">8/3 JX802 抵達</text>
-        <circle cx="280" cy="80" r="9" fill="var(--card)" stroke="var(--sea)" stroke-width="4"/>
-        <text x="280" y="52" font-size="13" font-weight="800" fill="var(--ink)">舞濱・迪士尼度假區</text>
-        <text x="280" y="112" font-size="11" fill="var(--ink-faint)">D1–D3 泊 ×3</text>
-        <text x="280" y="128" font-size="11" fill="var(--ink-faint)">夢幻泉鄉 ×2・玩具總動員 ×1</text>
-        <circle cx="480" cy="80" r="7" fill="var(--sea)" stroke="var(--card)" stroke-width="3"/>
-        <text x="480" y="52" font-size="13" font-weight="700" fill="var(--ink-soft)">豐洲・台場</text>
-        <text x="480" y="112" font-size="11" fill="var(--ink-faint)">D4 teamLab Planets</text>
-        <circle cx="650" cy="80" r="9" fill="var(--card)" stroke="var(--sea)" stroke-width="4"/>
-        <text x="650" y="52" font-size="13" font-weight="800" fill="var(--ink)">上野</text>
-        <text x="650" y="112" font-size="11" fill="var(--ink-faint)">D4–D6 泊 ×3・&amp;Here TOKYO UENO</text>
-        <text x="650" y="128" font-size="11" fill="var(--ink-faint)">放射：品川水族館（D5）・淺草（D6）</text>
-        <circle cx="820" cy="80" r="6" fill="var(--sea)"/>
-        <text x="820" y="52" font-size="13" font-weight="700" fill="var(--ink-soft)">成田機場</text>
-        <text x="820" y="112" font-size="11" fill="var(--ink-faint)">8/9 JX803 返台</text>
+        <circle cx="55" cy="80" r="9" fill="var(--card)" stroke="var(--sea)" stroke-width="4"/>
+        <text x="55" y="52" font-size="13" font-weight="800" fill="var(--ink)">成田機場</text>
+        <text x="55" y="112" font-size="11" fill="var(--ink-faint)">8/3 JX802 抵達</text>
+        <circle cx="235" cy="80" r="9" fill="var(--card)" stroke="var(--sea)" stroke-width="4"/>
+        <text x="235" y="52" font-size="13" font-weight="800" fill="var(--ink)">舞濱・迪士尼度假區</text>
+        <text x="235" y="112" font-size="11" fill="var(--ink-faint)">D1–D3 泊 ×3</text>
+        <text x="235" y="128" font-size="11" fill="var(--ink-faint)">夢幻泉鄉 ×2・玩具總動員 ×1</text>
+        <circle cx="400" cy="80" r="7" fill="var(--sea)" stroke="var(--card)" stroke-width="3"/>
+        <text x="400" y="52" font-size="13" font-weight="700" fill="var(--ink-soft)">豐洲・台場</text>
+        <text x="400" y="112" font-size="11" fill="var(--ink-faint)">D4 teamLab Planets</text>
+        <circle cx="545" cy="80" r="9" fill="var(--card)" stroke="var(--sea)" stroke-width="4"/>
+        <text x="545" y="52" font-size="13" font-weight="800" fill="var(--ink)">上野</text>
+        <text x="545" y="112" font-size="11" fill="var(--ink-faint)">D4–D6 泊 ×3・&amp;Here</text>
+        <text x="545" y="128" font-size="11" fill="var(--ink-faint)">放射：品川水族館（D5）・淺草（D6）</text>
+        <circle cx="685" cy="80" r="6" fill="var(--sea)"/>
+        <text x="685" y="52" font-size="13" font-weight="700" fill="var(--ink-soft)">成田機場</text>
+        <text x="685" y="112" font-size="11" fill="var(--ink-faint)">8/9 JX803 返台</text>
       </g>
     </svg>
   </div>
