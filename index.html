@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>翁家旅遊手帖｜歷年行程</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🗾</text></svg>">
+</head>
+<body>
+<style>
+:root{
+  --bg:#F7FAFB; --card:#FFFFFF; --ink:#1B2A32; --ink-soft:#4E6470; --ink-faint:#7E939E;
+  --line:#DCE7EB; --line-soft:#E9F1F4;
+  --sea:#0E7490; --sea-deep:#0B5C73; --sea-wash:#E3F1F5;
+  --sun:#D97706; --sun-wash:#FBF0DE;
+  --leaf:#2E8B62; --leaf-wash:#E2F2EA;
+  --alert:#C2410C; --alert-wash:#FBE9DF;
+  --shadow:0 1px 2px rgba(27,42,50,.05),0 4px 14px rgba(27,42,50,.06);
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#0F1619; --card:#172227; --ink:#E6EEF1; --ink-soft:#A9BCC5; --ink-faint:#7A8F99;
+    --line:#27363D; --line-soft:#1E2C32;
+    --sea:#4FB3CB; --sea-deep:#7FCBDD; --sea-wash:#122B33;
+    --sun:#E8A33D; --sun-wash:#2C2214;
+    --leaf:#5CBD93; --leaf-wash:#14291F;
+    --alert:#E8794A; --alert-wash:#301A10;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 14px rgba(0,0,0,.25);
+  }
+}
+:root[data-theme="light"]{
+  --bg:#F7FAFB; --card:#FFFFFF; --ink:#1B2A32; --ink-soft:#4E6470; --ink-faint:#7E939E;
+  --line:#DCE7EB; --line-soft:#E9F1F4;
+  --sea:#0E7490; --sea-deep:#0B5C73; --sea-wash:#E3F1F5;
+  --sun:#D97706; --sun-wash:#FBF0DE;
+  --leaf:#2E8B62; --leaf-wash:#E2F2EA;
+  --alert:#C2410C; --alert-wash:#FBE9DF;
+  --shadow:0 1px 2px rgba(27,42,50,.05),0 4px 14px rgba(27,42,50,.06);
+}
+:root[data-theme="dark"]{
+  --bg:#0F1619; --card:#172227; --ink:#E6EEF1; --ink-soft:#A9BCC5; --ink-faint:#7A8F99;
+  --line:#27363D; --line-soft:#1E2C32;
+  --sea:#4FB3CB; --sea-deep:#7FCBDD; --sea-wash:#122B33;
+  --sun:#E8A33D; --sun-wash:#2C2214;
+  --leaf:#5CBD93; --leaf-wash:#14291F;
+  --alert:#E8794A; --alert-wash:#301A10;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 14px rgba(0,0,0,.25);
+}
+*{box-sizing:border-box}
+body{
+  background:var(--bg); color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Hiragino Sans","Noto Sans TC","Microsoft JhengHei",sans-serif;
+  line-height:1.65; margin:0; padding:0 16px 72px;
+  font-size:15.5px;
+}
+.wrap{max-width:760px; margin:0 auto}
+a{color:var(--sea); text-decoration:none}
+a:hover{text-decoration:underline}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--sea); outline-offset:2px; border-radius:4px}
+
+/* ---------- header ---------- */
+header{padding:40px 0 8px}
+.kicker{font-size:12px; letter-spacing:.18em; color:var(--sea); font-weight:700; text-transform:uppercase}
+h1{font-size:clamp(26px,6vw,38px); font-weight:800; letter-spacing:.01em; margin:.2em 0 .1em; text-wrap:balance; line-height:1.25}
+.subtitle{color:var(--ink-soft); margin:0 0 18px; font-size:15px}
+.facts{display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 4px}
+.fact{background:var(--card); border:1px solid var(--line); border-radius:999px; padding:5px 14px; font-size:13px; color:var(--ink-soft); white-space:nowrap}
+.fact b{color:var(--ink); font-weight:650; font-variant-numeric:tabular-nums}
+
+/* ---------- flight ---------- */
+.flights{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:20px 0 0}
+@media (max-width:560px){.flights{grid-template-columns:1fr}}
+.flight{background:var(--card); border:1px solid var(--line); border-radius:10px; padding:14px 16px; box-shadow:var(--shadow)}
+.flight .tag{font-size:11px; letter-spacing:.14em; color:var(--ink-faint); font-weight:700}
+.flight .no{font-weight:800; font-size:17px; margin-top:2px}
+.flight .route{display:flex; align-items:baseline; gap:10px; margin-top:6px; font-variant-numeric:tabular-nums}
+.flight .apt{font-size:22px; font-weight:800; letter-spacing:.02em}
+.flight .t{font-size:13px; color:var(--ink-soft)}
+.flight .arrow{color:var(--sea); flex:1; text-align:center; font-size:14px}
+.flight .d{font-size:12.5px; color:var(--ink-faint); margin-top:4px}
+
+/* ---------- section ---------- */
+section{margin-top:44px}
+.sec-head{display:flex; align-items:baseline; gap:10px; border-bottom:2px solid var(--ink); padding-bottom:8px; margin-bottom:18px}
+.sec-head h2{font-size:20px; font-weight:800; margin:0; letter-spacing:.02em}
+.sec-head .en{font-size:11px; letter-spacing:.16em; color:var(--ink-faint); text-transform:uppercase; font-weight:700}
+
+/* ---------- todo ---------- */
+.todo-note{font-size:13.5px; color:var(--ink-soft); margin:-6px 0 14px}
+.todo{background:var(--card); border:1px solid var(--line); border-left:4px solid var(--sun); border-radius:10px; padding:14px 16px 14px 14px; margin-bottom:10px; box-shadow:var(--shadow)}
+.todo label{display:flex; gap:12px; align-items:flex-start; cursor:pointer}
+.todo input{width:19px; height:19px; margin-top:3px; accent-color:var(--leaf); flex:none; cursor:pointer}
+.todo .t-title{font-weight:750}
+.todo .t-body{font-size:14px; color:var(--ink-soft); margin-top:2px}
+.todo .t-body b{color:var(--ink)}
+.todo.done{border-left-color:var(--leaf); opacity:.62}
+.todo.done .t-title{text-decoration:line-through}
+.checks{background:var(--card); border:1px solid var(--line); border-radius:10px; padding:6px 16px; box-shadow:var(--shadow)}
+.checks label{display:flex; gap:12px; align-items:flex-start; padding:10px 0; border-bottom:1px solid var(--line-soft); font-size:14px; color:var(--ink-soft); cursor:pointer}
+.checks label:last-child{border-bottom:none}
+.checks input{width:17px; height:17px; margin-top:3px; accent-color:var(--leaf); flex:none; cursor:pointer}
+.checks b{color:var(--ink)}
+.checks label.done{opacity:.55}
+.checks label.done span{text-decoration:line-through}
+
+/* ---------- route map ---------- */
+.mapbox{background:var(--card); border:1px solid var(--line); border-radius:10px; box-shadow:var(--shadow); overflow-x:auto; padding:10px 6px}
+.mapbox svg{display:block; min-width:700px; width:100%; height:auto}
+.map-cap{font-size:12.5px; color:var(--ink-faint); margin-top:8px}
+
+/* ---------- day card ---------- */
+.day{background:var(--card); border:1px solid var(--line); border-radius:12px; margin-bottom:22px; box-shadow:var(--shadow); overflow:hidden}
+.day-band{display:flex; align-items:center; gap:12px; padding:10px 18px; background:var(--sea); color:#fff}
+:root[data-theme="dark"] .day-band, :root:not([data-theme="light"]) .day-band{color:#fff}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .day-band{background:var(--sea-wash); color:var(--sea-deep)}}
+:root[data-theme="dark"] .day-band{background:var(--sea-wash); color:var(--sea-deep)}
+:root[data-theme="light"] .day-band{background:var(--sea); color:#fff}
+.day-band .dnum{font-weight:800; font-size:15px; letter-spacing:.06em; white-space:nowrap}
+.day-band .ddate{font-size:13.5px; opacity:.85; white-space:nowrap; font-variant-numeric:tabular-nums}
+.day-band .dtheme{font-size:13.5px; font-weight:650; margin-left:auto; text-align:right}
+.day-inner{padding:16px 18px 18px}
+.tl{list-style:none; margin:0; padding:0}
+.tl li{display:flex; gap:14px; padding:7px 0; border-bottom:1px dashed var(--line-soft); align-items:baseline}
+.tl li:last-child{border-bottom:none}
+.tl .tt{font-variant-numeric:tabular-nums; font-weight:700; font-size:13.5px; color:var(--sea); flex:none; width:88px; letter-spacing:.02em}
+.tl .tx{font-size:14.5px}
+.tl .tx small{display:block; color:var(--ink-faint); font-size:12.5px}
+.warnline{display:flex; gap:8px; background:var(--alert-wash); color:var(--alert); border-radius:8px; padding:9px 12px; font-size:13.5px; margin-top:12px; align-items:flex-start}
+.warnline b{font-weight:750; flex:none; white-space:nowrap}
+.hintline{display:flex; gap:8px; background:var(--sun-wash); border-radius:8px; padding:9px 12px; font-size:13.5px; margin-top:12px; color:var(--ink-soft); align-items:flex-start}
+.hintline b{color:var(--ink)}
+.hintline > span:first-child{flex:none}
+
+/* stay card */
+.stay{border:1px solid var(--line); border-radius:10px; margin-top:14px; padding:13px 15px; background:linear-gradient(0deg,var(--sea-wash),var(--sea-wash))}
+.stay .s-label{font-size:11px; letter-spacing:.16em; font-weight:750; color:var(--sea-deep); text-transform:uppercase}
+.stay .s-name{font-weight:800; font-size:16px; margin:3px 0 1px}
+.stay .s-sub{font-size:13.5px; color:var(--ink-soft)}
+.stay .s-row{display:flex; flex-wrap:wrap; gap:6px 14px; margin-top:9px; font-size:13px; color:var(--ink-soft); align-items:center}
+.stay .s-row .kv b{color:var(--ink); font-variant-numeric:tabular-nums; font-weight:700}
+.s-info{display:grid; grid-template-columns:1fr 1fr; gap:8px 16px; margin-top:11px; padding-top:11px; border-top:1px solid var(--line)}
+@media (max-width:560px){.s-info{grid-template-columns:1fr}}
+.s-info .kv2{font-size:13px; color:var(--ink-soft); line-height:1.5}
+.s-info .kv2 .k{display:block; font-size:10.5px; letter-spacing:.14em; color:var(--ink-faint); font-weight:750; text-transform:uppercase; margin-bottom:1px}
+.s-info .kv2 b{color:var(--ink); font-weight:650; font-variant-numeric:tabular-nums}
+.s-info .kv2.wide{grid-column:1 / -1}
+.s-note{font-size:12.5px; color:var(--ink-faint); margin-top:10px; padding-top:9px; border-top:1px dashed var(--line); line-height:1.6}
+.s-note b{color:var(--ink-soft)}
+.badge{display:inline-block; border-radius:999px; padding:2px 11px; font-size:12px; font-weight:750; letter-spacing:.04em; white-space:nowrap}
+.badge.paid{background:var(--leaf-wash); color:var(--leaf)}
+.badge.onsite{background:var(--sun-wash); color:var(--sun)}
+.badge.nonref{background:var(--alert-wash); color:var(--alert)}
+
+/* drive + map link */
+.drive{display:flex; flex-wrap:wrap; gap:10px; margin-top:14px; align-items:center; justify-content:space-between}
+.km{font-size:13px; color:var(--ink-faint)}
+.km b{color:var(--ink-soft); font-variant-numeric:tabular-nums}
+.maplink{display:inline-flex; align-items:center; gap:7px; background:var(--sea); color:#fff; border-radius:8px; padding:8px 15px; font-size:13.5px; font-weight:700; white-space:nowrap; transition:background .15s}
+.maplink:hover{background:var(--sea-deep); text-decoration:none}
+:root[data-theme="dark"] .maplink{background:var(--sea-wash); color:var(--sea)}
+:root[data-theme="dark"] .maplink:hover{background:var(--line-soft)}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .maplink{background:var(--sea-wash); color:var(--sea)}
+  :root:not([data-theme="light"]) .maplink:hover{background:var(--line-soft)}
+}
+.maplink svg{flex:none}
+
+/* ---------- bookings table ---------- */
+.tablebox{background:var(--card); border:1px solid var(--line); border-radius:10px; box-shadow:var(--shadow); overflow-x:auto}
+table{border-collapse:collapse; width:100%; min-width:660px; font-size:13.5px}
+th{font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-faint); text-align:left; padding:12px 14px 8px; border-bottom:2px solid var(--line); white-space:nowrap}
+td{padding:11px 14px; border-bottom:1px solid var(--line-soft); vertical-align:top}
+tr:last-child td{border-bottom:none}
+td.num{font-variant-numeric:tabular-nums; white-space:nowrap}
+td .sub{display:block; font-size:12px; color:var(--ink-faint)}
+.foot{margin-top:40px; font-size:12.5px; color:var(--ink-faint); border-top:1px solid var(--line); padding-top:14px}
+@media (prefers-reduced-motion: reduce){ *{transition:none!important} }
+</style>
+<style>
+/* ---------- index 首頁專屬 ---------- */
+.year-list{list-style:none; margin:0; padding:0}
+.trip{display:flex; gap:14px; align-items:flex-start; background:var(--card); border:1px solid var(--line); border-radius:12px; padding:16px 18px; margin-bottom:14px; box-shadow:var(--shadow); color:var(--ink); transition:border-color .15s, transform .15s, box-shadow .15s}
+.trip:hover{border-color:var(--sea); text-decoration:none; transform:translateY(-2px); box-shadow:0 2px 4px rgba(27,42,50,.06),0 8px 22px rgba(27,42,50,.1)}
+.trip:hover .trip-title{color:var(--sea)}
+.trip-emoji{font-size:30px; flex:none; line-height:1.25; width:40px; text-align:center}
+.trip-main{flex:1; min-width:0}
+.trip-top{display:flex; gap:8px 10px; align-items:center; flex-wrap:wrap}
+.trip-title{font-weight:800; font-size:17px; letter-spacing:.01em}
+.trip-dates{font-size:13.5px; color:var(--ink-soft); margin-top:3px; font-variant-numeric:tabular-nums}
+.trip-desc{font-size:13px; color:var(--ink-faint); margin-top:5px; line-height:1.55}
+.trip-arrow{flex:none; align-self:center; color:var(--sea); font-size:18px; font-weight:700}
+.badge.upcoming{background:var(--sun-wash); color:var(--sun)}
+.badge.done{background:var(--leaf-wash); color:var(--leaf)}
+</style>
+<div class="wrap">
+
+<header>
+  <div class="kicker">Weng Family Travels</div>
+  <h1>翁家旅遊手帖</h1>
+  <p class="subtitle">一趟旅行一本手帖——行程、地圖、訂單與花費，全家一個連結隨時翻。</p>
+  <div class="facts">
+    <span class="fact">旅行 <b>3 趟</b></span>
+    <span class="fact">年份 <b>2025 – 2026</b></span>
+    <span class="fact">旅途 <b>20 天</b></span>
+    <span class="fact">成員 <b>翁家四人（2 大 2 小）</b></span>
+  </div>
+</header>
+
+<section aria-label="2026 年行程">
+  <div class="sec-head"><h2>2026</h2><span class="en">2 Trips</span></div>
+  <ul class="year-list">
+    <li>
+      <a class="trip" href="./2026-kyushu/">
+        <span class="trip-emoji">🚗</span>
+        <div class="trip-main">
+          <div class="trip-top"><span class="trip-title">九州自駕旅行</span><span class="badge upcoming">8/1 出發</span></div>
+          <div class="trip-dates">2026/8/1（六）– 8/8（六）・8 天 7 夜</div>
+          <div class="trip-desc">全程自駕約 775 km・佐世保 → 熊本 → 阿蘇 → 高千穗 → 別府 → 福岡</div>
+        </div>
+        <span class="trip-arrow">→</span>
+      </a>
+    </li>
+    <li>
+      <a class="trip" href="./2026-tokyo-ski/">
+        <span class="trip-emoji">⛷️</span>
+        <div class="trip-main">
+          <div class="trip-top"><span class="trip-title">東京滑雪旅行</span><span class="badge done">旅程回顧</span></div>
+          <div class="trip-dates">2026/1/24（六）– 1/28（三）・5 天 4 夜</div>
+          <div class="trip-desc">越後湯澤滑雪 2 晚・東京台場＋上野 2 晚・台場親子寫真</div>
+        </div>
+        <span class="trip-arrow">→</span>
+      </a>
+    </li>
+  </ul>
+</section>
+
+<section aria-label="2025 年行程">
+  <div class="sec-head"><h2>2025</h2><span class="en">1 Trip</span></div>
+  <ul class="year-list">
+    <li>
+      <a class="trip" href="./2025-tokyo-disney/">
+        <span class="trip-emoji">🏰</span>
+        <div class="trip-main">
+          <div class="trip-top"><span class="trip-title">東京迪士尼旅行</span><span class="badge done">旅程回顧</span></div>
+          <div class="trip-dates">2025/8/3（日）– 8/9（六）・7 天 6 夜</div>
+          <div class="trip-desc">陸地＋海洋兩日・teamLab・水族館・淺草和服</div>
+        </div>
+        <span class="trip-arrow">→</span>
+      </a>
+    </li>
+  </ul>
+</section>
+
+<footer class="foot">翁家旅遊手帖・點行程卡開啟該趟手帖・新旅程持續增加中</footer>
+
+</div>
+
+</body>
+</html>
