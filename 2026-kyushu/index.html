@@ -183,6 +183,11 @@ td .sub{display:block; font-size:12px; color:var(--ink-faint)}
 .costband .cb-items{display:flex; flex-wrap:wrap; gap:5px 18px; font-size:13.5px; color:var(--ink-soft)}
 .costband .cb-i b{color:var(--ink)}
 .costband .cb-note{flex-basis:100%; font-size:11.5px; color:var(--ink-faint)}
+/* 保險與上網快速參考（三頁手帖共用版式） */
+.ess-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+@media (max-width:760px){ .ess-grid{grid-template-columns:1fr} }
+.ess-grid .stay{margin-top:0}
+.ess-grid table{min-width:0}
 @media (prefers-reduced-motion: reduce){ *{transition:none!important} }
 </style>
 
@@ -318,6 +323,7 @@ td .sub{display:block; font-size:12px; color:var(--ink-faint)}
     <div class="day-band"><span class="dnum">DAY 1</span><span class="ddate">8/1（六）</span><span class="dtheme">抵達・豪斯登堡夜景</span></div>
     <div class="day-inner">
       <ul class="tl">
+        <li><span class="tt">出發日</span><span class="tx">掃 eSIM QR 安裝（兩張）<small>⚠ 暢日卡出發當日才裝、勿提早（會提前開通）；QR 各限掃一次；落地後開啟方案＋數據漫遊——見「保險與上網」</small></span></li>
         <li><span class="tt">13:05</span><span class="tx">JX840 抵達福岡機場</span></li>
         <li><span class="tt">15:00</span><span class="tx">取車出發往豪斯登堡<small>TOYOTA 租車國際線店・預約時間 13:30、已登記航班會等我們</small></span></li>
         <li><span class="tt">17:00–17:30</span><span class="tx">入住 Hotel Amsterdam<small>車停 Welcome Area 住客免費停車場 → 搭園區接駁進飯店（進園需門票）</small></span></li>
@@ -581,6 +587,43 @@ td .sub{display:block; font-size:12px; color:var(--ink-faint)}
         <tr><td>THE GATE HOTEL FUKUOKA<span class="sub">Luxe Twin 禁煙・⚠ 兒童待補登記</span></td><td class="num">8/6–8/8（2 晚）</td><td class="num">0015712693</td><td class="num">¥156,026</td><td><span class="badge paid">已付清</span> <span class="badge nonref">不可退</span></td></tr>
       </tbody>
     </table>
+  </div>
+</section>
+
+<section id="essentials">
+  <div class="sec-head"><h2>保險與上網</h2><span class="en">Insurance &amp; Connectivity</span></div>
+  <div class="ess-grid">
+    <div class="stay">
+      <div class="s-label">富邦旅平險 · 保障 8/1 00:00 – 8/9 00:00（日本九州・四國）</div>
+      <div class="s-name">旅平卡 網路投保（2 大 2 小）</div>
+      <div class="s-row">
+        <span class="kv">成人單 <b>3226CT20D19826</b>（計畫三/組合14 國外醫療加值型 300 萬）</span>
+        <span class="kv">兒童單 <b>3226CT20D19827</b>（組合12 加值型兒童）</span>
+        <span class="badge paid">已投保 NT$5,764</span>
+      </div>
+      <div class="s-info">
+        <div class="kv2"><span class="k">海外急難救助 SOS</span><a href="tel:+886225636292">+886-2-2563-6292</a>（24H；日本公用電話撥 001-886-2-25636292）</div>
+        <div class="kv2"><span class="k">事故/理賠客服</span><a href="tel:0800009888">0800-009-888</a>（台灣）</div>
+        <div class="kv2"><span class="k">旅平卡專線</span><a href="tel:0809019888">0809-019-888</a>（理賠按 4）</div>
+        <div class="kv2"><span class="k">逐項保障明細</span>Gmail 搜「富邦產險-電子保單通知」附件 PDF（密碼＝要保人身分證，英文大寫）</div>
+      </div>
+      <div class="s-note">海外突發疾病含法定傳染病。SOS 救援（International SOS）：就醫推薦/安排住院/醫療轉送/翻譯。就醫記得留存收據正本與診斷書。富邦官方海外救援資訊：b2c.518fb.com（2026/7 查證）。</div>
+    </div>
+    <div class="stay">
+      <div class="s-label">DJB eSIM · 8 天（8/1–8/8）</div>
+      <div class="s-name">暢日卡 ULTRA ×2（日本・吃到飽不降速）</div>
+      <div class="s-row">
+        <span class="kv">訂單 <b>#6312132</b></span>
+        <span class="badge paid">已付 NT$2,031</span>
+      </div>
+      <div class="s-info">
+        <div class="kv2"><span class="k">啟用</span><b>出發當日才掃 QR</b>（勿提早，會提前開通）；下單後 90 天內須啟用；QR 各限掃一次、不補發</div>
+        <div class="kv2"><span class="k">落地後</span>開啟該方案＋數據漫遊；APN：plus.4g</div>
+        <div class="kv2"><span class="k">QR 在哪</span>Gmail 搜「Order #6312132-715516408」——兩封開通信（-1／-2 各一張 QR，附件 qrcode.png）</div>
+        <div class="kv2"><span class="k">客服</span>官方 LINE <b>@djbcard</b>／24H 線上文字客服（開通信內連結）</div>
+      </div>
+      <div class="s-note">一人一張、掃完的 QR 即失效；未經客服判定就刪除方案不補發不退費。安裝教學影片連結在開通信。</div>
+    </div>
   </div>
 </section>
 
