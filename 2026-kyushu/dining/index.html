@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>2026 九州餐廳手冊</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍜</text></svg>">
+</head>
+<body>
+<style>
+  :root {
+    --ground: #f7f6f2;
+    --card: #ffffff;
+    --ink: #22293b;
+    --ink-soft: #5c6478;
+    --line: #e2e0d8;
+    --indigo: #35508c;
+    --indigo-soft: #eef1f8;
+    --citrus: #c05f10;
+    --citrus-soft: #fdf0e3;
+    --ok: #2e7d4f;
+    --ok-soft: #e8f3ec;
+    --muted-chip: #eceae3;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ground: #1a1e2b;
+      --card: #232838;
+      --ink: #e8e9ee;
+      --ink-soft: #a2a8ba;
+      --line: #363c50;
+      --indigo: #8ba3d9;
+      --indigo-soft: #2b3450;
+      --citrus: #e89454;
+      --citrus-soft: #3d2f22;
+      --ok: #7cc69a;
+      --ok-soft: #24382d;
+      --muted-chip: #303650;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #1a1e2b;
+    --card: #232838;
+    --ink: #e8e9ee;
+    --ink-soft: #a2a8ba;
+    --line: #363c50;
+    --indigo: #8ba3d9;
+    --indigo-soft: #2b3450;
+    --citrus: #e89454;
+    --citrus-soft: #3d2f22;
+    --ok: #7cc69a;
+    --ok-soft: #24382d;
+    --muted-chip: #303650;
+  }
+  :root[data-theme="light"] {
+    --ground: #f7f6f2;
+    --card: #ffffff;
+    --ink: #22293b;
+    --ink-soft: #5c6478;
+    --line: #e2e0d8;
+    --indigo: #35508c;
+    --indigo-soft: #eef1f8;
+    --citrus: #c05f10;
+    --citrus-soft: #fdf0e3;
+    --ok: #2e7d4f;
+    --ok-soft: #e8f3ec;
+    --muted-chip: #eceae3;
+  }
+
+  body {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: "Hiragino Sans", "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 700px; margin: 0 auto; padding: 2.5rem 1.1rem 4rem; }
+
+  .serif { font-family: "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif TC", serif; }
+
+  header.masthead { margin-bottom: 2.2rem; }
+  .eyebrow {
+    font-size: .72rem; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--indigo); font-weight: 600; margin-bottom: .5rem;
+  }
+  h1 {
+    font-family: "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif TC", serif;
+    font-size: clamp(1.7rem, 5vw, 2.3rem); font-weight: 600;
+    line-height: 1.25; text-wrap: balance; margin: 0 0 .6rem;
+  }
+  .lede { color: var(--ink-soft); font-size: .95rem; max-width: 36em; }
+
+  .legend {
+    display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.2rem;
+  }
+  .badge {
+    display: inline-flex; align-items: center; gap: .3em;
+    font-size: .72rem; font-weight: 600; letter-spacing: .04em;
+    padding: .18em .65em; border-radius: 3px; white-space: nowrap;
+  }
+  .badge.fixed  { background: var(--muted-chip); color: var(--ink-soft); }
+  .badge.book   { background: var(--citrus-soft); color: var(--citrus); }
+  .badge.walkin { background: var(--ok-soft); color: var(--ok); }
+
+  section.day {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 1.3rem 1.3rem 1.1rem;
+    margin-bottom: 1.4rem;
+  }
+  .day-head {
+    display: flex; align-items: baseline; gap: .8rem;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: .8rem; margin-bottom: 1rem;
+  }
+  .day-date {
+    font-family: "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif TC", serif;
+    font-size: 1.5rem; font-weight: 600; color: var(--indigo);
+    font-variant-numeric: tabular-nums; line-height: 1;
+  }
+  .day-route { font-size: .85rem; color: var(--ink-soft); }
+
+  .meal { display: flex; flex-direction: column; gap: .55rem; }
+  .meal + .meal { margin-top: 1.1rem; padding-top: 1.1rem; border-top: 1px dashed var(--line); }
+  .meal-label {
+    font-size: .72rem; letter-spacing: .16em; font-weight: 700;
+    color: var(--ink-soft); text-transform: uppercase;
+  }
+
+  .spot {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    gap: .8rem; padding: .55rem .7rem;
+    background: var(--indigo-soft); border-radius: 7px;
+  }
+  .spot.alt { background: transparent; border: 1px dashed var(--line); }
+  .spot-info { min-width: 0; }
+  .spot-name { font-weight: 600; font-size: .95rem; }
+  .spot-name .badge { margin-left: .4em; vertical-align: 2px; }
+  .spot-note { font-size: .82rem; color: var(--ink-soft); margin-top: .1rem; }
+
+  a.map {
+    flex-shrink: 0; display: inline-flex; align-items: center; gap: .35em;
+    font-size: .78rem; font-weight: 600; text-decoration: none;
+    color: var(--indigo); border: 1px solid var(--indigo);
+    border-radius: 999px; padding: .32em .8em; margin-top: .15rem;
+    transition: background .15s ease;
+  }
+  a.map:hover { background: var(--indigo-soft); }
+  a.map:focus-visible { outline: 2px solid var(--citrus); outline-offset: 2px; }
+  a.map svg { width: .85em; height: .85em; }
+
+  .fixed-row {
+    font-size: .85rem; color: var(--ink-soft);
+    display: flex; align-items: baseline; gap: .5rem;
+  }
+
+  .booklist {
+    background: var(--card); border: 1px solid var(--citrus);
+    border-radius: 10px; padding: 1.3rem 1.3rem 1.1rem; margin-top: 2.2rem;
+  }
+  .booklist h2 {
+    font-family: "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif TC", serif;
+    font-size: 1.15rem; margin: 0 0 .8rem; color: var(--citrus);
+  }
+  .booklist ol { margin: 0; padding-left: 1.3em; display: flex; flex-direction: column; gap: .45rem; font-size: .9rem; }
+  .booklist li strong { font-weight: 600; }
+  .booklist .how { color: var(--ink-soft); font-size: .84rem; }
+
+  footer.colophon {
+    margin-top: 2.5rem; font-size: .78rem; color: var(--ink-soft);
+    border-top: 1px solid var(--line); padding-top: 1rem;
+  }
+</style>
+
+<div class="wrap">
+  <header class="masthead">
+    <div class="eyebrow">2026.8.1 – 8.8 · 九州自駕 · 4人</div>
+    <h1>九州餐廳手冊</h1>
+    <p class="lede">搭配行程表使用的用餐地圖。每家店附 Google Maps 導航;飯店早餐與杉乃井 SORA 自助餐已固定,此處只列空檔餐的安排與備案。</p>
+    <div class="legend">
+      <span class="badge fixed">已排定</span>
+      <span class="badge book">需預約</span>
+      <span class="badge walkin">免預約</span>
+    </div>
+  </header>
+
+  <!-- 8/1 -->
+  <section class="day">
+    <div class="day-head">
+      <div class="day-date">8/1<span style="font-size:.55em"> 六</span></div>
+      <div class="day-route">福岡機場 → 豪斯登堡 · 20:45 花火秀</div>
+    </div>
+    <div class="meal">
+      <div class="meal-label">午餐</div>
+      <div class="fixed-row">13:05 落地 — 機場或租車後簡單解決即可。</div>
+    </div>
+    <div class="meal">
+      <div class="meal-label">晚餐 · 園內佐世保漢堡</div>
+      <div class="spot">
+        <div class="spot-info">
+          <div class="spot-name">DE FONTEIN GRILL BURGER <span class="badge walkin">免預約</span></div>
+          <div class="spot-note">遊樂設施城區(アトラクションタウン),官方認定佐世保漢堡店。吃完剛好卡位花火。</div>
+        </div>
+        <a class="map" href="https://www.google.com/maps/search/?api=1&query=DE+FONTEIN+GRILL+BURGER+ハウステンボス" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>地圖</a>
+      </div>
+      <div class="spot alt">
+        <div class="spot-info">
+          <div class="spot-name">ビッケンビッケン(備案)</div>
+          <div class="spot-note">港灣區(ハーバータウン)。雙起司佐世保漢堡。塔城區的タワーシティテラス也有供應。</div>
+        </div>
+        <a class="map" href="https://www.google.com/maps/search/?api=1&query=ビッケンビッケン+ハウステンボス" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>地圖</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8/2 -->
+  <section class="day">
+    <div class="day-head">
+      <div class="day-date">8/2<span style="font-size:.55em"> 日</span></div>
+      <div class="day-route">豪斯登堡 → 熊本(151.7 km)</div>
+    </div>
+    <div class="meal">
+      <div class="meal-label">午餐</div>
+      <div class="fixed-row">出發前在園內解決(昨晚沒吃到的那家漢堡),中途休息站小停即可。</div>
+    </div>
+    <div class="meal">
+      <div class="meal-label">晚餐 · SAKURAMACHI 商場</div>
+      <div class="spot">
+        <div class="spot-info">
+          <div class="spot-name">あか牛Dining yoka-yoka(3F) <span class="badge walkin">免預約</span></div>
+          <div class="spot-note">熊本名物紅牛丼、漢堡排、牛排,11:00–22:00。也可到 B1 美食街各吃各的。</div>
+        </div>
+        <a class="map" href="https://www.google.com/maps/search/?api=1&query=あか牛Dining+yoka-yoka+サクラマチクマモト店" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>地圖</a>
+      </div>
+      <div class="spot alt">
+        <div class="spot-info">
+          <div class="spot-name">天草 牛深丸(備案)</div>
+          <div class="spot-note">壽司、馬刺し,小孩接受度高。</div>
+        </div>
+        <a class="map" href="https://www.google.com/maps/search/?api=1&query=天草+牛深丸+サクラマチクマモト" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>地圖</a>
+      </div>
+      <div class="fixed-row">宵夜:Dormy Inn 免費夜鳴拉麵 <span class="badge fixed">已排定</span></div>
+    </div>
+  </section>
+
+  <!-- 8/3 -->
+  <section class="day">
+    <div class="day-head">
+      <div class="day-date">8/3<span style="font-size:.55em"> 一</span></div>
+      <div class="day-route">JASM → 草千里 → 阿蘇 → 高千穗(139.1 km)</div>
+    </div>
+    <div class="meal">
+      <div class="meal-label">午餐 · 阿蘇紅牛丼</div>
+      <div class="spot">
+        <div class="spot-info">
+          <div class="spot-name">草千里食堂(ニュー草千里 2F) <span class="badge walkin">免預約</span></div>
+          <div class="spot-note">阿蘇火山博物館旁,順路首選。看著草千里吃あか牛丼,9:00–16:00。(同棟原自助餐廳ヴォーノ已歇業,食堂正常營業)</div>
+        </div>
+        <a class="map" href="https://www.google.com/maps/search/?api=1&query=ニュー草千里+レストラン+阿蘇" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>地圖</a>
+      </div>
+      <div class="spot alt">
+        <div class="spot-info">
+          <div class="spot-name">いまきん食堂(進階選項)</div>
+          <div class="spot-note">あか牛丼創始百年老店,但平日也常排 2 小時、需繞往內牧,帶小孩不建議硬排。</div>
+        </div>
+        <a class="map" href="https://www.google.com/maps/search/?api=1&query=いまきん食堂+阿蘇市内牧" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>地圖</a>
+      </div>
+    </div>
+    <div class="meal">
+      <div class="meal-label">晚餐 · 高千穗</div>
+      <div class="spot">
+        <div class="spot-info">
+          <div class="spot-name">旅館四季見 會席 <span class="badge book">需預約</span></div>
+          <div class="spot-note">首選:直接向旅館加訂。高千穗晚上營業的店少,吃飽正好接夜神樂。</div>
+        </div>
+      </div>
+      <div class="spot alt">
+        <div class="spot-info">
+          <div class="spot-name">居酒屋けんちゃん(備案)</div>
+          <div class="spot-note">市街中心、大神樂面招牌,建議先電話確認。</div>
+        </div>
+        <a class="map" href="https://www.google.com/maps/search/?api=1&query=居酒屋けんちゃん+高千穂町" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>地圖</a>
+      </div>
+      <div class="spot alt">
+        <div class="spot-info">
+          <div class="spot-name">大舞神(備案)</div>
+          <div class="spot-note">高千穗神社前,宮崎チキン南蛮定食、可外帶。</div>
+        </div>
+        <a class="map" href="https://www.google.com/maps/search/?api=1&query=大舞神+高千穂" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>地圖</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8/4 -->
+  <section class="day">
+    <div class="day-head">
+      <div class="day-date">8/4<span style="font-size:.55em"> 二</span></div>
+      <div class="day-route">高千穗划船 09:30 → 海地獄 → 別府(113.4 km)</div>
+    </div>
+    <div class="meal">
+      <div class="meal-label">午餐(二選一)</div>
+      <div class="spot">
+        <div class="spot-info">
+          <div class="spot-name">お食事処 田舎屋 <span class="badge walkin">免預約</span></div>
+          <div class="spot-note">高千穗峽內、肉舖直營,划完船走過去。招牌流水麵定食(そうめん流し定食)、チキン南蛮定食,11:00–16:00 年中無休。(原推薦的千穂の家流水麵發祥店目前暫停營業)</div>
+        </div>
+        <a class="map" href="https://www.google.com/maps/search/?api=1&query=お食事処+田舎屋+高千穂峡" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>地圖</a>
+      </div>
+      <div class="spot">
+        <div class="spot-info">
+          <div class="spot-name">地獄蒸し工房 鉄輪 <span class="badge walkin">免預約</span></div>
+          <div class="spot-note">海地獄旁,溫泉蒸氣自己蒸食材、43 種可選。10:00–19:00(L.O. 18:00),每月第 3 個週三公休(8/19,行程日不受影響)。</div>
+        </div>
+        <a class="map" href="https://www.google.com/maps/search/?api=1&query=地獄蒸し工房+鉄輪+別府" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>地圖</a>
+      </div>
+    </div>
+    <div class="meal">
+      <div class="meal-label">晚餐</div>
+      <div class="fixed-row">杉乃井 SORA 自助餐 <span class="badge fixed">已排定</span></div>
+    </div>
+  </section>
+
+  <!-- 8/5 -->
+  <section class="day">
+    <div class="day-head">
+      <div class="day-date">8/5<span style="font-size:.55em"> 三</span></div>
+      <div class="day-route">African Safari 一日 · 宿別府</div>
+    </div>
+    <div class="meal">
+      <div class="meal-label">午餐</div>
+      <div class="fixed-row">園內簡單吃;若 8/4 沒吃到地獄蒸,回程可補。</div>
+    </div>
+    <div class="meal">
+      <div class="meal-label">晚餐</div>
+      <div class="fixed-row">杉乃井 SORA 自助餐 <span class="badge fixed">已排定</span></div>
+    </div>
+  </section>
+
+  <!-- 8/6 -->
+  <section class="day">
+    <div class="day-head">
+      <div class="day-date">8/6<span style="font-size:.55em"> 四</span></div>
+      <div class="day-route">Harmonyland → 福岡(154.6 km)· 宿天神</div>
+    </div>
+    <div class="meal">
+      <div class="meal-label">午餐</div>
+      <div class="fixed-row">Harmonyland 園內解決。</div>
+    </div>
+    <div class="meal">
+      <div class="meal-label">晚餐 · 博多水炊雞鍋</div>
+      <div class="spot">
+        <div class="spot-info">
+          <div class="spot-name">水たき料亭 博多華味鳥 天神店 <span class="badge book">需預約</span></div>
+          <div class="spot-note">完全個室、湯頭溫和小孩接受度高;離 GATE HOTEL 步行可到。HotPepper 可線上訂。</div>
+        </div>
+        <a class="map" href="https://www.google.com/maps/search/?api=1&query=水たき料亭+博多華味鳥+天神店" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>地圖</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8/7 -->
+  <section class="day">
+    <div class="day-head">
+      <div class="day-date">8/7<span style="font-size:.55em"> 五</span></div>
+      <div class="day-route">海之中道海濱公園 · 宿天神</div>
+    </div>
+    <div class="meal">
+      <div class="meal-label">午餐</div>
+      <div class="fixed-row">公園內或 The Park Cafe 簡單吃。</div>
+    </div>
+    <div class="meal">
+      <div class="meal-label">晚餐 · 博多牛腸鍋</div>
+      <div class="spot">
+        <div class="spot-info">
+          <div class="spot-name">博多もつ鍋 おおやま 福岡PARCO店 <span class="badge book">需預約</span></div>
+          <div class="spot-note">天神站直結、離飯店最近;HotPepper/ぐるなび 可線上訂。</div>
+        </div>
+        <a class="map" href="https://www.google.com/maps/search/?api=1&query=博多もつ鍋+おおやま+福岡PARCO店" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>地圖</a>
+      </div>
+      <div class="spot alt">
+        <div class="spot-info">
+          <div class="spot-name">一蘭 天神店(小孩備案)</div>
+          <div class="spot-note">如果小孩不吃牛腸鍋的安全牌。</div>
+        </div>
+        <a class="map" href="https://www.google.com/maps/search/?api=1&query=一蘭+天神店+福岡" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>地圖</a>
+      </div>
+      <div class="spot alt">
+        <div class="spot-info">
+          <div class="spot-name">中洲屋台街(大人宵夜)</div>
+          <div class="spot-note">大人可晚點輪流去體驗。</div>
+        </div>
+        <a class="map" href="https://www.google.com/maps/search/?api=1&query=中洲屋台+福岡" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>地圖</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8/8 -->
+  <section class="day">
+    <div class="day-head">
+      <div class="day-date">8/8<span style="font-size:.55em"> 六</span></div>
+      <div class="day-route">還車 → 福岡機場 → 桃園(14:15 起飛)</div>
+    </div>
+    <div class="meal">
+      <div class="meal-label">午餐</div>
+      <div class="spot">
+        <div class="spot-info">
+          <div class="spot-name">福岡機場國際線航廈餐廳 <span class="badge walkin">免預約</span></div>
+          <div class="spot-note">拉麵跑道在國內線航廈,還車後往返時間可能不夠;建議直接在國際線 3–4 樓吃,或前一晚在天神買麵包飯糰備著。</div>
+        </div>
+        <a class="map" href="https://www.google.com/maps/search/?api=1&query=福岡空港国際線ターミナル+レストラン" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>地圖</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="booklist">
+    <h2>出發前預約清單</h2>
+    <ol>
+      <li><strong>8/3 旅館四季見 會席晚餐</strong><br><span class="how">直接聯絡旅館加購</span></li>
+      <li><strong>8/6 博多華味鳥 天神店</strong><br><span class="how">HotPepper 線上訂個室</span></li>
+      <li><strong>8/7 おおやま 福岡PARCO店</strong><br><span class="how">HotPepper / ぐるなび 線上預約</span></li>
+    </ol>
+  </div>
+
+  <footer class="colophon">
+    田舎屋、地獄蒸し工房不接受預約,提早前往即可。本頁為餐廳專用手冊,行程細節請見<a href="../" style="color:var(--indigo)">九州自駕行程手帖</a>。<br>全部店家營業狀況確認於 2026/7/24。異動紀錄:バーガーハウス ダム永久歇業 → 改 DE FONTEIN GRILL BURGER;千穂の家流水麵暫停營業 → 改 田舎屋。
+  </footer>
+</div>
+
+</body>
+</html>
