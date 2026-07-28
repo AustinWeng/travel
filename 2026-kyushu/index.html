@@ -383,7 +383,7 @@ td .sub{display:block; font-size:12px; color:var(--ink-faint)}
       </div>
       <div class="drive">
         <span class="km">機場 → 豪斯登堡 113.3 km・→ 飯店 3.7 km（合計 <b>117.0 km</b>）・🅿 建議中停：金立 SA（長崎道，約全程 6 成處，廁所＋佐賀輕食）</span>
-        <a class="maplink" href="https://maps.app.goo.gl/Yvc1wGM7syyHSW6S7" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>當日路線</a>
+        <a class="maplink" data-route="d1n" href="https://maps.app.goo.gl/Yvc1wGM7syyHSW6S7" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>當日路線</a>
       </div>
     </div>
   </article>
@@ -830,12 +830,13 @@ td .sub{display:block; font-size:12px; color:var(--ink-faint)}
     return u;
   }
   var routes = {
-    d2n: dir('ハウステンボス', '都ホテル博多', ['マリンワールド海の中道']),
+    d1n: dir('福岡空港 国際線ターミナル', 'ホテルアムステルダム ハウステンボス', ['金立SA(下り)']),
+    d2n: dir('ハウステンボス', '都ホテル博多', ['基山PA(上り)', 'マリンワールド海の中道']),
     d3n: dir('都ホテル博多', 'ダイワロイネットホテル小倉駅前', ['ららぽーと福岡']),
     d4n: dir('ダイワロイネットホテル小倉駅前', '杉乃井ホテル 宙館', ['ハーモニーランド', '海地獄 別府']),
     d4: dir('旅館 四季見 高千穂', '杉乃井ホテル 宙館', ['高千穂峡 貸しボート乗り場', '海地獄 別府']),
     d5: dir('杉乃井ホテル 別府', '杉乃井ホテル 別府', ['九州自然動物公園 アフリカンサファリ']),
-    d6: dir('杉乃井ホテル 別府', 'THE GATE HOTEL FUKUOKA by HULIC', ['海の中道海浜公園 サンシャインプール']),
+    d6: dir('杉乃井ホテル 別府', 'THE GATE HOTEL FUKUOKA by HULIC', ['今川PA(上り)', '海の中道海浜公園 サンシャインプール']),
     d7: dir('THE GATE HOTEL FUKUOKA by HULIC', 'THE GATE HOTEL FUKUOKA by HULIC', ['福岡市動植物園', '福岡タワー', '大濠公園']),
     d8: dir('THE GATE HOTEL FUKUOKA by HULIC', '福岡空港 国際線ターミナル', ['トヨタレンタカー 福岡空港国際線店'])
   };
