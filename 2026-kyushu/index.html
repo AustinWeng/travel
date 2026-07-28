@@ -194,7 +194,8 @@ td .sub{display:block; font-size:12px; color:var(--ink-faint)}
 .quake p{font-size:14px; color:var(--ink-soft); margin:.4em 0}
 .quake b{color:var(--ink)}
 /* 保險與上網快速參考（三頁手帖共用版式） */
-.ess-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+.ess-grid{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:14px}
+.ess-grid .stay{min-width:0; max-width:100%}
 @media (max-width:760px){ .ess-grid{grid-template-columns:1fr} }
 .ess-grid .stay{margin-top:0}
 .ess-grid table{min-width:0}
@@ -816,7 +817,7 @@ td .sub{display:block; font-size:12px; color:var(--ink-faint)}
       </tbody>
     </table>
   </div>
-  <p class="map-cap">行前淨付 NT$203,724＝原已付 197,389 − Dormy 退款 7,624 ＋ 博多都酒店 9,485 ＋ 小倉 Daiwa Roynet 4,474；另 KidZania ¥19,400 已預約（台幣待入帳）。<b>7/28 地震取消退款</b>：Dormy ¥37,800 全額退（聯邦卡，退款入帳待下期）、划船 ¥5,100 全額退（未入帳互抵）、四季見到店付款單取消費 0（原 ¥71,102 不再發生）；沉沒成本僅 Dormy 原結匯手續費 NT$114。富邦旅平險 NT$5,764 於保期結束後扣款。尚未發生：8/3 晚住宿（待訂）、當地餐飲・門票・加油與過路費。資料來源：信用卡帳單明細（2026/7/10 核對）＋各訂單/取消確認信（至 2026/7/28）。</p>
+  <p class="map-cap">行前淨付 NT$203,724＝原已付 197,389 − Dormy 退款 7,624 ＋ 博多都酒店 9,485 ＋ 小倉 Daiwa Roynet 4,474；另 KidZania ¥19,400 已預約（台幣待入帳）。<b>7/28 地震取消退款</b>：Dormy ¥37,800 全額退（聯邦卡，退款入帳待下期）、划船 ¥5,100 全額退（未入帳互抵）、四季見到店付款單取消費 0（原 ¥71,102 不再發生）；沉沒成本僅 Dormy 原結匯手續費 NT$114。富邦旅平險 NT$5,764 於保期結束後扣款。尚未發生：當地餐飲・門票・加油與過路費。資料來源：信用卡帳單明細（2026/7/10 核對）＋各訂單/取消確認信（至 2026/7/28）。</p>
 </section>
 
 <div class="foot">
