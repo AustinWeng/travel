@@ -239,6 +239,118 @@ td .sub{display:block; font-size:12px; color:var(--ink-faint)}
   </div>
 </header>
 
+<section id="geomap">
+  <div class="sec-head"><h2>行程地圖</h2><span class="en">Route Map · D1–D8</span></div>
+  <div class="mapbox">
+    <svg viewBox="0 0 740 560" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="九州北部地理路線圖：八天行程路徑與日次標注；原熊本阿蘇高千穗路線以灰色虛線標示取消">
+      <defs>
+        <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="var(--sea)"/>
+        </marker>
+        <marker id="arrg" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="var(--ink-faint)"/>
+        </marker>
+      </defs>
+
+      <!-- 陸地輪廓（北九州示意） -->
+      <path d="M60,140 Q200,60 380,80 Q480,40 575,58
+               Q640,120 600,200 Q570,255 592,298 Q612,330 568,362 Q538,385 556,425
+               L520,510 Q350,540 160,505 Q100,430 128,380 Q158,338 100,318 Q30,298 58,248 Q92,220 70,182 Q48,160 60,140 Z"
+            fill="var(--leaf-wash)" opacity=".45" stroke="var(--line)" stroke-width="2"/>
+      <text x="70" y="520" font-size="11" fill="var(--ink-faint)" opacity=".8">↓ 九州南部（本次不前往）</text>
+
+      <!-- 取消原線（灰虛線）：博多→熊本→阿蘇→高千穗→別府 -->
+      <g stroke="var(--ink-faint)" stroke-width="2.5" fill="none" stroke-dasharray="7 6" opacity=".45">
+        <path d="M335,155 Q290,300 300,430"/>
+        <path d="M300,430 Q345,425 390,400"/>
+        <path d="M390,400 Q430,430 470,440"/>
+        <path d="M470,440 Q510,410 525,370"/>
+      </g>
+      <g opacity=".55" font-family="inherit">
+        <circle cx="300" cy="430" r="5" fill="var(--ink-faint)"/>
+        <text x="300" y="452" font-size="12" fill="var(--ink-faint)" text-anchor="middle" text-decoration="line-through">熊本</text>
+        <circle cx="390" cy="400" r="5" fill="var(--ink-faint)"/>
+        <text x="390" y="390" font-size="12" fill="var(--ink-faint)" text-anchor="middle" text-decoration="line-through">阿蘇</text>
+        <circle cx="470" cy="440" r="5" fill="var(--ink-faint)"/>
+        <text x="470" y="462" font-size="12" fill="var(--ink-faint)" text-anchor="middle" text-decoration="line-through">高千穗</text>
+      </g>
+      <text x="345" y="480" font-size="12" font-weight="750" fill="var(--alert)">✕ 7/28 地震取消</text>
+
+      <!-- 行程路徑 -->
+      <g stroke="var(--sea)" stroke-width="3.5" fill="none" stroke-linecap="round">
+        <path d="M360,172 Q250,195 222,230 Q160,255 118,265" marker-end="url(#arr)"/>                <!-- D1 -->
+        <path d="M105,258 Q225,255 330,226 Q368,195 362,122" marker-end="url(#arr)"/>                <!-- D2 -->
+        <path d="M348,112 Q345,132 337,142" marker-end="url(#arr)"/>                                  <!-- D2b 海之中道→博多 -->
+        <path d="M342,143 Q432,100 508,84" marker-end="url(#arr)"/>                                   <!-- D3 -->
+        <path d="M522,90 Q492,130 481,180 Q468,262 538,325" marker-end="url(#arr)"/>                  <!-- D4 -->
+        <path d="M545,338 Q536,352 528,358" marker-end="url(#arr)"/>                                  <!-- D4b -->
+        <path d="M517,358 Q495,342 488,336" stroke-width="2.5" stroke-dasharray="2 5" marker-end="url(#arr)"/> <!-- D5 -->
+        <path d="M521,372 Q448,292 470,182 Q425,95 372,108" marker-end="url(#arr)"/>                  <!-- D6 -->
+        <path d="M352,158 Q362,164 358,166" marker-end="url(#arr)"/>                                  <!-- D8 -->
+      </g>
+
+      <!-- 休息站小點 -->
+      <g font-family="inherit">
+        <circle cx="222" cy="230" r="4" fill="var(--card)" stroke="var(--sea)" stroke-width="2"/>
+        <text x="222" y="248" font-size="10.5" fill="var(--ink-faint)" text-anchor="middle">金立SA</text>
+        <circle cx="330" cy="226" r="4" fill="var(--card)" stroke="var(--sea)" stroke-width="2"/>
+        <text x="318" y="243" font-size="10.5" fill="var(--ink-faint)" text-anchor="middle">基山PA</text>
+        <circle cx="477" cy="181" r="4" fill="var(--card)" stroke="var(--sea)" stroke-width="2"/>
+        <text x="507" y="178" font-size="10.5" fill="var(--ink-faint)" text-anchor="middle">今川PA</text>
+      </g>
+
+      <!-- 主要節點 -->
+      <g font-family="inherit">
+        <circle cx="360" cy="172" r="7" fill="var(--card)" stroke="var(--sea)" stroke-width="3.5"/>
+        <text x="388" y="186" font-size="12.5" font-weight="700" fill="var(--ink)">福岡機場 ✈</text>
+        <text x="388" y="200" font-size="10.5" fill="var(--ink-faint)">8/1 取車・8/8 還車</text>
+
+        <circle cx="105" cy="265" r="9" fill="var(--card)" stroke="var(--sea)" stroke-width="4"/>
+        <text x="105" y="292" font-size="13" font-weight="800" fill="var(--ink)" text-anchor="middle">豪斯登堡</text>
+        <text x="105" y="306" font-size="10.5" fill="var(--ink-faint)" text-anchor="middle">D1 泊・Amsterdam</text>
+
+        <circle cx="360" cy="110" r="7" fill="var(--card)" stroke="var(--sea)" stroke-width="3.5"/>
+        <text x="368" y="98" font-size="12.5" font-weight="700" fill="var(--ink)">海之中道</text>
+        <text x="368" y="84" font-size="10.5" fill="var(--ink-faint)">D2 海洋世界・D6 泳池</text>
+
+        <circle cx="335" cy="150" r="9" fill="var(--card)" stroke="var(--sea)" stroke-width="4"/>
+        <text x="300" y="140" font-size="13" font-weight="800" fill="var(--ink)" text-anchor="end">博多・福岡</text>
+        <text x="300" y="154" font-size="10.5" fill="var(--ink-faint)" text-anchor="end">D2 泊都酒店・D3 KidZania</text>
+        <text x="300" y="168" font-size="10.5" fill="var(--ink-faint)" text-anchor="end">D6–D7 泊 GATE ×2</text>
+
+        <circle cx="520" cy="84" r="9" fill="var(--card)" stroke="var(--sea)" stroke-width="4"/>
+        <text x="520" y="66" font-size="13" font-weight="800" fill="var(--ink)" text-anchor="middle">小倉</text>
+        <text x="520" y="52" font-size="10.5" fill="var(--ink-faint)" text-anchor="middle">D3 泊 Daiwa Roynet</text>
+
+        <circle cx="543" cy="330" r="7" fill="var(--card)" stroke="var(--sea)" stroke-width="3.5"/>
+        <text x="573" y="326" font-size="12.5" font-weight="700" fill="var(--ink)">Harmonyland</text>
+        <text x="573" y="340" font-size="10.5" fill="var(--ink-faint)">D4 三麗鷗樂園</text>
+
+        <circle cx="484" cy="332" r="6" fill="var(--card)" stroke="var(--sea)" stroke-width="3"/>
+        <text x="452" y="322" font-size="11.5" font-weight="700" fill="var(--ink)" text-anchor="end">Safari</text>
+        <text x="452" y="336" font-size="10.5" fill="var(--ink-faint)" text-anchor="end">D5 動物園</text>
+
+        <circle cx="524" cy="366" r="9" fill="var(--card)" stroke="var(--sea)" stroke-width="4"/>
+        <text x="524" y="393" font-size="13" font-weight="800" fill="var(--ink)" text-anchor="middle">別府溫泉</text>
+        <text x="524" y="407" font-size="10.5" fill="var(--ink-faint)" text-anchor="middle">D4–D5 泊 杉乃井 ×2</text>
+      </g>
+
+      <!-- 日次徽章 -->
+      <g font-family="inherit" font-size="11" font-weight="800" text-anchor="middle">
+        <circle cx="228" cy="203" r="11" fill="var(--sea)"/><text x="228" y="207" fill="#fff">D1</text>
+        <circle cx="228" cy="257" r="11" fill="var(--sea)"/><text x="228" y="261" fill="#fff">D2</text>
+        <circle cx="428" cy="107" r="11" fill="var(--sea)"/><text x="428" y="111" fill="#fff">D3</text>
+        <circle cx="496" cy="248" r="11" fill="var(--sea)"/><text x="496" y="252" fill="#fff">D4</text>
+        <circle cx="502" cy="360" r="11" fill="var(--sea)"/><text x="502" y="364" fill="#fff">D5</text>
+        <circle cx="446" cy="252" r="11" fill="var(--sea)"/><text x="446" y="256" fill="#fff">D6</text>
+        <circle cx="290" cy="122" r="11" fill="var(--sea)"/><text x="290" y="126" fill="#fff">D7</text>
+        <circle cx="382" cy="150" r="11" fill="var(--sea)"/><text x="382" y="154" fill="#fff">D8</text>
+      </g>
+    </svg>
+  </div>
+  <p class="map-cap">實線＝改線後行程（D1–D8，箭頭為行進方向；D5 虛線＝別府當地往返，D7 福岡市區日不移動）；空心小點＝建議休息站；灰虛線＝7/28 地震取消的原路線（熊本・阿蘇・高千穗，留給下一次）。地理位置為示意，實際導航用各日卡「當日路線」。</p>
+</section>
+
 <section id="earthquake">
   <div class="sec-head"><h2>行程變更記事</h2><span class="en">The Earthquake, and Plan B</span></div>
   <div class="quake">
