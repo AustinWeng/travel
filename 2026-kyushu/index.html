@@ -183,6 +183,16 @@ td .sub{display:block; font-size:12px; color:var(--ink-faint)}
 .costband .cb-items{display:flex; flex-wrap:wrap; gap:5px 18px; font-size:13.5px; color:var(--ink-soft)}
 .costband .cb-i b{color:var(--ink)}
 .costband .cb-note{flex-basis:100%; font-size:11.5px; color:var(--ink-faint)}
+/* 地震改線：原行程反灰留存 */
+.day.cancelled{opacity:.55; filter:grayscale(.75)}
+.day.cancelled .day-band{background:var(--ink-faint)!important; color:#fff!important}
+.day.cancelled .dtheme::after{content:"（7/28 地震取消）"; font-weight:750}
+.badge.cxl{background:var(--alert-wash); color:var(--alert); font-weight:700}
+.quake{background:var(--card); border:1px solid var(--alert); border-left:6px solid var(--alert); border-radius:12px; padding:16px 18px; box-shadow:var(--shadow)}
+.quake .q-date{font-size:12px; letter-spacing:.14em; font-weight:750; color:var(--alert); text-transform:uppercase}
+.quake .q-title{font-weight:800; font-size:18px; margin:4px 0 8px}
+.quake p{font-size:14px; color:var(--ink-soft); margin:.4em 0}
+.quake b{color:var(--ink)}
 /* 保險與上網快速參考（三頁手帖共用版式） */
 .ess-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px}
 @media (max-width:760px){ .ess-grid{grid-template-columns:1fr} }
@@ -197,20 +207,20 @@ td .sub{display:block; font-size:12px; color:var(--ink-faint)}
   <h1>九州自駕旅行手帖</h1>
   <p class="subtitle">2026/8/1（六）– 8/8（六）・8 天 7 夜・一家四口（2 大 2 小）</p>
   <div class="facts">
-    <span class="fact">全程自駕 <b>約 775 km</b></span>
-    <span class="fact">住宿 <b>5 間・7 晚</b></span>
+    <span class="fact">全程自駕 <b>約 740 km</b>（改線後）</span>
+    <span class="fact">住宿 <b>7 晚</b>（⚠ 8/3 待訂）</span>
     <span class="fact">租車 <b>SIENTA Hybrid</b></span>
-    <span class="fact">路線 <b>佐世保 → 熊本 → 阿蘇 → 高千穗 → 別府 → 福岡</b></span>
+    <span class="fact">路線 <b>佐世保 → 福岡 → 別府 → 福岡</b>（7/28 地震改線）</span>
     <span class="fact">🍜 <a href="./dining/" style="font-weight:750; color:inherit">餐廳手冊 →</a></span>
   </div>
   <div class="costband">
-    <div class="cb-total"><span>行前已付</span><b>NT$197,389 ＋ ¥5,100</b></div>
+    <div class="cb-total"><span>行前淨付</span><b>NT$199,250 ＋ ¥19,400</b></div>
     <div class="cb-items">
-      <span class="cb-i">🏨 住宿 <b>NT$105,327</b></span>
+      <span class="cb-i">🏨 住宿 <b>NT$107,188</b></span>
       <span class="cb-i">🚗 交通 <b>NT$90,031</b></span>
-      <span class="cb-i">🎡 其他 <b>NT$2,031＋¥5,100</b>（eSIM＋划船；其餘出發後累計）</span>
+      <span class="cb-i">🎡 其他 <b>NT$2,031＋¥19,400</b>（eSIM＋KidZania）</span>
     </div>
-    <div class="cb-note">含海外交易手續費（按母筆歸入分類）；划船 ¥5,100（7/21）與 eSIM NT$2,031（7/22）已付、台幣入帳待下期帳單；旅平險 NT$5,764 為保期結束後扣款、暫不計入；另有到店現場付 ¥71,102（四季見）與當地餐飲、門票、油資過路費未發生——明細見「花費追蹤」。</div>
+    <div class="cb-note">7/28 地震改線後淨額：住宿已扣 Dormy 退款 7,624、加博多都酒店 9,485；取消三筆全額退（划船 ¥5,100 未入帳互抵）；KidZania ¥19,400 與博多都台幣待入帳；旅平險 NT$5,764 保期後扣款暫不計入；⚠ 8/3 晚住宿未訂——明細見「花費追蹤」。</div>
   </div>
   <div class="flights">
     <div class="flight">
@@ -228,22 +238,41 @@ td .sub{display:block; font-size:12px; color:var(--ink-faint)}
   </div>
 </header>
 
+<section id="earthquake">
+  <div class="sec-head"><h2>行程變更記事</h2><span class="en">The Earthquake, and Plan B</span></div>
+  <div class="quake">
+    <div class="q-date">2026.07.28（二）16:27 JST・出發前 4 天</div>
+    <div class="q-title">熊本 M7.1 大地震——行程史上第一次改線</div>
+    <p><b>熊本縣宇城市・氷川町觀測到最大震度 7</b>（震源深度 10 km），有明海・八代海一度發布海嘯注意報，JR 九州全線停駛、熊本城石垣崩落。震央正是原行程 D2–D3 的核心區（熊本市區 → 阿蘇 → 高千穗），山區餘震期土石流風險高。</p>
+    <p><b>當晚全家的決定：</b>取消熊本與高千穗段——Dormy Inn 熊本、旅館四季見、高千穗峽划船三筆全數取消（趕在收費線前，<b>取消費 0、全額退款</b>）；行程改走北線：福岡海之中道海洋世界、KidZania 職業體驗，8/4 改由東九州道南下別府接回原行程，<b>全程避開震區</b>。</p>
+    <p>原 D2–D4 行程保留在下方（灰色）作為紀念——阿蘇的草千里、高千穗峽的船，留給下一次。</p>
+  </div>
+</section>
+
 <section id="todo">
   <div class="sec-head"><h2>行前必辦</h2><span class="en">Before we go</span></div>
-  <p class="todo-note">7/10 已核對 Gmail 全部訂房信——7 晚住宿與租車都訂妥；<b>7/21 划船已搶到、7/22 旅平險與 eSIM 也辦妥</b>，剩下面兩件事。勾選狀態會存在這台裝置上。</p>
-  <div class="todo" data-key="boat">
-    <label><input type="checkbox" checked>
+  <p class="todo-note">7/10 已核對 Gmail 全部訂房信、7/22 旅平險與 eSIM 辦妥；<b>7/28 熊本地震改線</b>（見上方記事）——博多住宿與 KidZania 已訂，剩下面三件事。勾選狀態會存在這台裝置上。</p>
+  <div class="todo" data-key="hotel0803">
+    <label><input type="checkbox">
       <div>
-        <div class="t-title">✅ 7/21 已搶到——高千穗峽划船（8/4 09:30）</div>
-        <div class="t-body">預約番號 <b>LH6HB4H4</b>（整理番號 00007）・大人 3＋未就學兒 1＝<b>一艘搞定</b>・¥5,100 線上刷卡已付。乘船受付要<b>出示預約確認 mail</b>（不能用手抄），臨時改期＝先取消（注意全額退款期限）再重訂；<span style="color:var(--sun)">划船無專用停車場</span>，停車看<a href="https://takachiho-kanko.info/boat/detail.php" target="_blank" rel="noopener">觀光協會網站</a>。電話 0982-82-2140。</div>
+        <div class="t-title">⚠ 最急——訂 8/3（一）晚住宿</div>
+        <div class="t-body">改線後 <b>8/3 晚目前沒有訂單</b>（博多都酒店只訂 8/2 一晚、杉乃井 8/4 才入住）。建議：續住博多 都酒店或博多站前（隔天 9:30 出發南下順）；或 KidZania 玩完直接南下住別府市區。訂好後回報更新行程頁。</div>
       </div>
     </label>
   </div>
   <div class="todo" data-key="dining">
     <label><input type="checkbox">
       <div>
-        <div class="t-title">餐廳預約 ×3（媽媽的餐廳手冊）</div>
-        <div class="t-body">出發前訂好：<b>8/3 旅館四季見 會席晚餐</b>（致電加訂「高千穂蘇食物語」，18:00 起・最終入席 19:30）、<b>8/6 博多華味鳥 天神店</b>（HotPepper 訂個室）、<b>8/7 おおやま 福岡PARCO店</b>（HotPepper／ぐるなび）。逐日用餐地圖與備案見 <a href="./dining/">🍜 九州餐廳手冊</a>（店家營業狀況已於 7/24 全數查證）。</div>
+        <div class="t-title">餐廳預約 ×2（媽媽的餐廳手冊）</div>
+        <div class="t-body">出發前訂好：<b>8/6 博多華味鳥 天神店</b>（HotPepper 訂個室）、<b>8/7 おおやま 福岡PARCO店</b>（HotPepper／ぐるなび）。逐日用餐地圖與備案見 <a href="./dining/">🍜 九州餐廳手冊</a>（7/24 查證；D2–D4 改線後餐食待媽媽更新手冊）。<s>8/3 四季見會席</s>——已隨地震取消。</div>
+      </div>
+    </label>
+  </div>
+  <div class="todo cancelled-item" data-key="boat" style="opacity:.55">
+    <label><input type="checkbox" checked>
+      <div>
+        <div class="t-title" style="text-decoration:line-through">高千穗峽划船（8/4 09:30）——7/28 地震取消</div>
+        <div class="t-body">原預約番號 LH6HB4H4・¥5,100 <b>已 100% 全額退款</b>（系統自動退回信用卡，免手續）。高千穗峽的船，留給下一次。</div>
       </div>
     </label>
   </div>
@@ -265,19 +294,18 @@ td .sub{display:block; font-size:12px; color:var(--ink-faint)}
   </div>
 
   <div class="checks" id="checks">
-    <label data-key="aso"><input type="checkbox"><span><b>7/25 前後再查阿蘇火口</b>——現為噴火警戒 2 級、火口周邊 1 km 管制、阿蘇山公園道路封閉；屆時未解除就走備案（草千里＋火山博物館）。</span></label>
-    <label data-key="shikimi"><input type="checkbox"><span><b>通知四季見提早抵達</b>——訂單登記 18:00、實際約 15:30 到；這晚是唯一現場付款（¥71,102），高千穗晚餐選擇少、先想好。</span></label>
+    <label data-key="quakecheck"><input type="checkbox"><span><b>出發前 1–2 天做地震後總確認</b>——高速公路通行（NEXCO 西日本）、豪斯登堡／海洋世界／KidZania／杉乃井官網臨時公告、JR 復駛與餘震動態；餘震期兩週內任何設施都可能臨時休。</span></label>
     <label data-key="htb"><input type="checkbox"><span><b>確認豪斯登堡門票組合</b>——入住日（8/1）進園需門票（傍晚票種）；住宿方案多含隔日 1-Day Passport、住客隔天可提早約 1 小時入園——訂房頁或電話 0570-064-110 確認清楚再決定買什麼票。8/1、8/2 晚 20:45 都有花火秀。</span></label>
     <label data-key="parking"><input type="checkbox"><span><b>查好福岡 GATE HOTEL 附近停車場</b>——飯店無停車場，8/6 晚–8/8 早要停天神周邊收費停車場（8/7 白天開去海之中道），先查 Times 位置與夜間最大料金。</span></label>
     <label data-key="safari"><input type="checkbox"><span><b>African Safari 早點到</b>——8 月 9:15 開園、8:50 開始受付；Jungle Bus 今夏不開放預約、只能當日現場排隊（開自己車遊園免預約）。</span></label>
-    <label data-key="typhoon"><input type="checkbox"><span><b>出發前 3 天看颱風</b>——8 月上旬是颱風季，戶外行程比重高（阿蘇、划船、動物園、泳池）。</span></label>
+    <label data-key="typhoon"><input type="checkbox"><span><b>出發前 3 天看颱風</b>——8 月上旬是颱風季，戶外行程比重高（水族館以外多為戶外：動物園、泳池、Harmonyland）。</span></label>
   </div>
 </section>
 
 <section id="map">
   <div class="sec-head"><h2>全程路線</h2><span class="en">Route Overview</span></div>
   <div class="mapbox">
-    <svg viewBox="0 0 880 190" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="八天路線圖：福岡機場、豪斯登堡、熊本、阿蘇、高千穗、別府、福岡、福岡機場">
+    <svg viewBox="0 0 880 190" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="八天路線圖（7/28 地震改線）：福岡機場、豪斯登堡、福岡海之中道、別府、福岡、福岡機場；原熊本阿蘇高千穗段取消">
       <line x1="50" y1="80" x2="830" y2="80" stroke="var(--line)" stroke-width="5" stroke-linecap="round"/>
       <line x1="50" y1="80" x2="830" y2="80" stroke="var(--sea)" stroke-width="5" stroke-linecap="round" stroke-dasharray="0"/>
       <!-- stops -->
@@ -287,34 +315,28 @@ td .sub{display:block; font-size:12px; color:var(--ink-faint)}
         <text x="50" y="52" font-size="13" font-weight="800" fill="var(--ink)">福岡機場</text>
         <text x="50" y="112" font-size="11" fill="var(--ink-faint)">8/1 取車</text>
         <!-- 豪斯登堡 -->
-        <circle cx="165" cy="80" r="9" fill="var(--card)" stroke="var(--sea)" stroke-width="4"/>
-        <text x="165" y="52" font-size="13" font-weight="800" fill="var(--ink)">豪斯登堡</text>
-        <text x="165" y="112" font-size="11" fill="var(--ink-faint)">D1 泊</text>
-        <text x="165" y="128" font-size="11" fill="var(--ink-faint)">Hotel Amsterdam</text>
-        <!-- 熊本 -->
-        <circle cx="300" cy="80" r="9" fill="var(--card)" stroke="var(--sea)" stroke-width="4"/>
-        <text x="300" y="52" font-size="13" font-weight="800" fill="var(--ink)">熊本</text>
-        <text x="300" y="112" font-size="11" fill="var(--ink-faint)">D2 泊</text>
-        <text x="300" y="128" font-size="11" fill="var(--ink-faint)">Dormy Inn</text>
-        <!-- 阿蘇 -->
-        <circle cx="420" cy="80" r="7" fill="var(--sea)" stroke="var(--card)" stroke-width="3"/>
-        <text x="420" y="52" font-size="13" font-weight="700" fill="var(--ink-soft)">阿蘇</text>
-        <text x="420" y="112" font-size="11" fill="var(--ink-faint)">D3 經過</text>
-        <!-- 高千穗 -->
-        <circle cx="530" cy="80" r="9" fill="var(--card)" stroke="var(--sea)" stroke-width="4"/>
-        <text x="530" y="52" font-size="13" font-weight="800" fill="var(--ink)">高千穗</text>
-        <text x="530" y="112" font-size="11" fill="var(--ink-faint)">D3 泊</text>
-        <text x="530" y="128" font-size="11" fill="var(--ink-faint)">四季見</text>
+        <circle cx="190" cy="80" r="9" fill="var(--card)" stroke="var(--sea)" stroke-width="4"/>
+        <text x="190" y="52" font-size="13" font-weight="800" fill="var(--ink)">豪斯登堡</text>
+        <text x="190" y="112" font-size="11" fill="var(--ink-faint)">D1 泊</text>
+        <text x="190" y="128" font-size="11" fill="var(--ink-faint)">Hotel Amsterdam</text>
+        <!-- 福岡・海之中道 -->
+        <circle cx="360" cy="80" r="9" fill="var(--card)" stroke="var(--sea)" stroke-width="4"/>
+        <text x="360" y="52" font-size="13" font-weight="800" fill="var(--ink)">福岡・博多</text>
+        <text x="360" y="112" font-size="11" fill="var(--ink-faint)">D2 泊（D3 ⚠ 待訂）</text>
+        <text x="360" y="128" font-size="11" fill="var(--ink-faint)">海洋世界・KidZania</text>
+        <!-- 原熊本高千穗（取消標記） -->
+        <text x="360" y="165" font-size="11" fill="var(--ink-faint)" text-decoration="line-through">熊本・阿蘇・高千穗</text>
+        <text x="480" y="165" font-size="11" fill="var(--alert)">✕ 7/28 地震取消</text>
         <!-- 別府 -->
-        <circle cx="655" cy="80" r="9" fill="var(--card)" stroke="var(--sea)" stroke-width="4"/>
-        <text x="655" y="52" font-size="13" font-weight="800" fill="var(--ink)">別府</text>
-        <text x="655" y="112" font-size="11" fill="var(--ink-faint)">D4–D5 泊 ×2</text>
-        <text x="655" y="128" font-size="11" fill="var(--ink-faint)">杉乃井 宙館</text>
+        <circle cx="560" cy="80" r="9" fill="var(--card)" stroke="var(--sea)" stroke-width="4"/>
+        <text x="560" y="52" font-size="13" font-weight="800" fill="var(--ink)">別府</text>
+        <text x="560" y="112" font-size="11" fill="var(--ink-faint)">D4–D5 泊 ×2</text>
+        <text x="560" y="128" font-size="11" fill="var(--ink-faint)">杉乃井 宙館</text>
         <!-- 福岡 -->
-        <circle cx="775" cy="80" r="9" fill="var(--card)" stroke="var(--sea)" stroke-width="4"/>
-        <text x="775" y="52" font-size="13" font-weight="800" fill="var(--ink)">福岡</text>
-        <text x="775" y="112" font-size="11" fill="var(--ink-faint)">D6–D7 泊 ×2</text>
-        <text x="775" y="128" font-size="11" fill="var(--ink-faint)">THE GATE HOTEL</text>
+        <circle cx="740" cy="80" r="9" fill="var(--card)" stroke="var(--sea)" stroke-width="4"/>
+        <text x="740" y="52" font-size="13" font-weight="800" fill="var(--ink)">福岡</text>
+        <text x="740" y="112" font-size="11" fill="var(--ink-faint)">D6–D7 泊 ×2</text>
+        <text x="740" y="128" font-size="11" fill="var(--ink-faint)">THE GATE HOTEL</text>
         <!-- 機場終點 -->
         <circle cx="830" cy="80" r="6" fill="var(--sea)"/>
         <text x="830" y="160" font-size="11" fill="var(--ink-faint)">8/8 還車返台</text>
@@ -367,6 +389,40 @@ td .sub{display:block; font-size:12px; color:var(--ink-faint)}
 
   <!-- Day 2 -->
   <article class="day">
+    <div class="day-band"><span class="dnum">DAY 2</span><span class="ddate">8/2（日）</span><span class="dtheme">豪斯登堡 → 海洋世界 → 宿博多</span></div>
+    <div class="day-inner">
+      <ul class="tl">
+        <li><span class="tt">08:30–12:00</span><span class="tx">豪斯登堡上午行程<small>園內飯店住客可提早自由進出；午餐出發前在園內解決（昨晚沒吃到的那家漢堡）</small></span></li>
+        <li><span class="tt">12:30</span><span class="tx">出發往福岡・海之中道<small>長崎道 → 九州道北上，全程不經熊本震區，約 2.5 小時</small></span></li>
+        <li><span class="tt">15:00–17:30</span><span class="tx">海洋世界海之中道（マリンワールド海の中道）<small>九州近海主題水族館：外洋大水槽鯊魚群、海豚海獅秀；8 月有夏季延長營業與夜間場，出發前查官網當日時刻</small></span></li>
+        <li><span class="tt">18:00</span><span class="tx">入住 博多 都酒店（都ホテル博多）<small>海之中道 → 博多站東約 40 分</small></span></li>
+        <li><span class="tt">晚間</span><span class="tx">頂樓屋頂泳池・溫泉水療<small>住宿方案含免費使用（僅限房客）；晚餐博多站周邊自由覓食</small></span></li>
+      </ul>
+      <div class="stay">
+        <div class="s-label">今晚住宿 · 1 晚（8/2–8/3）・7/28 改線新訂</div>
+        <div class="s-name">博多 都酒店（都ホテル博多）</div>
+        <div class="s-sub">高級雙床房（禁菸）・4 位（2 大 2 小）・官網特惠方案</div>
+        <div class="s-row">
+          <span class="kv">預約號 <b>T10337AADB737</b>（tripla）</span>
+          <span class="kv">金額 <b>NT$9,485</b>（含稅）</span>
+          <span class="badge paid">已刷卡</span>
+        </div>
+        <div class="s-info">
+          <div class="kv2"><span class="k">地址</span><a href="https://www.google.com/maps/search/?api=1&amp;query=%E9%83%BD%E3%83%9B%E3%83%86%E3%83%AB%E5%8D%9A%E5%A4%9A" target="_blank" rel="noopener">福岡県福岡市博多区博多駅東2-1-1</a></div>
+          <div class="kv2"><span class="k">電話</span><a href="tel:+81924413111">092-441-3111</a></div>
+          <div class="kv2"><span class="k">Check-in</span>18:00 登記（8/2）／退房 8/3</div>
+          <div class="kv2"><span class="k">特典</span>頂樓屋頂泳池＋溫泉水療免費（房客限定）</div>
+          <div class="kv2"><span class="k">取消條款</span>前 2 日 0%／前 1 日 20%／當日 80%</div>
+        </div>
+      </div>
+      <div class="drive">
+        <span class="km">豪斯登堡 → 海之中道（約 175 km）→ 博多站（約 25 km）</span>
+        <a class="maplink" data-route="d2n" href="#" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>當日路線</a>
+      </div>
+    </div>
+  </article>
+
+  <article class="day cancelled">
     <div class="day-band"><span class="dnum">DAY 2</span><span class="ddate">8/2（日）</span><span class="dtheme">豪斯登堡整天・熊本夜逛</span></div>
     <div class="day-inner">
       <ul class="tl">
@@ -406,6 +462,29 @@ td .sub{display:block; font-size:12px; color:var(--ink-faint)}
 
   <!-- Day 3 -->
   <article class="day">
+    <div class="day-band"><span class="dnum">DAY 3</span><span class="ddate">8/3（一）</span><span class="dtheme">KidZania 職業體驗日</span></div>
+    <div class="day-inner">
+      <ul class="tl">
+        <li><span class="tt">08:15</span><span class="tx">博多都酒店退房出發<small>博多站 → ららぽーと福岡 車程約 15 分；開場為營業開始前 30 分（8:30）</small></span></li>
+        <li><span class="tt">09:00–14:30</span><span class="tx">KidZania 福岡 第 1 部<small>✅ 已預約（7/28）・預約番號 93135958203711・小人 2×¥6,900＋大人 2×¥2,800＝¥19,400；入場出示 e チケット畫面或預約番號；當日パビリオン休止資訊出發前查官網</small></span></li>
+        <li><span class="tt">午餐</span><span class="tx">KidZania 館內或 ららぽーと美食街</span></li>
+        <li><span class="tt">15:00–17:00</span><span class="tx">ららぽーと福岡<small>購物補給；屋上有 teamLab Forest 可加點（去年豐洲玩過的 teamLab 系列）</small></span></li>
+      </ul>
+      <div class="warnline"><b>⚠ 今晚住宿未訂</b><span>8/3（一）晚住宿目前沒有訂單——建議續住博多（都酒店或站前）或直接南下先住別府市區，訂好後回報我更新此卡。</span></div>
+      <div class="drive">
+        <span class="km">博多站 → ららぽーと福岡（約 5 km）</span>
+        <a class="maplink" data-route="d3n" href="#" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>當日路線</a>
+      </div>
+      <div class="played">
+        <div class="p-label">當日制霸清單</div>
+        <ul>
+          <li>KidZania 福岡</li><li>ららぽーと福岡</li><li>teamLab Forest（候選）</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <article class="day cancelled">
     <div class="day-band"><span class="dnum">DAY 3</span><span class="ddate">8/3（一）</span><span class="dtheme">JASM 外圍・阿蘇景觀・宿高千穗</span></div>
     <div class="day-inner">
       <ul class="tl">
@@ -448,16 +527,12 @@ td .sub{display:block; font-size:12px; color:var(--ink-faint)}
 
   <!-- Day 4 -->
   <article class="day">
-    <div class="day-band"><span class="dnum">DAY 4</span><span class="ddate">8/4（二）</span><span class="dtheme">高千穗峽划船・海地獄・宿別府</span></div>
+    <div class="day-band"><span class="dnum">DAY 4</span><span class="ddate">8/4（二）</span><span class="dtheme">北路南下：中津・宇佐 → 宿別府</span></div>
     <div class="day-inner">
       <ul class="tl">
-        <li><span class="tt">08:20</span><span class="tx">出發前往高千穗峽<small>划船無專用停車場，早到找位（滿車狀況見觀光協會網站）</small></span></li>
-        <li><span class="tt">09:00</span><span class="tx">划船受付報到<small>出示預約確認 mail（預約番號 LH6HB4H4）</small></span></li>
-        <li><span class="tt">09:30</span><span class="tx">高千穗峽划船<small>✅ 已預約（7/21）・一艘 4 人（大人 3＋未就學兒 1）・¥5,100 已付；增水／雷雨會臨時停駛，停駛就改走步道</small></span></li>
-        <li><span class="tt">09:30–10:20</span><span class="tx">峽谷步道・真名井瀑布</span></li>
-        <li><span class="tt">午餐</span><span class="tx">二選一：田舎屋（高千穗峽內）或 地獄蒸し工房 鉄輪（別府）<small>田舎屋＝肉舖直營、划完船走過去，流水麵定食・チキン南蛮，11:00–16:00 免預約；地獄蒸し＝海地獄旁溫泉蒸氣自己蒸、43 種食材，10:00–19:00 免預約</small></span></li>
-        <li><span class="tt">11:30</span><span class="tx">出發往別府</span></li>
-        <li><span class="tt">14:20–15:00</span><span class="tx">海地獄短停</span></li>
+        <li><span class="tt">09:30</span><span class="tx">福岡出發<small>東九州自動車道南下，全程不經熊本震區；直達別府純車程約 2 小時</small></span></li>
+        <li><span class="tt">午餐</span><span class="tx">順遊二選一：中津からあげ 或 宇佐神宮<small>中津＝唐揚げ聖地吃炸雞午餐、可加走耶馬溪青之洞門；宇佐＝全國八幡宮總本宮參拜；兩者都在東九州道沿線，看當天狀態挑一個就好</small></span></li>
+        <li><span class="tt">14:20–15:00</span><span class="tx">海地獄短停<small>別府 IC 下來順路；原行程保留項</small></span></li>
         <li><span class="tt">15:20–15:40</span><span class="tx">入住杉乃井 宙館<small>check-in 15:00 開始，剛剛好；晚餐＝宙館 SORA buffet（一泊二食已含），飯後泡棚湯</small></span></li>
       </ul>
       <div class="stay">
@@ -477,8 +552,34 @@ td .sub{display:block; font-size:12px; color:var(--ink-faint)}
           <div class="kv2 wide"><span class="k">停車</span><b>免費</b>約 900 格（平面＋立體；立體限高 2.1 m，SIENTA OK）</div>
           <div class="kv2 wide"><span class="k">溫泉・泳池</span>棚湯 <b>5:00–24:00</b>｜宙湯（宙館住客專屬頂樓露天）<b>5:00–10:00／15:00–24:00</b>｜Aquagarden 泳衣溫泉泳池 <b>11:00–22:00</b>（噴水秀 20:00／20:45／21:30）</div>
         </div>
-        <div class="s-note">Aquagarden：小學生以下需大人陪同、未戒尿布要穿泳褲型尿布、浮具限 1.2 m 內甜甜圈型。6 歲以下可與爸媽同浴。</div>
+        <div class="s-note">Aquagarden：小學生以下需大人陪同、未戒尿布要穿泳褲型尿布、浮具限 1.2 m 內甜甜圈型。6 歲以下可與爸媽同浴。7/28 地震後路線改由東九州道北側進入別府，杉乃井營運正常（7/27 有寄住宿確認信；出發前再確認餘震動態）。</div>
       </div>
+      <div class="drive">
+        <span class="km">福岡 → 中津／宇佐（約 100 km）→ 海地獄 → 杉乃井（合計約 160 km）</span>
+        <a class="maplink" data-route="d4n" href="#" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>當日路線</a>
+      </div>
+      <div class="played">
+        <div class="p-label">當日制霸清單</div>
+        <ul>
+          <li>中津唐揚／宇佐神宮</li><li>海地獄</li><li>杉乃井棚湯</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <article class="day cancelled">
+    <div class="day-band"><span class="dnum">DAY 4</span><span class="ddate">8/4（二）</span><span class="dtheme">高千穗峽划船・海地獄・宿別府</span></div>
+    <div class="day-inner">
+      <ul class="tl">
+        <li><span class="tt">08:20</span><span class="tx">出發前往高千穗峽<small>划船無專用停車場，早到找位（滿車狀況見觀光協會網站）</small></span></li>
+        <li><span class="tt">09:00</span><span class="tx">划船受付報到<small>出示預約確認 mail（預約番號 LH6HB4H4）</small></span></li>
+        <li><span class="tt">09:30</span><span class="tx">高千穗峽划船<small>✅ 已預約（7/21）・一艘 4 人（大人 3＋未就學兒 1）・¥5,100 已付；增水／雷雨會臨時停駛，停駛就改走步道</small></span></li>
+        <li><span class="tt">09:30–10:20</span><span class="tx">峽谷步道・真名井瀑布</span></li>
+        <li><span class="tt">午餐</span><span class="tx">二選一：田舎屋（高千穗峽內）或 地獄蒸し工房 鉄輪（別府）<small>田舎屋＝肉舖直營、划完船走過去，流水麵定食・チキン南蛮，11:00–16:00 免預約；地獄蒸し＝海地獄旁溫泉蒸氣自己蒸、43 種食材，10:00–19:00 免預約</small></span></li>
+        <li><span class="tt">11:30</span><span class="tx">出發往別府</span></li>
+        <li><span class="tt">14:20–15:00</span><span class="tx">海地獄短停</span></li>
+        <li><span class="tt">15:20–15:40</span><span class="tx">入住杉乃井 宙館<small>check-in 15:00 開始，剛剛好；晚餐＝宙館 SORA buffet（一泊二食已含），飯後泡棚湯</small></span></li>
+      </ul>
       <div class="drive">
         <span class="km">四季見 → 划船場 1.1 km・→ 海地獄 107.2 km・→ 杉乃井 5.1 km（合計 <b>113.4 km</b>）</span>
         <a class="maplink" data-route="d4" href="#" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>當日路線</a>
@@ -596,9 +697,11 @@ td .sub{display:block; font-size:12px; color:var(--ink-faint)}
         <tr><td>星宇航空 JX840／JX841<span class="sub">TPE⇄FUK 來回・4 人（大人 19,708×2・兒童 15,305×2）・訂位 DOUZXL</span></td><td class="num">8/1・8/8</td><td class="num">PNR DOUZXL</td><td class="num">NT$70,026</td><td><span class="badge paid">已開票</span></td></tr>
         <tr><td>TOYOTA 租車 SIENTA Hybrid<span class="sub">福岡機場國際線店・含免責補償＋ETC</span></td><td class="num">8/1 13:30 – 8/8 12:30</td><td class="num">99965316000</td><td class="num">¥97,614</td><td><span class="badge paid">已付清</span></td></tr>
         <tr><td>Hotel Amsterdam<span class="sub">豪斯登堡園內・禁煙豪華設計師房・含早餐</span></td><td class="num">8/1–8/2（1 晚）</td><td class="num">HA048802</td><td class="num">¥115,200</td><td><span class="badge paid">已付清</span></td></tr>
-        <tr><td>Dormy Inn 熊本 六花之湯<span class="sub">禁煙和洋室・含早餐・4 名</span></td><td class="num">8/2–8/3（1 晚）</td><td class="num">0015681335</td><td class="num">¥37,800</td><td><span class="badge paid">已付清</span></td></tr>
-        <tr><td>旅館 四季見（高千穗）<span class="sub">新館特別和式房・含早餐・2 大＋兒童 B1＋C1</span></td><td class="num">8/3–8/4（1 晚）</td><td class="num">6192745235</td><td class="num">¥71,102</td><td><span class="badge onsite">到店現場付</span></td></tr>
-        <tr><td>高千穗峽貸しボート<span class="sub">8/4 09:30・一艘（大人 3＋未就學兒 1）・高千穗町觀光協會；乘船出示預約確認 mail</span></td><td class="num">8/4 09:30</td><td class="num">LH6HB4H4</td><td class="num">¥5,100</td><td><span class="badge paid">已付清</span></td></tr>
+        <tr><td>博多 都酒店（都ホテル博多）<span class="sub">高級雙床房（禁菸）・4 名・含屋頂泳池＋溫泉水療；7/28 地震改線新訂（tripla）</span></td><td class="num">8/2–8/3（1 晚）</td><td class="num">T10337AADB737</td><td class="num">NT$9,485</td><td><span class="badge paid">已刷卡</span></td></tr>
+        <tr><td>KidZania 福岡 第 1 部<span class="sub">小人 2×¥6,900＋大人 2×¥2,800・ららぽーと福岡；入場出示 e チケット或預約番號；7/28 地震改線新訂</span></td><td class="num">8/3 09:00–14:30</td><td class="num">93135958203711</td><td class="num">¥19,400</td><td><span class="badge paid">已預約</span></td></tr>
+        <tr><td>Dormy Inn 熊本 六花之湯<span class="sub">禁煙和洋室・含早餐・4 名；7/28 地震取消，¥37,800 全額退回聯邦卡（取消費 0）</span></td><td class="num"><s>8/2–8/3（1 晚）</s></td><td class="num">0015681335</td><td class="num"><s>¥37,800</s></td><td><span class="badge cxl">7/28 地震取消</span></td></tr>
+        <tr><td>旅館 四季見（高千穗）<span class="sub">新館特別和式房・含早餐；7/28 地震取消，到店付款單、取消費 JPY 0（趕在 7/31 收費線前）</span></td><td class="num"><s>8/3–8/4（1 晚）</s></td><td class="num">6192745235</td><td class="num"><s>¥71,102</s></td><td><span class="badge cxl">7/28 地震取消</span></td></tr>
+        <tr><td>高千穗峽貸しボート<span class="sub">一艘（大人 3＋未就學兒 1）・高千穗町觀光協會；7/28 地震取消，100% 全額退款（系統自動退回信用卡）</span></td><td class="num"><s>8/4 09:30</s></td><td class="num">LH6HB4H4</td><td class="num"><s>¥5,100</s></td><td><span class="badge cxl">7/28 地震取消</span></td></tr>
         <tr><td>DJB eSIM 暢日卡 ULTRA ×2<span class="sub">日本 8 天吃到飽不降速・Email QR 開通・ApplePay（紅利折 9 元）</span></td><td class="num">7/22 購</td><td class="num">#6312132</td><td class="num">NT$2,031</td><td><span class="badge paid">已付清</span></td></tr>
         <tr><td>富邦旅平險（旅平卡網路投保）<span class="sub">4 人（2 大 2 小）・保障 8/1 00:00–8/9 00:00 日本九州・四國・成人 國外醫療加值型 300 萬/兒童方案・含法傳</span></td><td class="num">7/22 投保</td><td class="num">3226CT20D19826／19827</td><td class="num">NT$5,764</td><td><span class="badge paid">已投保</span></td></tr>
         <tr><td>杉乃井 Hotel 宙館<span class="sub">Premium Standard 海側・每晚 4 名・一泊二食（早＋晚 buffet）</span></td><td class="num">8/4–8/6（2 晚）</td><td class="num">0015686267</td><td class="num">¥206,720</td><td><span class="badge paid">已付清</span></td></tr>
@@ -667,8 +770,8 @@ td .sub{display:block; font-size:12px; color:var(--ink-faint)}
 <section id="spending">
   <div class="sec-head"><h2>花費追蹤</h2><span class="en">Spending</span></div>
   <div class="facts" style="margin-bottom:14px">
-    <span class="fact">行前已付 <b>NT$197,389</b>（含手續費）</span>
-    <span class="fact">到店現場付 <b>¥71,102</b>（四季見）</span>
+    <span class="fact">行前淨付 <b>NT$199,250 ＋ ¥19,400</b></span>
+    <span class="fact">地震取消退款 <b>¥42,900</b>（退款中）</span>
     <span class="fact">當地花費 <b>出發後補記</b></span>
   </div>
   <div class="tablebox">
@@ -677,18 +780,20 @@ td .sub{display:block; font-size:12px; color:var(--ink-faint)}
       <tbody>
         <tr><td class="num">3/10</td><td>星宇機票 JX840／JX841<span class="sub">4 人來回・訂位 DOUZXL</span></td><td>台新</td><td class="num">—</td><td class="num">70,026</td></tr>
         <tr><td class="num">3/23</td><td>Hotel Amsterdam（8/1）</td><td>聯邦</td><td class="num">¥115,200</td><td class="num">23,236</td></tr>
-        <tr><td class="num">3/23</td><td>Dormy Inn 熊本（8/2）</td><td>聯邦</td><td class="num">¥37,800</td><td class="num">7,624</td></tr>
+        <tr><td class="num">3/23</td><td><s>Dormy Inn 熊本（8/2）</s><span class="sub">7/28 地震取消・¥37,800 全額退回聯邦卡（退款台幣待入帳；原結匯手續費 114 不退）</span></td><td>聯邦</td><td class="num"><s>¥37,800</s></td><td class="num">7,624 → 退款中</td></tr>
         <tr><td class="num">3/23</td><td>杉乃井 宙館（8/4–8/6・一泊二食）</td><td>聯邦</td><td class="num">¥206,720</td><td class="num">41,696</td></tr>
         <tr><td class="num">3/25</td><td>THE GATE HOTEL（8/6–8/8）</td><td>聯邦</td><td class="num">¥156,026</td><td class="num">31,215</td></tr>
         <tr><td class="num">5/2</td><td>TOYOTA 租車（8/1–8/8）</td><td>聯邦</td><td class="num">¥97,614</td><td class="num">19,709</td></tr>
         <tr><td class="num">—</td><td>國外交易結匯手續費（5 筆合計）</td><td>聯邦</td><td class="num">—</td><td class="num">1,852</td></tr>
-        <tr><td class="num">7/21</td><td>高千穗峽貸しボート（8/4 09:30）<span class="sub">預約番號 LH6HB4H4・線上刷卡</span></td><td>—（待入帳）</td><td class="num">¥5,100</td><td class="num">—（待入帳）</td></tr>
+        <tr><td class="num">7/21</td><td><s>高千穗峽貸しボート（8/4 09:30）</s><span class="sub">7/28 地震取消・100% 全額退款（未入帳即互抵，淨 0）</span></td><td>—</td><td class="num"><s>¥5,100</s></td><td class="num">0（已退）</td></tr>
+        <tr><td class="num">7/28</td><td>博多 都酒店（8/2 一晚）<span class="sub">地震改線新訂・tripla 預約 T10337AADB737</span></td><td>—（待入帳）</td><td class="num">—（TWD 計價）</td><td class="num">9,485<span class="sub">已刷卡，帳單待入</span></td></tr>
+        <tr><td class="num">7/28</td><td>KidZania 福岡（8/3 第 1 部）<span class="sub">地震改線新訂・預約番號 93135958203711</span></td><td>—（待入帳）</td><td class="num">¥19,400</td><td class="num">—（待入帳）</td></tr>
         <tr><td class="num">7/22</td><td>DJB eSIM 暢日卡 ×2（8 天吃到飽）<span class="sub">訂單 #6312132・ApplePay</span></td><td>—（待入帳）</td><td class="num">—</td><td class="num">2,031<span class="sub">已付，帳單待入</span></td></tr>
         <tr><td class="num">7/22</td><td>富邦旅平險 4 人<span class="sub">保單 3226CT20D19826／19827</span></td><td>授權卡</td><td class="num">—</td><td class="num">5,764<span class="sub">保期結束後扣款</span></td></tr>
       </tbody>
     </table>
   </div>
-  <p class="map-cap">已付合計 NT$197,389（日圓部分 ¥613,360；含 7/22 eSIM NT$2,031），另高千穗划船 ¥5,100 已於 7/21 線上刷卡（台幣入帳待下期帳單）；富邦旅平險 NT$5,764 於保期結束後扣款。尚未發生：四季見現場付 ¥71,102、當地餐飲・門票・加油與過路費。資料來源：信用卡帳單明細（2026/7/10 核對）＋划船/旅平險/eSIM 確認信（2026/7/21–22）。</p>
+  <p class="map-cap">行前淨付 NT$199,250＝原已付 197,389 − Dormy 退款 7,624 ＋ 博多都酒店 9,485；另 KidZania ¥19,400 已預約（台幣待入帳）。<b>7/28 地震取消退款</b>：Dormy ¥37,800 全額退（聯邦卡，退款入帳待下期）、划船 ¥5,100 全額退（未入帳互抵）、四季見到店付款單取消費 0（原 ¥71,102 不再發生）；沉沒成本僅 Dormy 原結匯手續費 NT$114。富邦旅平險 NT$5,764 於保期結束後扣款。尚未發生：8/3 晚住宿（待訂）、當地餐飲・門票・加油與過路費。資料來源：信用卡帳單明細（2026/7/10 核對）＋各訂單/取消確認信（至 2026/7/28）。</p>
 </section>
 
 <div class="foot">
@@ -706,6 +811,9 @@ td .sub{display:block; font-size:12px; color:var(--ink-faint)}
     return u;
   }
   var routes = {
+    d2n: dir('ハウステンボス', '都ホテル博多', ['マリンワールド海の中道']),
+    d3n: dir('都ホテル博多', 'ららぽーと福岡', []),
+    d4n: dir('博多駅', '杉乃井ホテル 宙館', ['宇佐神宮', '海地獄 別府']),
     d4: dir('旅館 四季見 高千穂', '杉乃井ホテル 宙館', ['高千穂峡 貸しボート乗り場', '海地獄 別府']),
     d5: dir('杉乃井ホテル 別府', '杉乃井ホテル 別府', ['九州自然動物公園 アフリカンサファリ']),
     d6: dir('杉乃井ホテル 別府', 'THE GATE HOTEL FUKUOKA by HULIC', ['ハーモニーランド']),
