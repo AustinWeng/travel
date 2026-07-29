@@ -243,6 +243,9 @@ td .sub{display:block; font-size:12px; color:var(--ink-faint)}
   <div class="sec-head"><h2>行程地圖</h2><span class="en">Route Map · D1–D8</span></div>
   <div class="mapbox">
     <svg viewBox="0 0 740 643" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="九州真實比例行程地圖：八天路徑與日次標注、7/28 震央位置、取消的熊本阿蘇高千穗原路線">
+      <style>
+        .geo-lbl text{paint-order:stroke; stroke:var(--bg); stroke-width:3.5px; stroke-linejoin:round}
+      </style>
       <defs>
         <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
           <path d="M0,0 L10,5 L0,10 z" fill="var(--sea)"/>
@@ -278,14 +281,14 @@ td .sub{display:block; font-size:12px; color:var(--ink-faint)}
         <circle cx="375.7" cy="461.3" r="30" fill="var(--alert)" opacity=".10"/>
         <circle cx="375.7" cy="461.3" r="16" fill="var(--alert)" opacity=".16"/>
         <text x="375.7" y="466.3" font-size="15" font-weight="800" fill="var(--alert)" text-anchor="middle">✕</text>
-        <text x="375.7" y="487.3" font-size="11" font-weight="750" fill="var(--alert)" text-anchor="middle">7/28 震央 M7.1</text>
+        <text x="375.7" y="487.3" font-size="11" font-weight="750" fill="var(--alert)" text-anchor="middle" style="paint-order:stroke; stroke:var(--bg); stroke-width:3.5px; stroke-linejoin:round">7/28 震央 M7.1</text>
       </g>
 
       <!-- 取消原線（灰虛線） -->
       <g stroke="var(--ink-faint)" stroke-width="2.5" fill="none" stroke-dasharray="7 6" opacity=".45">
         <path d="M328.7,265.9 Q331.7,346.1 370.8,416.2"/><path d="M370.8,416.2 Q396.1,399.0 426.7,398.6"/><path d="M426.7,398.6 Q442.5,421.1 468.1,431.1"/><path d="M468.1,431.1 Q493.7,381.6 494.1,325.8"/>
       </g>
-      <g opacity=".55" font-family="inherit" font-size="12" fill="var(--ink-faint)" text-anchor="middle">
+      <g opacity=".55" font-family="inherit" font-size="12" fill="var(--ink-faint)" text-anchor="middle" class="geo-lbl">
         <circle cx="370.8" cy="416.2" r="5" fill="var(--ink-faint)"/>
         <text x="348.8" y="420.2" text-decoration="line-through">熊本</text>
         <circle cx="426.7" cy="398.6" r="5" fill="var(--ink-faint)"/>
@@ -308,7 +311,7 @@ td .sub{display:block; font-size:12px; color:var(--ink-faint)}
       </g>
 
       <!-- 休息站 -->
-      <g font-family="inherit" font-size="10.5" fill="var(--ink-faint)">
+      <g font-family="inherit" font-size="10.5" fill="var(--ink-faint)" class="geo-lbl">
         <circle cx="305.5" cy="317.9" r="4" fill="var(--card)" stroke="var(--sea)" stroke-width="2"/>
         <text x="305.5" y="335.9" text-anchor="middle">金立SA</text>
         <circle cx="345.7" cy="293.5" r="4" fill="var(--card)" stroke="var(--sea)" stroke-width="2"/>
@@ -318,8 +321,7 @@ td .sub{display:block; font-size:12px; color:var(--ink-faint)}
       </g>
 
       <!-- 主要節點 -->
-      <g font-family="inherit">
-        <circle cx="333.4" cy="266.8" r="6" fill="var(--card)" stroke="var(--sea)" stroke-width="3"/>
+      <g font-family="inherit" class="geo-lbl">
         <text x="346.4" y="282.8" font-size="12" font-weight="700" fill="var(--ink)">福岡機場 ✈</text>
 
         <circle cx="229.4" cy="360.6" r="9" fill="var(--card)" stroke="var(--sea)" stroke-width="4"/>
