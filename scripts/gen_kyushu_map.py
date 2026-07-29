@@ -122,7 +122,7 @@ gx4, _ = q(C["takachiho"], C["beppu"], .12, 1)
 
 # 徽章位置：以路徑中點為錨，自動避讓（節點淨空>=6、徽章互距>=26、留邊）
 _anchor = {
-    "D1": m1, "D2": shift(m2, -30, 0), "D3": shift(m3, -6, -14),
+    "D1": m1, "D2": m2, "D3": shift(m3, -6, -14),
     "D4": shift(m4, 16, -4), "D5": m5, "D6": shift(m6, -16, -8),
     "D7": shift(C["hakata"], -34, -26), "D8": shift(C["airport"], 104, 2),
 }
@@ -176,10 +176,10 @@ def _ok(pt, placed):
         return False
     return True
 B = {}
-_pinned = {"D1", "D2"}
+_pinned_pos = {"D1": shift(m1, -22, 15), "D2": shift(m2, -30, 0)}
 for name, anc in _anchor.items():
-    if name in _pinned:
-        B[name] = anc
+    if name in _pinned_pos:
+        B[name] = _pinned_pos[name]
         continue
     if _ok(anc, B):
         B[name] = anc
