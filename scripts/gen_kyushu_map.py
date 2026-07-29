@@ -211,6 +211,8 @@ svg = f'''    <svg viewBox="0 0 {W} {H}" xmlns="http://www.w3.org/2000/svg" role
 {land_paths}
       </g>
 
+      <text x="40" y="{H-10}" font-size="11" fill="var(--ink-faint)" opacity=".8">↓ 九州南部（本次不前往）</text>
+
       <!-- 震央（7/28 M7.1） -->
       <g>
         <circle cx="{C['epicenter'][0]}" cy="{C['epicenter'][1]}" r="30" fill="var(--alert)" opacity=".10"/>
