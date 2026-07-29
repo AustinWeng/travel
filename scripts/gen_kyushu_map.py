@@ -107,14 +107,13 @@ def lerp(a, b, t):
 
 segs = []
 d1, m1 = q(lerp(C["airport"], C["htb"], .04), lerp(C["airport"], C["htb"], .97), .10, -1)
-d2a, m2 = q(lerp(C["htb"], C["uminaka"], .03), lerp(C["htb"], C["uminaka"], .97), .13, -1)
-d2b, _ = q(lerp(C["uminaka"], C["hakata"], .15), lerp(C["uminaka"], C["hakata"], .85), .3, 1)
-d3, m3 = q(lerp(C["hakata"], C["kokura"], .05), lerp(C["kokura"], C["hakata"], .04)[::-1] if False else lerp(C["hakata"], C["kokura"], .96), .10, -1)
-d4a, m4 = q(lerp(C["kokura"], C["harmony"], .04), lerp(C["kokura"], C["harmony"], .96), .13, -1)
-d4b, _ = q(lerp(C["harmony"], C["beppu"], .1), lerp(C["harmony"], C["beppu"], .85), .2, -1)
+d2a, m2 = q(lerp(C["htb"], C["uminaka"], .03), lerp(C["htb"], C["uminaka"], .93), .13, -1)
+d2b, _ = q(lerp(C["uminaka"], C["hakata"], .2), lerp(C["uminaka"], C["hakata"], .72), .3, 1)
+d3, m3 = q(lerp(C["hakata"], C["kokura"], .07), lerp(C["hakata"], C["kokura"], .93), .10, -1)
+d4a, m4 = q(lerp(C["kokura"], C["harmony"], .05), lerp(C["kokura"], C["harmony"], .90), .13, -1)
+d4b, _ = q(lerp(C["harmony"], C["beppu"], .18), lerp(C["harmony"], C["beppu"], .70), .2, -1)
 d5, m5 = q(lerp(C["beppu"], C["safari"], .2), lerp(C["beppu"], C["safari"], .8), .25, 1)
-d6, m6 = q(lerp(C["beppu"], C["uminaka"], .03), lerp(C["beppu"], C["uminaka"], .965), .12, -1)
-d8, m8 = q(lerp(C["hakata"], C["airport"], .2), lerp(C["hakata"], C["airport"], .8), .4, -1)
+d6, m6 = q(lerp(C["beppu"], C["hakata"], .05), lerp(C["beppu"], C["hakata"], .88), .22, -1)
 
 gx1, _ = q(C["hakata"], C["kumamoto"], .12, 1)
 gx2, _ = q(C["kumamoto"], C["aso"], .15, -1)
@@ -125,7 +124,7 @@ gx4, _ = q(C["takachiho"], C["beppu"], .12, 1)
 _anchor = {
     "D1": shift(m1, -2, -14), "D2": shift(m2, 6, 16), "D3": shift(m3, -6, -14),
     "D4": shift(m4, 16, -4), "D5": m5, "D6": shift(m6, -16, -8),
-    "D7": shift(C["hakata"], -34, -26), "D8": shift(C["airport"], 26, -10),
+    "D7": shift(C["hakata"], -34, -26), "D8": shift(C["airport"], 104, 2),
 }
 _nodesR = {"airport":0,"hakata":9,"uminaka":7,"kokura":9,"htb":9,"harmony":7,
            "beppu":9,"safari":6,"kanryu":4,"kiyama":4,"imagawa":4}
@@ -136,7 +135,7 @@ def _bb(cx, cy, anchor, w, size):
     else:                  x0, x1 = cx - w / 2, cx + w / 2
     return (x0, x1, cy - size, cy + 3)
 _texts = [
-    _bb(C["airport"][0]+13, C["airport"][1]+16, "start", 74, 12),
+    _bb(C["airport"][0]+16, C["airport"][1]+5, "start", 74, 12),
     _bb(C["htb"][0], C["htb"][1]+27, "middle", 52, 13),
     _bb(C["htb"][0], C["htb"][1]+41, "middle", 96, 10.5),
     _bb(C["uminaka"][0]-12, C["uminaka"][1]-16, "end", 50, 12.5),
@@ -148,10 +147,10 @@ _texts = [
     _bb(C["kokura"][0]+16, C["kokura"][1]+12, "start", 118, 10.5),
     _bb(C["harmony"][0]+14, C["harmony"][1]+2, "start", 88, 12.5),
     _bb(C["harmony"][0]+14, C["harmony"][1]+16, "start", 96, 10.5),
-    _bb(C["safari"][0]-12, C["safari"][1]-8, "end", 40, 11.5),
-    _bb(C["safari"][0]-12, C["safari"][1]+5, "end", 72, 10.5),
-    _bb(C["beppu"][0]+16, C["beppu"][1]+8, "start", 52, 13),
-    _bb(C["beppu"][0]+16, C["beppu"][1]+22, "start", 124, 10.5),
+    _bb(C["safari"][0]-16, C["safari"][1]-10, "end", 40, 11.5),
+    _bb(C["safari"][0]-16, C["safari"][1]+3, "end", 72, 10.5),
+    _bb(C["beppu"][0]+15, C["beppu"][1]+16, "start", 52, 13),
+    _bb(C["beppu"][0]+15, C["beppu"][1]+30, "start", 124, 10.5),
     _bb(C["kanryu"][0], C["kanryu"][1]+18, "middle", 52, 10.5),
     _bb(C["kiyama"][0]+8, C["kiyama"][1]+14, "start", 52, 10.5),
     _bb(C["imagawa"][0]+9, C["imagawa"][1]+4, "start", 52, 10.5),
@@ -161,10 +160,16 @@ def _hits_text(x, y, pad=4):
         if x0 - 11 - pad < x < x1 + 11 + pad and y0 - 11 - pad < y < y1 + 11 + pad:
             return True
     return False
+_arrow_tips = [lerp(C["airport"], C["htb"], .97), lerp(C["uminaka"], C["hakata"], .72),
+               lerp(C["hakata"], C["kokura"], .93), lerp(C["harmony"], C["beppu"], .70),
+               lerp(C["beppu"], C["safari"], .8), lerp(C["beppu"], C["hakata"], .88)]
 def _ok(pt, placed):
     x, y = pt
     if not (20 <= x <= 720 and 20 <= y <= 620):
         return False
+    for tp in _arrow_tips:
+        if math.hypot(x - tp[0], y - tp[1]) < 24:
+            return False
     for nn, rr in _nodesR.items():
         if math.hypot(x - C[nn][0], y - C[nn][1]) - 11 - rr < 6:
             return False
@@ -216,11 +221,11 @@ svg = f'''    <svg viewBox="{VX0} {VY0} {VW} {VH}" xmlns="http://www.w3.org/2000
       <style>
         .geo-lbl text{{paint-order:stroke; stroke:var(--bg); stroke-width:3.5px; stroke-linejoin:round}}
         a.geo-day{{cursor:pointer}}
-        a.geo-day:hover path{{stroke-width:5.5px}}
+        a.geo-day:hover path{{stroke-width:4.5px}}
         a.geo-day:hover circle{{r:13px}}
       </style>
       <defs>
-        <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
+        <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto-start-reverse">
           <path d="M0,0 L10,5 L0,10 z" fill="var(--sea)"/>
         </marker>
       </defs>
@@ -254,14 +259,13 @@ svg = f'''    <svg viewBox="{VX0} {VY0} {VW} {VH}" xmlns="http://www.w3.org/2000
       </g>
 
       <!-- 行程路徑（點擊跳至該日行程卡） -->
-      <g stroke="var(--sea)" stroke-width="3.5" fill="none" stroke-linecap="round">
+      <g stroke="var(--sea)" stroke-width="3" fill="none" stroke-linecap="round">
         <a href="#day1" class="geo-day"><title>D1 8/1 機場 → 豪斯登堡（點擊看當日行程）</title><path d="{d1}" marker-end="url(#arr)"/></a>
-        <a href="#day2" class="geo-day"><title>D2 8/2 豪斯登堡 → 海洋世界 → 博多（點擊看當日行程）</title><path d="{d2a}" marker-end="url(#arr)"/><path d="{d2b}" marker-end="url(#arr)"/></a>
+        <a href="#day2" class="geo-day"><title>D2 8/2 豪斯登堡 → 海洋世界 → 博多（點擊看當日行程）</title><path d="{d2a}"/><path d="{d2b}" marker-end="url(#arr)"/></a>
         <a href="#day3" class="geo-day"><title>D3 8/3 KidZania → 小倉（點擊看當日行程）</title><path d="{d3}" marker-end="url(#arr)"/></a>
-        <a href="#day4" class="geo-day"><title>D4 8/4 Harmonyland → 別府（點擊看當日行程）</title><path d="{d4a}" marker-end="url(#arr)"/><path d="{d4b}" marker-end="url(#arr)"/></a>
+        <a href="#day4" class="geo-day"><title>D4 8/4 Harmonyland → 別府（點擊看當日行程）</title><path d="{d4a}"/><path d="{d4b}" marker-end="url(#arr)"/></a>
         <a href="#day5" class="geo-day"><title>D5 8/5 African Safari（點擊看當日行程）</title><path d="{d5}" stroke-width="2.5" stroke-dasharray="2 5" marker-end="url(#arr)"/></a>
         <a href="#day6" class="geo-day"><title>D6 8/6 別府 → 海之中道 → 福岡（點擊看當日行程）</title><path d="{d6}" marker-end="url(#arr)"/></a>
-        <a href="#day8" class="geo-day"><title>D8 8/8 還車返台（點擊看當日行程）</title><path d="{d8}" marker-end="url(#arr)"/></a>
       </g>
 
       <!-- 休息站 -->
@@ -276,7 +280,7 @@ svg = f'''    <svg viewBox="{VX0} {VY0} {VW} {VH}" xmlns="http://www.w3.org/2000
 
       <!-- 主要節點 -->
       <g font-family="inherit" class="geo-lbl">
-        <text x="{C['airport'][0]+13}" y="{C['airport'][1]+16}" font-size="12" font-weight="700" fill="var(--ink)">福岡機場 ✈</text>
+        <text x="{C['airport'][0]+16}" y="{C['airport'][1]+5}" font-size="12" font-weight="700" fill="var(--ink)">福岡機場 ✈</text>
 
         <circle cx="{C['htb'][0]}" cy="{C['htb'][1]}" r="9" fill="var(--card)" stroke="var(--sea)" stroke-width="4"/>
         <text x="{C['htb'][0]}" y="{C['htb'][1]+27}" font-size="13" font-weight="800" fill="var(--ink)" text-anchor="middle">豪斯登堡</text>
@@ -300,12 +304,12 @@ svg = f'''    <svg viewBox="{VX0} {VY0} {VW} {VH}" xmlns="http://www.w3.org/2000
         <text x="{C['harmony'][0]+14}" y="{C['harmony'][1]+16}" font-size="10.5" fill="var(--ink-faint)">D4 三麗鷗樂園</text>
 
         <circle cx="{C['safari'][0]}" cy="{C['safari'][1]}" r="6" fill="var(--card)" stroke="var(--sea)" stroke-width="3"/>
-        <text x="{C['safari'][0]-12}" y="{C['safari'][1]-8}" font-size="11.5" font-weight="700" fill="var(--ink)" text-anchor="end">Safari</text>
-        <text x="{C['safari'][0]-12}" y="{C['safari'][1]+5}" font-size="10.5" fill="var(--ink-faint)" text-anchor="end">D5 動物園</text>
+        <text x="{C['safari'][0]-16}" y="{C['safari'][1]-10}" font-size="11.5" font-weight="700" fill="var(--ink)" text-anchor="end">Safari</text>
+        <text x="{C['safari'][0]-16}" y="{C['safari'][1]+3}" font-size="10.5" fill="var(--ink-faint)" text-anchor="end">D5 動物園</text>
 
         <circle cx="{C['beppu'][0]}" cy="{C['beppu'][1]}" r="9" fill="var(--card)" stroke="var(--sea)" stroke-width="4"/>
-        <text x="{C['beppu'][0]+16}" y="{C['beppu'][1]+8}" font-size="13" font-weight="800" fill="var(--ink)">別府溫泉</text>
-        <text x="{C['beppu'][0]+16}" y="{C['beppu'][1]+22}" font-size="10.5" fill="var(--ink-faint)">D4–D5 泊 杉乃井 ×2</text>
+        <text x="{C['beppu'][0]+15}" y="{C['beppu'][1]+16}" font-size="13" font-weight="800" fill="var(--ink)">別府溫泉</text>
+        <text x="{C['beppu'][0]+15}" y="{C['beppu'][1]+30}" font-size="10.5" fill="var(--ink-faint)">D4–D5 泊 杉乃井 ×2</text>
       </g>
 
       <!-- 日次徽章（擁擠處帶引線） -->
