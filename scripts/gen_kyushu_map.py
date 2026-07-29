@@ -49,13 +49,13 @@ for f in prefs:
 # ---- 投影（等距圓柱，cos 校正） ----
 lats = [p[1] for _, r in rings for p in r]
 lons = [p[0] for _, r in rings for p in r]
-lat0, lat1 = 31.9, max(lats)   # 視窗下緣裁在 31.9°N（含震央），南部漸隱
+lat0, lat1 = 32.35, max(lats)  # 視窗下緣裁在 32.35°N（震央下方留漣漪與標籤空間）
 lon0, lon1 = min(lons), max(lons)
 cosf = math.cos(math.radians((lat0 + lat1) / 2))
 W = 740
-PADL, PADR, PADT, PADB = 30, 150, 56, 34   # 右側留標籤空間
+PADL, PADR, PADT, PADB = 26, 148, 40, 28   # 右側留標籤空間
 S = (W - PADL - PADR) / ((lon1 - lon0) * cosf)
-H = int((lat1 - lat0) * S + PADT + PADB + 26)
+H = int((lat1 - lat0) * S + PADT + PADB)
 
 def XY(lon, lat):
     return (round(PADL + (lon - lon0) * cosf * S, 1), round(PADT + (lat1 - lat) * S, 1))
@@ -196,6 +196,9 @@ for name, anc in _anchor.items():
 svg = f'''    <svg viewBox="0 0 {W} {H}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="九州真實比例行程地圖：八天路徑與日次標注、7/28 震央位置、取消的熊本阿蘇高千穗原路線">
       <style>
         .geo-lbl text{{paint-order:stroke; stroke:var(--bg); stroke-width:3.5px; stroke-linejoin:round}}
+        a.geo-day{{cursor:pointer}}
+        a.geo-day:hover path{{stroke-width:5.5px}}
+        a.geo-day:hover circle{{r:13px}}
       </style>
       <defs>
         <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
@@ -229,17 +232,15 @@ svg = f'''    <svg viewBox="0 0 {W} {H}" xmlns="http://www.w3.org/2000/svg" role
         <text x="{C['takachiho'][0]+8}" y="{C['takachiho'][1]+18}" text-decoration="line-through">高千穗</text>
       </g>
 
-      <!-- 行程路徑 -->
+      <!-- 行程路徑（點擊跳至該日行程卡） -->
       <g stroke="var(--sea)" stroke-width="3.5" fill="none" stroke-linecap="round">
-        <path d="{d1}" marker-end="url(#arr)"/>
-        <path d="{d2a}" marker-end="url(#arr)"/>
-        <path d="{d2b}" marker-end="url(#arr)"/>
-        <path d="{d3}" marker-end="url(#arr)"/>
-        <path d="{d4a}" marker-end="url(#arr)"/>
-        <path d="{d4b}" marker-end="url(#arr)"/>
-        <path d="{d5}" stroke-width="2.5" stroke-dasharray="2 5" marker-end="url(#arr)"/>
-        <path d="{d6}" marker-end="url(#arr)"/>
-        <path d="{d8}" marker-end="url(#arr)"/>
+        <a href="#day1" class="geo-day"><title>D1 8/1 機場 → 豪斯登堡（點擊看當日行程）</title><path d="{d1}" marker-end="url(#arr)"/></a>
+        <a href="#day2" class="geo-day"><title>D2 8/2 豪斯登堡 → 海洋世界 → 博多（點擊看當日行程）</title><path d="{d2a}" marker-end="url(#arr)"/><path d="{d2b}" marker-end="url(#arr)"/></a>
+        <a href="#day3" class="geo-day"><title>D3 8/3 KidZania → 小倉（點擊看當日行程）</title><path d="{d3}" marker-end="url(#arr)"/></a>
+        <a href="#day4" class="geo-day"><title>D4 8/4 Harmonyland → 別府（點擊看當日行程）</title><path d="{d4a}" marker-end="url(#arr)"/><path d="{d4b}" marker-end="url(#arr)"/></a>
+        <a href="#day5" class="geo-day"><title>D5 8/5 African Safari（點擊看當日行程）</title><path d="{d5}" stroke-width="2.5" stroke-dasharray="2 5" marker-end="url(#arr)"/></a>
+        <a href="#day6" class="geo-day"><title>D6 8/6 別府 → 海之中道 → 福岡（點擊看當日行程）</title><path d="{d6}" marker-end="url(#arr)"/></a>
+        <a href="#day8" class="geo-day"><title>D8 8/8 還車返台（點擊看當日行程）</title><path d="{d8}" marker-end="url(#arr)"/></a>
       </g>
 
       <!-- 休息站 -->
@@ -324,8 +325,10 @@ for name, (bx, by) in B.items():
     if math.hypot(ex - sx, ey - sy) < 8:
         continue  # 線太短乾脆不畫
     svg += f'        <line x1="{round(sx,1)}" y1="{round(sy,1)}" x2="{round(ex,1)}" y2="{round(ey,1)}" stroke="var(--ink-faint)" stroke-width="1" opacity=".55"/>\n'
+_day_title = {"D1":"8/1 機場 → 豪斯登堡","D2":"8/2 豪斯登堡 → 海洋世界 → 博多","D3":"8/3 KidZania → 小倉","D4":"8/4 Harmonyland → 別府","D5":"8/5 African Safari","D6":"8/6 別府 → 海之中道 → 福岡","D7":"8/7 福岡市區自由日","D8":"8/8 還車返台"}
 for name, (bx, by) in B.items():
-    svg += f'        <circle cx="{bx}" cy="{by}" r="11" fill="var(--sea)"/><text x="{bx}" y="{by+4}" fill="#fff">{name}</text>\n'
+    n = name[1]
+    svg += f'        <a href="#day{n}" class="geo-day"><title>{name} {_day_title[name]}（點擊看當日行程）</title><circle cx="{bx}" cy="{by}" r="11" fill="var(--sea)"/><text x="{bx}" y="{by+4}" fill="#fff">{name}</text></a>\n'
 svg += '''      </g>
     </svg>'''
 
