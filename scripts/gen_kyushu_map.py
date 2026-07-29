@@ -122,7 +122,7 @@ gx4, _ = q(C["takachiho"], C["beppu"], .12, 1)
 
 # 徽章位置：以路徑中點為錨，自動避讓（節點淨空>=6、徽章互距>=26、留邊）
 _anchor = {
-    "D1": shift(m1, -2, -14), "D2": shift(m2, 6, 16), "D3": shift(m3, -6, -14),
+    "D1": shift(m1, -22, 6), "D2": shift(m2, 12, -13), "D3": shift(m3, -6, -14),
     "D4": shift(m4, 16, -4), "D5": m5, "D6": shift(m6, -16, -8),
     "D7": shift(C["hakata"], -34, -26), "D8": shift(C["airport"], 104, 2),
 }
@@ -137,20 +137,16 @@ def _bb(cx, cy, anchor, w, size):
 _texts = [
     _bb(C["airport"][0]+16, C["airport"][1]+5, "start", 74, 12),
     _bb(C["htb"][0], C["htb"][1]+27, "middle", 52, 13),
-    _bb(C["htb"][0], C["htb"][1]+41, "middle", 96, 10.5),
     _bb(C["uminaka"][0]-12, C["uminaka"][1]-16, "end", 50, 12.5),
     _bb(C["uminaka"][0]-12, C["uminaka"][1]-3, "end", 112, 10.5),
     _bb(C["hakata"][0]-15, C["hakata"][1]+8, "end", 65, 13),
-    _bb(C["hakata"][0]-15, C["hakata"][1]+22, "end", 150, 10.5),
-    _bb(C["hakata"][0]-15, C["hakata"][1]+36, "end", 122, 10.5),
+    _bb(C["hakata"][0]-15, C["hakata"][1]+22, "end", 78, 10.5),
     _bb(C["kokura"][0]+16, C["kokura"][1]-2, "start", 26, 13),
-    _bb(C["kokura"][0]+16, C["kokura"][1]+12, "start", 118, 10.5),
     _bb(C["harmony"][0]+14, C["harmony"][1]+2, "start", 88, 12.5),
     _bb(C["harmony"][0]+14, C["harmony"][1]+16, "start", 96, 10.5),
     _bb(C["safari"][0]-16, C["safari"][1]-10, "end", 40, 11.5),
     _bb(C["safari"][0]-16, C["safari"][1]+3, "end", 72, 10.5),
     _bb(C["beppu"][0]+15, C["beppu"][1]+16, "start", 52, 13),
-    _bb(C["beppu"][0]+15, C["beppu"][1]+30, "start", 124, 10.5),
     _bb(C["kanryu"][0], C["kanryu"][1]+18, "middle", 52, 10.5),
     _bb(C["kiyama"][0]+8, C["kiyama"][1]+14, "start", 52, 10.5),
     _bb(C["imagawa"][0]+9, C["imagawa"][1]+4, "start", 52, 10.5),
@@ -180,7 +176,11 @@ def _ok(pt, placed):
         return False
     return True
 B = {}
+_pinned = {"D1", "D2"}
 for name, anc in _anchor.items():
+    if name in _pinned:
+        B[name] = anc
+        continue
     if _ok(anc, B):
         B[name] = anc
         continue
@@ -251,11 +251,11 @@ svg = f'''    <svg viewBox="{VX0} {VY0} {VW} {VH}" xmlns="http://www.w3.org/2000
       </g>
       <g opacity=".55" font-family="inherit" font-size="12" fill="var(--ink-faint)" text-anchor="middle" class="geo-lbl">
         <circle cx="{C['kumamoto'][0]}" cy="{C['kumamoto'][1]}" r="5" fill="var(--ink-faint)"/>
-        <text x="{C['kumamoto'][0]-22}" y="{C['kumamoto'][1]+4}" text-decoration="line-through">熊本</text>
+        <text x="{C['kumamoto'][0]-22}" y="{C['kumamoto'][1]+4}">熊本</text>
         <circle cx="{C['aso'][0]}" cy="{C['aso'][1]}" r="5" fill="var(--ink-faint)"/>
-        <text x="{C['aso'][0]+2}" y="{C['aso'][1]-10}" text-decoration="line-through">阿蘇</text>
+        <text x="{C['aso'][0]+2}" y="{C['aso'][1]-10}">阿蘇</text>
         <circle cx="{C['takachiho'][0]}" cy="{C['takachiho'][1]}" r="5" fill="var(--ink-faint)"/>
-        <text x="{C['takachiho'][0]+8}" y="{C['takachiho'][1]+18}" text-decoration="line-through">高千穗</text>
+        <text x="{C['takachiho'][0]+8}" y="{C['takachiho'][1]+18}">高千穗</text>
       </g>
 
       <!-- 行程路徑（點擊跳至該日行程卡） -->
@@ -284,7 +284,6 @@ svg = f'''    <svg viewBox="{VX0} {VY0} {VW} {VH}" xmlns="http://www.w3.org/2000
 
         <circle cx="{C['htb'][0]}" cy="{C['htb'][1]}" r="9" fill="var(--card)" stroke="var(--sea)" stroke-width="4"/>
         <text x="{C['htb'][0]}" y="{C['htb'][1]+27}" font-size="13" font-weight="800" fill="var(--ink)" text-anchor="middle">豪斯登堡</text>
-        <text x="{C['htb'][0]}" y="{C['htb'][1]+41}" font-size="10.5" fill="var(--ink-faint)" text-anchor="middle">D1 泊・Amsterdam</text>
 
         <circle cx="{C['uminaka'][0]}" cy="{C['uminaka'][1]}" r="7" fill="var(--card)" stroke="var(--sea)" stroke-width="3.5"/>
         <text x="{C['uminaka'][0]-12}" y="{C['uminaka'][1]-16}" font-size="12.5" font-weight="700" fill="var(--ink)" text-anchor="end">海之中道</text>
@@ -292,12 +291,10 @@ svg = f'''    <svg viewBox="{VX0} {VY0} {VW} {VH}" xmlns="http://www.w3.org/2000
 
         <circle cx="{C['hakata'][0]}" cy="{C['hakata'][1]}" r="9" fill="var(--card)" stroke="var(--sea)" stroke-width="4"/>
         <text x="{C['hakata'][0]-15}" y="{C['hakata'][1]+8}" font-size="13" font-weight="800" fill="var(--ink)" text-anchor="end">博多・福岡</text>
-        <text x="{C['hakata'][0]-15}" y="{C['hakata'][1]+22}" font-size="10.5" fill="var(--ink-faint)" text-anchor="end">D2 泊都酒店・D3 KidZania</text>
-        <text x="{C['hakata'][0]-15}" y="{C['hakata'][1]+36}" font-size="10.5" fill="var(--ink-faint)" text-anchor="end">D6–D7 泊 GATE ×2</text>
+        <text x="{C['hakata'][0]-15}" y="{C['hakata'][1]+22}" font-size="10.5" fill="var(--ink-faint)" text-anchor="end">D3 KidZania</text>
 
         <circle cx="{C['kokura'][0]}" cy="{C['kokura'][1]}" r="9" fill="var(--card)" stroke="var(--sea)" stroke-width="4"/>
         <text x="{C['kokura'][0]+16}" y="{C['kokura'][1]-2}" font-size="13" font-weight="800" fill="var(--ink)">小倉</text>
-        <text x="{C['kokura'][0]+16}" y="{C['kokura'][1]+12}" font-size="10.5" fill="var(--ink-faint)">D3 泊 Daiwa Roynet</text>
 
         <circle cx="{C['harmony'][0]}" cy="{C['harmony'][1]}" r="7" fill="var(--card)" stroke="var(--sea)" stroke-width="3.5"/>
         <text x="{C['harmony'][0]+14}" y="{C['harmony'][1]+2}" font-size="12.5" font-weight="700" fill="var(--ink)">Harmonyland</text>
@@ -309,7 +306,6 @@ svg = f'''    <svg viewBox="{VX0} {VY0} {VW} {VH}" xmlns="http://www.w3.org/2000
 
         <circle cx="{C['beppu'][0]}" cy="{C['beppu'][1]}" r="9" fill="var(--card)" stroke="var(--sea)" stroke-width="4"/>
         <text x="{C['beppu'][0]+15}" y="{C['beppu'][1]+16}" font-size="13" font-weight="800" fill="var(--ink)">別府溫泉</text>
-        <text x="{C['beppu'][0]+15}" y="{C['beppu'][1]+30}" font-size="10.5" fill="var(--ink-faint)">D4–D5 泊 杉乃井 ×2</text>
       </g>
 
       <!-- 日次徽章（擁擠處帶引線） -->
@@ -350,6 +346,7 @@ for name, (bx, by) in B.items():
     if math.hypot(ex - sx, ey - sy) < 8:
         continue  # 線太短乾脆不畫
     svg += f'        <line x1="{round(sx,1)}" y1="{round(sy,1)}" x2="{round(ex,1)}" y2="{round(ey,1)}" stroke="var(--ink-faint)" stroke-width="1" opacity=".55"/>\n'
+print("DEBUG m1,m2,B:", m1, m2, {k: v for k, v in B.items() if k in ("D1","D2")})
 _day_title = {"D1":"8/1 機場 → 豪斯登堡","D2":"8/2 豪斯登堡 → 海洋世界 → 博多","D3":"8/3 KidZania → 小倉","D4":"8/4 Harmonyland → 別府","D5":"8/5 African Safari","D6":"8/6 別府 → 海之中道 → 福岡","D7":"8/7 福岡市區自由日","D8":"8/8 還車返台"}
 for name, (bx, by) in B.items():
     n = name[1]
