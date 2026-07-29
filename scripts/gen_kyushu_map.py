@@ -193,7 +193,26 @@ for name, anc in _anchor.items():
     if not best:
         print(f"  !! {name} 找不到避讓位，沿用錨點")
 
-svg = f'''    <svg viewBox="0 0 {W} {H}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="九州真實比例行程地圖：八天路徑與日次標注、7/28 震央位置、取消的熊本阿蘇高千穗原路線">
+# ---- 視窗緊貼內容 bbox（Austin 2026-07-31：周圍空白裁到只剩內容） ----
+_xs, _ys = [], []
+for k in ("airport","hakata","uminaka","kokura","htb","harmony","beppu","safari","kanryu","kiyama","imagawa"):
+    _xs += [C[k][0] - _nodesR[k], C[k][0] + _nodesR[k]]
+    _ys += [C[k][1] - _nodesR[k], C[k][1] + _nodesR[k]]
+for (tx0, tx1, ty0, ty1) in _texts:
+    _xs += [tx0, tx1]; _ys += [ty0, ty1]
+for k in ("kumamoto","aso","takachiho"):
+    _xs += [C[k][0] - 40, C[k][0] + 40]; _ys += [C[k][1] - 22, C[k][1] + 22]
+_xs += [C["epicenter"][0] - 52, C["epicenter"][0] + 52]
+_ys += [C["epicenter"][1] - 32, C["epicenter"][1] + 34]
+for (bx, by) in B.values():
+    _xs += [bx - 12, bx + 12]; _ys += [by - 12, by + 12]
+_PAD = 12
+VX0, VY0 = round(min(_xs) - _PAD, 1), round(min(_ys) - _PAD, 1)
+VW, VH = round(max(_xs) + _PAD - VX0, 1), round(max(_ys) + _PAD - VY0, 1)
+print(f"content viewBox: {VX0} {VY0} {VW} {VH}")
+
+
+svg = f'''    <svg viewBox="{VX0} {VY0} {VW} {VH}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="九州真實比例行程地圖：八天路徑與日次標注、7/28 震央位置、取消的熊本阿蘇高千穗原路線">
       <style>
         .geo-lbl text{{paint-order:stroke; stroke:var(--bg); stroke-width:3.5px; stroke-linejoin:round}}
         a.geo-day{{cursor:pointer}}
@@ -211,7 +230,7 @@ svg = f'''    <svg viewBox="0 0 {W} {H}" xmlns="http://www.w3.org/2000/svg" role
 {land_paths}
       </g>
 
-      <text x="40" y="{H-10}" font-size="11" fill="var(--ink-faint)" opacity=".8">↓ 九州南部（本次不前往）</text>
+      <text x="{VX0+16}" y="{VY0+VH-10}" font-size="11" fill="var(--ink-faint)" opacity=".8">↓ 九州南部（本次不前往）</text>
 
       <!-- 震央（7/28 M7.1） -->
       <g>
