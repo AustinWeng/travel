@@ -114,10 +114,10 @@ d7,  m7,  e7  = q(C["ueno"], C["narita"],      .13, -1, r_start=13, r_end=11)   
 
 _anchor = {
     "D1": m1, "D2": shift(C["maihama"], -30, -20), "D3": shift(C["maihama"], 30, -20),
-    "D4": m4a, "D5": m5, "D6": shift(C["ueno"], -32, 2), "D7": m7,
+    "D4": m4a, "D5": m5, "D6": shift(C["ueno"], -36, 2), "D7": m7,
 }
 _pinned_pos = {"D2": shift(C["maihama"], -30, -20), "D3": shift(C["maihama"], 30, -20),
-               "D6": shift(C["ueno"], -32, 2)}
+               "D6": shift(C["ueno"], -36, 2)}
 _nodesR = {"narita": 7, "maihama": 9, "odaiba": 7, "ueno": 9, "shinagawa": 7}
 
 def _bb(cx, cy, anchor, w, size):
