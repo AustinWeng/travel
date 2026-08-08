@@ -138,7 +138,7 @@ _texts = [
     _bb(C["airport"][0]+16, C["airport"][1]+5, "start", 74, 12),
     _bb(C["htb"][0], C["htb"][1]+27, "middle", 52, 13),
     _bb(C["uminaka"][0]-12, C["uminaka"][1]-16, "end", 50, 12.5),
-    _bb(C["uminaka"][0]-12, C["uminaka"][1]-3, "end", 72, 10.5),
+    _bb(C["uminaka"][0]-12, C["uminaka"][1]-3, "end", 112, 10.5),
     _bb(C["hakata"][0]-15, C["hakata"][1]+8, "end", 65, 13),
     _bb(C["hakata"][0]-15, C["hakata"][1]+22, "end", 78, 10.5),
     _bb(C["kokura"][0]+16, C["kokura"][1]-2, "start", 26, 13),
@@ -287,7 +287,7 @@ svg = f'''    <svg viewBox="{VX0} {VY0} {VW} {VH}" xmlns="http://www.w3.org/2000
 
         <circle cx="{C['uminaka'][0]}" cy="{C['uminaka'][1]}" r="7" fill="var(--card)" stroke="var(--sea)" stroke-width="3.5"/>
         <text x="{C['uminaka'][0]-12}" y="{C['uminaka'][1]-16}" font-size="12.5" font-weight="700" fill="var(--ink)" text-anchor="end">海之中道</text>
-        <text x="{C['uminaka'][0]-12}" y="{C['uminaka'][1]-3}" font-size="10.5" fill="var(--ink-faint)" text-anchor="end">D2 海洋世界</text>
+        <text x="{C['uminaka'][0]-12}" y="{C['uminaka'][1]-3}" font-size="10.5" fill="var(--ink-faint)" text-anchor="end">D2 海洋世界・D7 泳池</text>
 
         <circle cx="{C['hakata'][0]}" cy="{C['hakata'][1]}" r="9" fill="var(--card)" stroke="var(--sea)" stroke-width="4"/>
         <text x="{C['hakata'][0]-15}" y="{C['hakata'][1]+8}" font-size="13" font-weight="800" fill="var(--ink)" text-anchor="end">博多・福岡</text>
@@ -347,7 +347,7 @@ for name, (bx, by) in B.items():
         continue  # 線太短乾脆不畫
     svg += f'        <line x1="{round(sx,1)}" y1="{round(sy,1)}" x2="{round(ex,1)}" y2="{round(ey,1)}" stroke="var(--ink-faint)" stroke-width="1" opacity=".55"/>\n'
 print("DEBUG m1,m2,B:", m1, m2, {k: v for k, v in B.items() if k in ("D1","D2")})
-_day_title = {"D1":"8/1 機場 → 豪斯登堡","D2":"8/2 豪斯登堡 → 海洋世界 → 博多","D3":"8/3 KidZania → 小倉","D4":"8/4 Harmonyland → 別府","D5":"8/5 African Safari","D6":"8/6 海地獄 → 筑紫野公園 → 福岡","D7":"8/7 福岡市區自由日","D8":"8/8 還車返台"}
+_day_title = {"D1":"8/1 機場 → 豪斯登堡","D2":"8/2 豪斯登堡 → 海洋世界 → 博多","D3":"8/3 KidZania → 小倉","D4":"8/4 Harmonyland → 別府","D5":"8/5 African Safari","D6":"8/6 海地獄 → 筑紫野公園 → 福岡","D7":"8/7 海之中道泳池・科學館","D8":"8/8 還車返台"}
 for name, (bx, by) in B.items():
     n = name[1]
     svg += f'        <a href="#day{n}" class="geo-day"><title>{name} {_day_title[name]}（點擊看當日行程）</title><circle cx="{bx}" cy="{by}" r="11" fill="var(--sea)"/><text x="{bx}" y="{by+4}" fill="#fff">{name}</text></a>\n'
