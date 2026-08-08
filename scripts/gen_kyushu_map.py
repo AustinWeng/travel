@@ -168,8 +168,9 @@ d1, m1, e1   = q(C["airport"], C["htb"],     .10, -1, r_start=6,  r_end=14)
 # （圓心距 17.1 < 外緣和 19.8），終點區放不下箭頭；uminaka→hakata 段同理不畫線。
 d2af, d2ab, m2, e2a = q2seg(C["htb"], C["uminaka"], .13, -1, r_start=12, r_end=0)
 d3, m3, e3   = q(C["hakata"], C["kokura"],   .10, -1, r_start=13, r_end=14)
-d4a, m4, _   = q(C["kokura"], C["harmony"],  .13, -1, r_start=13, r_end=12)
-d4b, _, e4b  = q(C["harmony"], C["beppu"],   .20, -1, r_start=11, r_end=14)
+# D4：小倉→別府一條線。Harmonyland（距別府 27.7px）與 Safari（17.9px）在此比例尺
+# 與別府三圓相貼，獨立節點必然疊成一團——併入別府節點副標表達。
+d4, m4, e4   = q(C["kokura"], C["beppu"],    .13, -1, r_start=13, r_end=14)
 # d5 不畫線：beppu 圓（外緣11）與 safari 圓（外緣7.5）圓心僅距 17.9px，兩圓重疊，
 # 真實比例下無可見線段可畫；D5 徽章（可點）＋Safari 旁「D5 動物園」已表達往返。
 _, m5, _     = q(C["beppu"], C["safari"],    .55,  1)
@@ -186,8 +187,8 @@ _anchor = {
     "D4": shift(m4, 16, -4), "D5": m5, "D6": shift(m6, -16, -8),
     "D7": shift(C["hakata"], -34, -26), "D8": shift(C["airport"], 104, 2),
 }
-_nodesR = {"airport":0,"hakata":9,"uminaka":7,"kokura":9,"htb":9,"harmony":7,
-           "beppu":9,"safari":6,"kanryu":4,"kiyama":4,"imagawa":4}
+_nodesR = {"airport":0,"hakata":9,"uminaka":7,"kokura":9,"htb":9,
+           "beppu":9,"kanryu":4,"kiyama":4,"imagawa":4}
 # 文字標籤 bbox 近似（與下方渲染公式同步；(x0,x1,y0,y1)）
 def _bb(cx, cy, anchor, w, size):
     if anchor == "start":  x0, x1 = cx, cx + w
@@ -202,11 +203,8 @@ _texts = [
     _bb(C["hakata"][0]-15, C["hakata"][1]+8, "end", 65, 13),
     _bb(C["hakata"][0]-15, C["hakata"][1]+22, "end", 78, 10.5),
     _bb(C["kokura"][0]+16, C["kokura"][1]-2, "start", 26, 13),
-    _bb(C["harmony"][0]+14, C["harmony"][1]+2, "start", 88, 12.5),
-    _bb(C["harmony"][0]+14, C["harmony"][1]+16, "start", 96, 10.5),
-    _bb(C["safari"][0]-16, C["safari"][1]-10, "end", 40, 11.5),
-    _bb(C["safari"][0]-16, C["safari"][1]+3, "end", 72, 10.5),
     _bb(C["beppu"][0]+15, C["beppu"][1]+16, "start", 52, 13),
+    _bb(C["beppu"][0]+15, C["beppu"][1]+30, "start", 150, 10.5),
     _bb(C["kanryu"][0], C["kanryu"][1]+18, "middle", 52, 10.5),
     _bb(C["kiyama"][0]+8, C["kiyama"][1]+14, "start", 52, 10.5),
     _bb(C["imagawa"][0]+9, C["imagawa"][1]+4, "start", 52, 10.5),
@@ -216,7 +214,7 @@ def _hits_text(x, y, pad=4):
         if x0 - 11 - pad < x < x1 + 11 + pad and y0 - 11 - pad < y < y1 + 11 + pad:
             return True
     return False
-_arrow_tips = [e1, e2a, e3, e4b, e6]  # 各段截斷後的實際箭頭尖（d5 無線）
+_arrow_tips = [e1, e2a, e3, e4, e6]  # 各段截斷後的實際箭頭尖（d5 無線）
 def _ok(pt, placed):
     x, y = pt
     if not (20 <= x <= 720 and 20 <= y <= 620):
@@ -258,7 +256,7 @@ for name, anc in _anchor.items():
 
 # ---- 視窗緊貼內容 bbox（Austin 2026-07-31：周圍空白裁到只剩內容） ----
 _xs, _ys = [], []
-for k in ("airport","hakata","uminaka","kokura","htb","harmony","beppu","safari","kanryu","kiyama","imagawa"):
+for k in ("airport","hakata","uminaka","kokura","htb","beppu","kanryu","kiyama","imagawa"):
     _xs += [C[k][0] - _nodesR[k], C[k][0] + _nodesR[k]]
     _ys += [C[k][1] - _nodesR[k], C[k][1] + _nodesR[k]]
 for (tx0, tx1, ty0, ty1) in _texts:
@@ -321,7 +319,7 @@ svg = f'''    <svg viewBox="{VX0} {VY0} {VW} {VH}" xmlns="http://www.w3.org/2000
         <a href="#day1" class="geo-day"><title>D1 8/1 機場 → 豪斯登堡（點擊看當日行程）</title><path d="{d1}" marker-end="url(#arr)"/></a>
         <a href="#day2" class="geo-day"><title>D2 8/2 豪斯登堡 → 海洋世界 → 博多（點擊看當日行程）</title><path d="{d2af}" marker-end="url(#arr)"/><path d="{d2ab}"/></a>
         <a href="#day3" class="geo-day"><title>D3 8/3 KidZania → 小倉（點擊看當日行程）</title><path d="{d3}" marker-end="url(#arr)"/></a>
-        <a href="#day4" class="geo-day"><title>D4 8/4 Harmonyland → 別府（點擊看當日行程）</title><path d="{d4a}"/><path d="{d4b}" marker-end="url(#arr)"/></a>
+        <a href="#day4" class="geo-day"><title>D4 8/4 Harmonyland → 別府（點擊看當日行程）</title><path d="{d4}" marker-end="url(#arr)"/></a>
         <a href="#day6" class="geo-day"><title>D6 8/6 海地獄 → 筑紫野公園 → 福岡（點擊看當日行程）</title><path d="{d6}" marker-end="url(#arr)"/></a>
       </g>
 
@@ -353,16 +351,9 @@ svg = f'''    <svg viewBox="{VX0} {VY0} {VW} {VH}" xmlns="http://www.w3.org/2000
         <circle cx="{C['kokura'][0]}" cy="{C['kokura'][1]}" r="9" fill="var(--card)" stroke="var(--sea)" stroke-width="4"/>
         <text x="{C['kokura'][0]+16}" y="{C['kokura'][1]-2}" font-size="13" font-weight="800" fill="var(--ink)">小倉</text>
 
-        <circle cx="{C['harmony'][0]}" cy="{C['harmony'][1]}" r="7" fill="var(--card)" stroke="var(--sea)" stroke-width="3.5"/>
-        <text x="{C['harmony'][0]+14}" y="{C['harmony'][1]+2}" font-size="12.5" font-weight="700" fill="var(--ink)">Harmonyland</text>
-        <text x="{C['harmony'][0]+14}" y="{C['harmony'][1]+16}" font-size="10.5" fill="var(--ink-faint)">D4 三麗鷗樂園</text>
-
-        <circle cx="{C['safari'][0]}" cy="{C['safari'][1]}" r="6" fill="var(--card)" stroke="var(--sea)" stroke-width="3"/>
-        <text x="{C['safari'][0]-16}" y="{C['safari'][1]-10}" font-size="11.5" font-weight="700" fill="var(--ink)" text-anchor="end">Safari</text>
-        <text x="{C['safari'][0]-16}" y="{C['safari'][1]+3}" font-size="10.5" fill="var(--ink-faint)" text-anchor="end">D5 動物園</text>
-
         <circle cx="{C['beppu'][0]}" cy="{C['beppu'][1]}" r="9" fill="var(--card)" stroke="var(--sea)" stroke-width="4"/>
         <text x="{C['beppu'][0]+15}" y="{C['beppu'][1]+16}" font-size="13" font-weight="800" fill="var(--ink)">別府溫泉</text>
+        <text x="{C['beppu'][0]+15}" y="{C['beppu'][1]+30}" font-size="10.5" fill="var(--ink-faint)">D4 Harmonyland・D5 Safari</text>
       </g>
 
       <!-- 日次徽章（擁擠處帶引線） -->
@@ -415,8 +406,8 @@ svg += '''      </g>
 print(f"viewBox 0 0 {W} {H}; rings={len(rings)}; pts={sum(len(r) for _,r in rings)}")
 
 # ---- 自檢：徽章 vs 節點/文字粗查 ----
-nodes = {k: C[k] for k in ["airport","hakata","uminaka","kokura","htb","harmony","beppu","safari","kanryu","kiyama","imagawa"]}
-R = {"airport":6,"hakata":9,"uminaka":7,"kokura":9,"htb":9,"harmony":7,"beppu":9,"safari":6,"kanryu":4,"kiyama":4,"imagawa":4}
+nodes = {k: C[k] for k in ["airport","hakata","uminaka","kokura","htb","beppu","kanryu","kiyama","imagawa"]}
+R = {"airport":6,"hakata":9,"uminaka":7,"kokura":9,"htb":9,"beppu":9,"kanryu":4,"kiyama":4,"imagawa":4}
 for bn,(bx,by) in B.items():
     for nn,(nx,ny) in nodes.items():
         gap = math.hypot(bx-nx, by-ny) - 11 - R[nn]
@@ -424,8 +415,8 @@ for bn,(bx,by) in B.items():
             print(f"  ! 徽章 {bn} 距節點 {nn} 淨空 {gap:.1f}px")
 
 # ---- 自檢：箭頭尖 vs 節點圓外緣（必須在圓外，淨空 >= 1）----
-_r_outer = {"airport":4,"hakata":11,"uminaka":8.8,"kokura":11,"htb":11,"harmony":8.8,"beppu":11,"safari":7.5}
-_tip_names = ["d1→htb","d2 中段箭頭","d3→kokura","d4b→beppu","d6→hakata"]
+_r_outer = {"airport":4,"hakata":11,"uminaka":8.8,"kokura":11,"htb":11,"beppu":11}
+_tip_names = ["d1→htb","d2 中段箭頭","d3→kokura","d4→beppu","d6→hakata"]
 _tip_targets = ["htb","uminaka","kokura","beppu","hakata"]
 _fail = False
 for nm, tgt, (tx, ty) in zip(_tip_names, _tip_targets, _arrow_tips):
