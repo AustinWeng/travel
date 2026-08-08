@@ -109,13 +109,13 @@ def shift(pt, dx, dy):
 d1a, m1a, e1a = q(C["narita"], C["ueno"],   .17,  1, r_start=9,  r_end=13)   # Skyliner
 d1b, m1b, e1b = q(C["ueno"], C["yuzawa"],   .10,  1, r_start=13, r_end=14)   # 上越新幹線
 d3,  m3,  e3  = q(C["yuzawa"], C["ueno"],   .10,  1, r_start=13, r_end=14)   # 回程（反向同 side＝彎另一側）
-d5,  m5,  e5  = q(C["ueno"], C["narita"],   .14,  1, r_start=13, r_end=11)   # Skyliner 回程
+d5,  m5,  e5  = q(C["ueno"], C["narita"],   .10,  1, r_start=13, r_end=11)   # Skyliner 回程（小彎陡升；上野文字在西側，東側線帶無字）
 
 _anchor = {
     "D1": m1b, "D2": shift(C["yuzawa"], -34, -22), "D3": m3,
-    "D4": shift(C["odaiba"], -26, 16), "D5": m5,
+    "D4": shift(C["odaiba"], 26, 14), "D5": m5,
 }
-_pinned_pos = {"D2": shift(C["yuzawa"], -34, -22), "D4": shift(C["odaiba"], -26, 16)}
+_pinned_pos = {"D2": shift(C["yuzawa"], -34, -22), "D4": shift(C["odaiba"], 26, 14)}  # D4 釘台場圓右側海面（左下是台場文字）
 _nodesR = {"narita": 7, "ueno": 9, "yuzawa": 9, "odaiba": 6}
 
 def _bb(cx, cy, anchor, w, size):
@@ -126,8 +126,7 @@ def _bb(cx, cy, anchor, w, size):
 
 _texts = [
     _bb(C["narita"][0]+13, C["narita"][1]+5,  "start", 86, 12),
-    _bb(C["ueno"][0]+17,   C["ueno"][1]-6,    "start", 26, 13),
-    _bb(C["ueno"][0]+17,   C["ueno"][1]+8,    "start", 150, 10.5),
+    _bb(C["ueno"][0]-15,   C["ueno"][1]+4,    "end", 176, 13),  # 上野主副標一行 tspan 混排（樞紐站圓周全是線帶，僅正西水平帶乾淨）
     _bb(C["yuzawa"][0]+16, C["yuzawa"][1]+2,  "start", 52, 13),
     _bb(C["yuzawa"][0]+16, C["yuzawa"][1]+16, "start", 140, 10.5),
     _bb(C["odaiba"][0]-11, C["odaiba"][1]+14, "end",   26, 13),
@@ -227,8 +226,7 @@ svg = f'''    <svg viewBox="{VX0} {VY0} {VW} {VH}" xmlns="http://www.w3.org/2000
         <text x="{C['narita'][0]+13}" y="{C['narita'][1]+5}" font-size="12" font-weight="700" fill="var(--ink)">成田機場 ✈</text>
 
         <circle cx="{C['ueno'][0]}" cy="{C['ueno'][1]}" r="9" fill="var(--card)" stroke="var(--sea)" stroke-width="4"/>
-        <text x="{C['ueno'][0]+17}" y="{C['ueno'][1]-6}" font-size="13" font-weight="800" fill="var(--ink)">上野</text>
-        <text x="{C['ueno'][0]+17}" y="{C['ueno'][1]+8}" font-size="10.5" fill="var(--ink-faint)">D3–D4 泊 Section L・D5 淺草寫真</text>
+        <text x="{C['ueno'][0]-15}" y="{C['ueno'][1]+4}" text-anchor="end"><tspan font-size="13" font-weight="800" fill="var(--ink)">上野</tspan><tspan font-size="10.5" fill="var(--ink-faint)">　D3–D4 泊 Section L・D5 淺草寫真</tspan></text>
 
         <circle cx="{C['yuzawa'][0]}" cy="{C['yuzawa'][1]}" r="9" fill="var(--card)" stroke="var(--sea)" stroke-width="4"/>
         <text x="{C['yuzawa'][0]+16}" y="{C['yuzawa'][1]+2}" font-size="13" font-weight="800" fill="var(--ink)">越後湯澤</text>
@@ -322,5 +320,22 @@ if _min < 5: _fail = True
 _min2 = min(math.hypot(a[0]-b2[0], a[1]-b2[1]) for a in _bpts(d1a) for b2 in _bpts(d5))
 print(f"  d1a/d5 雙向線最小間距 {_min2:.1f}px" + ("  !! 太近" if _min2 < 5 else ""))
 if _min2 < 5: _fail = True
+# 線身 × 文字框（取樣，框內縮 1px 嚴格內部才算穿）
+for nm, dd in [("d1a", d1a), ("d1b", d1b), ("d3", d3), ("d5", d5)]:
+    hit = None
+    for (x, y) in _bpts(dd):
+        for (x0, x1, y0, y1) in _texts:
+            if x0 + 1 < x < x1 - 1 and y0 + 1 < y < y1 - 1:
+                hit = (round(x, 1), round(y, 1)); break
+        if hit: break
+    if hit:
+        print(f"  !! 線 {nm} 穿過文字框 {hit}")
+        _fail = True
+# 徽章 × 文字框
+for bn, (bx, by) in B.items():
+    for (x0, x1, y0, y1) in _texts:
+        if x0 - 8 < bx < x1 + 8 and y0 - 8 < by < y1 + 8:
+            print(f"  !! 徽章 {bn} 壓文字框 ({bx},{by})")
+            _fail = True
 if _fail:
     raise SystemExit("自檢未過")

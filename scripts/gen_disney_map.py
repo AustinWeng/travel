@@ -109,15 +109,15 @@ def shift(pt, dx, dy):
 d1,  m1,  e1  = q(C["narita"], C["maihama"],   .13, -1, r_start=9,  r_end=14)   # 抵達日（彎南沿灣）
 d4a, m4a, e4a = q(C["maihama"], C["odaiba"],   .16,  1, r_start=13, r_end=12)   # 舞浜 → 台場豐洲
 d4b, m4b, e4b = q(C["odaiba"], C["ueno"],      .14,  1, r_start=12, r_end=14)   # 台場 → 上野
-d5,  m5,  e5  = q(C["ueno"], C["shinagawa"],   .28, -1, r_start=13, r_end=12)   # 上野 → 品川（彎東側進，避台場文字帶）
+d5,  m5,  e5  = q(C["ueno"], C["shinagawa"],   .25, -1, r_start=13, r_end=12)   # 上野 → 品川（彎東側進，避台場文字帶）
 d7,  m7,  e7  = q(C["ueno"], C["narita"],      .13, -1, r_start=13, r_end=11)   # 回程（彎北內陸，與 d1 分流）
 
 _anchor = {
     "D1": m1, "D2": shift(C["maihama"], -30, -20), "D3": shift(C["maihama"], 30, -20),
-    "D4": m4a, "D5": m5, "D6": shift(C["ueno"], -30, -16), "D7": m7,
+    "D4": m4a, "D5": m5, "D6": shift(C["ueno"], -32, 2), "D7": m7,
 }
 _pinned_pos = {"D2": shift(C["maihama"], -30, -20), "D3": shift(C["maihama"], 30, -20),
-               "D6": shift(C["ueno"], -30, -16)}
+               "D6": shift(C["ueno"], -32, 2)}
 _nodesR = {"narita": 7, "maihama": 9, "odaiba": 7, "ueno": 9, "shinagawa": 7}
 
 def _bb(cx, cy, anchor, w, size):
@@ -130,9 +130,9 @@ _texts = [
     _bb(C["narita"][0]+13,  C["narita"][1]+5,   "start",  86, 12),
     _bb(C["maihama"][0],    C["maihama"][1]+26, "middle", 65, 13),
     _bb(C["maihama"][0],    C["maihama"][1]+40, "middle", 150, 10.5),
-    _bb(C["odaiba"][0]-12,  C["odaiba"][1]-21,  "end",  78, 12.5),
-    _bb(C["odaiba"][0]-12,  C["odaiba"][1]-8,   "end",  90, 10.5),
-    _bb(C["ueno"][0]+15,    C["ueno"][1]-6,     "start",  26, 13),
+    _bb(C["odaiba"][0]-18,  C["odaiba"][1]-21,  "end",  78, 12.5),
+    _bb(C["odaiba"][0]-18,  C["odaiba"][1]-8,   "end",  90, 10.5),
+    _bb(C["ueno"][0]-13,    C["ueno"][1]-12,    "end",  26, 13),   # 主標放圓左上斜角（西北無線帶；東北是 d7 出線）
     _bb(C["ueno"][0]+15,    C["ueno"][1]+8,     "start",  150, 10.5),
     _bb(C["shinagawa"][0]-12, C["shinagawa"][1]+2,  "end", 26, 13),
     _bb(C["shinagawa"][0]-12, C["shinagawa"][1]+15, "end", 68, 10.5),
@@ -236,11 +236,11 @@ svg = f'''    <svg viewBox="{VX0} {VY0} {VW} {VH}" xmlns="http://www.w3.org/2000
         <text x="{C['maihama'][0]}" y="{C['maihama'][1]+40}" font-size="10.5" fill="var(--ink-faint)" text-anchor="middle">D1–D3 泊・D2 陸地・D3 海洋</text>
 
         <circle cx="{C['odaiba'][0]}" cy="{C['odaiba'][1]}" r="7" fill="var(--card)" stroke="var(--sea)" stroke-width="3.5"/>
-        <text x="{C['odaiba'][0]-12}" y="{C['odaiba'][1]-21}" font-size="12.5" font-weight="700" fill="var(--ink)" text-anchor="end">台場・豐洲</text>
-        <text x="{C['odaiba'][0]-12}" y="{C['odaiba'][1]-8}" font-size="10.5" fill="var(--ink-faint)" text-anchor="end">D4 teamLab</text>
+        <text x="{C['odaiba'][0]-18}" y="{C['odaiba'][1]-21}" font-size="12.5" font-weight="700" fill="var(--ink)" text-anchor="end">台場・豐洲</text>
+        <text x="{C['odaiba'][0]-18}" y="{C['odaiba'][1]-8}" font-size="10.5" fill="var(--ink-faint)" text-anchor="end">D4 teamLab</text>
 
         <circle cx="{C['ueno'][0]}" cy="{C['ueno'][1]}" r="9" fill="var(--card)" stroke="var(--sea)" stroke-width="4"/>
-        <text x="{C['ueno'][0]+15}" y="{C['ueno'][1]-6}" font-size="13" font-weight="800" fill="var(--ink)">上野</text>
+        <text x="{C['ueno'][0]-13}" y="{C['ueno'][1]-12}" font-size="13" font-weight="800" fill="var(--ink)" text-anchor="end">上野</text>
         <text x="{C['ueno'][0]+15}" y="{C['ueno'][1]+8}" font-size="10.5" fill="var(--ink-faint)">D4–D6 泊・D5 晴空塔・D6 淺草</text>
 
         <circle cx="{C['shinagawa'][0]}" cy="{C['shinagawa'][1]}" r="7" fill="var(--card)" stroke="var(--sea)" stroke-width="3.5"/>
@@ -329,5 +329,22 @@ def _bpts(dd):
 _min = min(math.hypot(a[0]-b2[0], a[1]-b2[1]) for a in _bpts(d1) for b2 in _bpts(d7))
 print(f"  d1/d7 進出線最小間距 {_min:.1f}px" + ("  !! 太近" if _min < 5 else ""))
 if _min < 5: _fail = True
+# 線身 × 文字框（取樣，框內縮 1px 嚴格內部才算穿）
+for nm, dd in [("d1", d1), ("d4a", d4a), ("d4b", d4b), ("d5", d5), ("d7", d7)]:
+    hit = None
+    for (x, y) in _bpts(dd):
+        for (x0, x1, y0, y1) in _texts:
+            if x0 + 1 < x < x1 - 1 and y0 + 1 < y < y1 - 1:
+                hit = (round(x, 1), round(y, 1)); break
+        if hit: break
+    if hit:
+        print(f"  !! 線 {nm} 穿過文字框 {hit}")
+        _fail = True
+# 徽章 × 文字框
+for bn, (bx, by) in B.items():
+    for (x0, x1, y0, y1) in _texts:
+        if x0 - 8 < bx < x1 + 8 and y0 - 8 < by < y1 + 8:
+            print(f"  !! 徽章 {bn} 壓文字框 ({bx},{by})")
+            _fail = True
 if _fail:
     raise SystemExit("自檢未過")
