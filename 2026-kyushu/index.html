@@ -9,127 +9,87 @@
 </head>
 <body>
 <style>
-/* ============================================================
-   DoodleTheme・粉藍盤（claude.ai/design「Design System」）
-   手繪語彙：cream 紙卡＋ink 粗框＋實心位移影＋貼紙 chip＋筆記本格線
-   ============================================================ */
 :root{
-  --bg:#F8FBFF; --card:#F0F8FF; --card-alt:#FFFDF9;
-  --ink:#2A3F5C; --ink-soft:#5F7B9C; --ink-faint:#8CA0B8;
-  --line:#C9DCEF; --line-soft:#DFEBF7;
-  --primary:#5AA3FF; --primary-deep:#3D7FD9; --secondary:#00D4C4;
-  --cream-deep:#D6ECFF;
-  --sea:var(--primary); --sea-deep:var(--primary-deep); --sea-wash:var(--cream-deep);
-  --sun:#9A7A22; --sun-wash:#FBF2D2;
-  --leaf:#1F6E5C; --leaf-wash:#DFF2EE;
-  --alert:#B54848; --alert-wash:#FBE3E3;
-  --gold:#E8D090;
-  --frame:#2A3F5C; --shadow-c:#2A3F5C;
-  --rule:rgba(42,63,92,.045);
-  --band-bg:var(--primary); --band-fg:#FFFFFF;
-  --nav-on-bg:var(--primary-deep); --nav-on-fg:#FFFFFF;
-  --sticker-bg:#FFFFFF; --sticker-fg:var(--primary-deep);
+  --bg:#F7FAFB; --card:#FFFFFF; --ink:#1B2A32; --ink-soft:#4E6470; --ink-faint:#7E939E;
+  --line:#DCE7EB; --line-soft:#E9F1F4;
+  --sea:#0E7490; --sea-deep:#0B5C73; --sea-wash:#E3F1F5;
+  --sun:#D97706; --sun-wash:#FBF0DE;
+  --leaf:#2E8B62; --leaf-wash:#E2F2EA;
+  --alert:#C2410C; --alert-wash:#FBE9DF;
+  --shadow:0 1px 2px rgba(27,42,50,.05),0 4px 14px rgba(27,42,50,.06);
 }
 @media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --bg:#131A28; --card:#1B2534; --card-alt:#212C3E;
-    --ink:#E7EEF9; --ink-soft:#AEBED6; --ink-faint:#7D8FA9;
-    --line:#33445F; --line-soft:#26344A;
-    --primary:#6FB0FF; --primary-deep:#9CC8FF; --secondary:#2BD9CA;
-    --cream-deep:#24354F;
-    --sun:#E5A952; --sun-wash:#2E2413;
-    --leaf:#57C4A8; --leaf-wash:#12291F;
-    --alert:#E88585; --alert-wash:#331717;
-    --gold:#D9C077;
-    --frame:#3E5170; --shadow-c:rgba(0,0,0,.5);
-    --rule:rgba(231,238,249,.035);
-    --band-bg:var(--cream-deep); --band-fg:var(--primary-deep);
-    --nav-on-bg:var(--primary); --nav-on-fg:#131A28;
-    --sticker-bg:#1B2534; --sticker-fg:var(--primary);
+  :root{
+    --bg:#0F1619; --card:#172227; --ink:#E6EEF1; --ink-soft:#A9BCC5; --ink-faint:#7A8F99;
+    --line:#27363D; --line-soft:#1E2C32;
+    --sea:#4FB3CB; --sea-deep:#7FCBDD; --sea-wash:#122B33;
+    --sun:#E8A33D; --sun-wash:#2C2214;
+    --leaf:#5CBD93; --leaf-wash:#14291F;
+    --alert:#E8794A; --alert-wash:#301A10;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 14px rgba(0,0,0,.25);
   }
 }
+:root[data-theme="light"]{
+  --bg:#F7FAFB; --card:#FFFFFF; --ink:#1B2A32; --ink-soft:#4E6470; --ink-faint:#7E939E;
+  --line:#DCE7EB; --line-soft:#E9F1F4;
+  --sea:#0E7490; --sea-deep:#0B5C73; --sea-wash:#E3F1F5;
+  --sun:#D97706; --sun-wash:#FBF0DE;
+  --leaf:#2E8B62; --leaf-wash:#E2F2EA;
+  --alert:#C2410C; --alert-wash:#FBE9DF;
+  --shadow:0 1px 2px rgba(27,42,50,.05),0 4px 14px rgba(27,42,50,.06);
+}
 :root[data-theme="dark"]{
-  --bg:#131A28; --card:#1B2534; --card-alt:#212C3E;
-  --ink:#E7EEF9; --ink-soft:#AEBED6; --ink-faint:#7D8FA9;
-  --line:#33445F; --line-soft:#26344A;
-  --primary:#6FB0FF; --primary-deep:#9CC8FF; --secondary:#2BD9CA;
-  --cream-deep:#24354F;
-  --sun:#E5A952; --sun-wash:#2E2413;
-  --leaf:#57C4A8; --leaf-wash:#12291F;
-  --alert:#E88585; --alert-wash:#331717;
-  --gold:#D9C077;
-  --frame:#3E5170; --shadow-c:rgba(0,0,0,.5);
-  --rule:rgba(231,238,249,.035);
-  --band-bg:var(--cream-deep); --band-fg:var(--primary-deep);
-  --nav-on-bg:var(--primary); --nav-on-fg:#131A28;
-  --sticker-bg:#1B2534; --sticker-fg:var(--primary);
+  --bg:#0F1619; --card:#172227; --ink:#E6EEF1; --ink-soft:#A9BCC5; --ink-faint:#7A8F99;
+  --line:#27363D; --line-soft:#1E2C32;
+  --sea:#4FB3CB; --sea-deep:#7FCBDD; --sea-wash:#122B33;
+  --sun:#E8A33D; --sun-wash:#2C2214;
+  --leaf:#5CBD93; --leaf-wash:#14291F;
+  --alert:#E8794A; --alert-wash:#301A10;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 14px rgba(0,0,0,.25);
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth; scroll-padding-top:66px}
 body{
-  background:var(--bg);
-  background-image:repeating-linear-gradient(0deg, transparent, transparent 25px, var(--rule) 25px, var(--rule) 26px);
-  color:var(--ink);
-  font-family:ui-rounded,"SF Pro Rounded","Hiragino Maru Gothic ProN","PingFang TC","Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif;
+  background:var(--bg); color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Hiragino Sans","Noto Sans TC","Microsoft JhengHei",sans-serif;
   line-height:1.65; margin:0; padding:0 16px 72px;
   font-size:15.5px;
 }
 .wrap{max-width:760px; margin:0 auto}
-a{color:var(--primary-deep); text-decoration:none}
+a{color:var(--sea); text-decoration:none}
 a:hover{text-decoration:underline}
-a:focus-visible,button:focus-visible,input:focus-visible,summary:focus-visible{outline:2.5px solid var(--primary); outline-offset:2px; border-radius:6px}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--sea); outline-offset:2px; border-radius:4px}
 
 /* ---------- header ---------- */
-header{padding:42px 0 8px}
-.kicker{font-size:12px; letter-spacing:.18em; color:var(--primary-deep); font-weight:800; text-transform:uppercase}
-h1{font-size:clamp(27px,6vw,39px); font-weight:800; letter-spacing:.01em; margin:.2em 0 .12em; text-wrap:balance; line-height:1.25}
+header{padding:40px 0 8px}
+.kicker{font-size:12px; letter-spacing:.18em; color:var(--sea); font-weight:700; text-transform:uppercase}
+h1{font-size:clamp(26px,6vw,38px); font-weight:800; letter-spacing:.01em; margin:.2em 0 .1em; text-wrap:balance; line-height:1.25}
 .subtitle{color:var(--ink-soft); margin:0 0 18px; font-size:15px}
-.facts{display:flex; flex-wrap:wrap; gap:9px; margin:16px 0 4px}
-.fact{background:var(--card-alt); border:2px solid var(--frame); border-radius:11px; padding:5px 13px; font-size:13px; color:var(--ink-soft); white-space:nowrap; box-shadow:2px 2px 0 var(--shadow-c); font-weight:600}
-.fact:nth-child(odd){transform:rotate(-.7deg)}
-.fact:nth-child(even){transform:rotate(.6deg)}
-.fact b{color:var(--ink); font-weight:750; font-variant-numeric:tabular-nums}
+.facts{display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 4px}
+.fact{background:var(--card); border:1px solid var(--line); border-radius:999px; padding:5px 14px; font-size:13px; color:var(--ink-soft); white-space:nowrap}
+.fact b{color:var(--ink); font-weight:650; font-variant-numeric:tabular-nums}
 
 /* ---------- flight ---------- */
-.flights{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:22px 0 0}
+.flights{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:20px 0 0}
 @media (max-width:560px){.flights{grid-template-columns:1fr}}
-.flight{background:var(--card-alt); border:2.5px solid var(--frame); border-radius:16px; padding:14px 16px; box-shadow:2.5px 3.5px 0 var(--shadow-c)}
-.flight .tag{font-size:11px; letter-spacing:.14em; color:var(--ink-faint); font-weight:750}
+.flight{background:var(--card); border:1px solid var(--line); border-radius:10px; padding:14px 16px; box-shadow:var(--shadow)}
+.flight .tag{font-size:11px; letter-spacing:.14em; color:var(--ink-faint); font-weight:700}
 .flight .no{font-weight:800; font-size:17px; margin-top:2px}
 .flight .route{display:flex; align-items:baseline; gap:10px; margin-top:6px; font-variant-numeric:tabular-nums}
 .flight .apt{font-size:22px; font-weight:800; letter-spacing:.02em}
 .flight .t{font-size:13px; color:var(--ink-soft)}
-.flight .arrow{color:var(--primary-deep); flex:1; text-align:center; font-size:14px}
+.flight .arrow{color:var(--sea); flex:1; text-align:center; font-size:14px}
 .flight .d{font-size:12.5px; color:var(--ink-faint); margin-top:4px}
 
 /* ---------- section ---------- */
-section{margin-top:48px}
-.sec-head{display:flex; align-items:baseline; gap:11px; margin-bottom:18px}
-.sec-head h2{font-size:20.5px; font-weight:800; margin:0; letter-spacing:.02em; padding:0 6px;
-  background:linear-gradient(transparent 60%, var(--cream-deep) 60%, var(--cream-deep) 94%, transparent 94%)}
-.sec-head .en{font-size:11px; letter-spacing:.16em; color:var(--ink-faint); text-transform:uppercase; font-weight:750}
+section{margin-top:44px}
+.sec-head{display:flex; align-items:baseline; gap:10px; border-bottom:2px solid var(--ink); padding-bottom:8px; margin-bottom:18px}
+.sec-head h2{font-size:20px; font-weight:800; margin:0; letter-spacing:.02em}
+.sec-head .en{font-size:11px; letter-spacing:.16em; color:var(--ink-faint); text-transform:uppercase; font-weight:700}
 
-/* ---------- sticky day nav ---------- */
-.daynav{position:sticky; top:10px; z-index:60; margin-top:30px}
-.daynav-in{display:flex; gap:4px; overflow-x:auto; background:var(--card-alt); border:2.5px solid var(--frame); border-radius:999px; padding:5px 7px; box-shadow:2.5px 3px 0 var(--shadow-c); scrollbar-width:none; align-items:stretch}
-.daynav-in::-webkit-scrollbar{display:none}
-.daynav a{flex:none; font-size:12.5px; font-weight:800; color:var(--ink-soft); padding:5px 11px; border-radius:999px; letter-spacing:.02em; line-height:1.4}
-.daynav a:hover{background:var(--cream-deep); text-decoration:none; color:var(--ink)}
-.daynav a.on{background:var(--nav-on-bg); color:var(--nav-on-fg)}
-.daynav .dn-sep{flex:none; width:2px; background:var(--line); margin:4px 3px; border-radius:2px}
-
-/* ---------- todo（行前準備紀錄・收合） ---------- */
-.predep{background:var(--card-alt); border:2.5px solid var(--frame); border-radius:18px; box-shadow:2.5px 4px 0 var(--shadow-c); overflow:hidden}
-.predep summary{cursor:pointer; list-style:none; display:flex; align-items:baseline; gap:11px; flex-wrap:wrap; padding:15px 18px; font-weight:800}
-.predep summary::-webkit-details-marker{display:none}
-.predep summary::before{content:"▸"; color:var(--primary-deep); font-size:15px; transition:transform .15s; align-self:center}
-.predep[open] summary::before{transform:rotate(90deg)}
-.predep .sum-h{font-size:17px}
-.predep .sum-en{font-size:10.5px; letter-spacing:.16em; color:var(--ink-faint); text-transform:uppercase; font-weight:750}
-.predep .sum-hint{font-size:12.5px; color:var(--ink-faint); font-weight:500; margin-left:auto}
-.predep-body{padding:2px 18px 16px}
-.todo-note{font-size:13.5px; color:var(--ink-soft); margin:0 0 14px}
-.todo{background:var(--card); border:2px solid var(--frame); border-left:6px solid var(--sun); border-radius:13px; padding:13px 15px 13px 13px; margin-bottom:10px; box-shadow:2px 2.5px 0 var(--shadow-c)}
+/* ---------- todo ---------- */
+.todo-note{font-size:13.5px; color:var(--ink-soft); margin:-6px 0 14px}
+.todo{background:var(--card); border:1px solid var(--line); border-left:4px solid var(--sun); border-radius:10px; padding:14px 16px 14px 14px; margin-bottom:10px; box-shadow:var(--shadow)}
 .todo label{display:flex; gap:12px; align-items:flex-start; cursor:pointer}
 .todo input{width:19px; height:19px; margin-top:3px; accent-color:var(--leaf); flex:none; cursor:pointer}
 .todo .t-title{font-weight:750}
@@ -137,8 +97,8 @@ section{margin-top:48px}
 .todo .t-body b{color:var(--ink)}
 .todo.done{border-left-color:var(--leaf); opacity:.62}
 .todo.done .t-title{text-decoration:line-through}
-.checks{background:var(--card); border:2px solid var(--frame); border-radius:13px; padding:6px 16px; box-shadow:2px 2.5px 0 var(--shadow-c)}
-.checks label{display:flex; gap:12px; align-items:flex-start; padding:10px 0; border-bottom:1.5px dashed var(--line); font-size:14px; color:var(--ink-soft); cursor:pointer}
+.checks{background:var(--card); border:1px solid var(--line); border-radius:10px; padding:6px 16px; box-shadow:var(--shadow)}
+.checks label{display:flex; gap:12px; align-items:flex-start; padding:10px 0; border-bottom:1px solid var(--line-soft); font-size:14px; color:var(--ink-soft); cursor:pointer}
 .checks label:last-child{border-bottom:none}
 .checks input{width:17px; height:17px; margin-top:3px; accent-color:var(--leaf); flex:none; cursor:pointer}
 .checks b{color:var(--ink)}
@@ -146,46 +106,49 @@ section{margin-top:48px}
 .checks label.done span{text-decoration:line-through}
 
 /* ---------- route map ---------- */
-.mapbox{background:var(--card); border:3px solid var(--frame); border-radius:20px; box-shadow:3px 5px 0 var(--shadow-c); overflow-x:auto; padding:12px 8px}
-.mapbox svg{display:block; min-width:600px; width:100%; height:auto}
-.map-cap{font-size:12.5px; color:var(--ink-faint); margin-top:9px}
-#geomap a.geo-day > circle:first-of-type{fill:var(--primary-deep)}
+.mapbox{background:var(--card); border:1px solid var(--line); border-radius:10px; box-shadow:var(--shadow); overflow-x:auto; padding:10px 6px}
+.mapbox svg{display:block; min-width:700px; width:100%; height:auto}
+.map-cap{font-size:12.5px; color:var(--ink-faint); margin-top:8px}
 
 /* ---------- day card ---------- */
-.day{background:var(--card); border:3px solid var(--frame); border-radius:20px; margin-bottom:26px; box-shadow:3px 5px 0 var(--shadow-c); overflow:hidden}
-.day-band{display:flex; align-items:center; gap:12px; padding:11px 16px; background:var(--band-bg); color:var(--band-fg); border-bottom:2.5px solid var(--frame)}
-.day-band .dnum{font-weight:800; font-size:13.5px; letter-spacing:.05em; white-space:nowrap; background:var(--sticker-bg); color:var(--sticker-fg); border:2px solid var(--frame); border-radius:9px; padding:2px 10px; box-shadow:1.5px 1.5px 0 var(--shadow-c); transform:rotate(-1.4deg)}
-.day-band .ddate{font-size:13.5px; opacity:.92; white-space:nowrap; font-variant-numeric:tabular-nums; font-weight:700}
-.day-band .dtheme{font-size:13.5px; font-weight:700; margin-left:auto; text-align:right}
+.day{background:var(--card); border:1px solid var(--line); border-radius:12px; margin-bottom:22px; box-shadow:var(--shadow); overflow:hidden}
+.day-band{display:flex; align-items:center; gap:12px; padding:10px 18px; background:var(--sea); color:#fff}
+:root[data-theme="dark"] .day-band, :root:not([data-theme="light"]) .day-band{color:#fff}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .day-band{background:var(--sea-wash); color:var(--sea-deep)}}
+:root[data-theme="dark"] .day-band{background:var(--sea-wash); color:var(--sea-deep)}
+:root[data-theme="light"] .day-band{background:var(--sea); color:#fff}
+.day-band .dnum{font-weight:800; font-size:15px; letter-spacing:.06em; white-space:nowrap}
+.day-band .ddate{font-size:13.5px; opacity:.85; white-space:nowrap; font-variant-numeric:tabular-nums}
+.day-band .dtheme{font-size:13.5px; font-weight:650; margin-left:auto; text-align:right}
 .day-inner{padding:16px 18px 18px}
 .tl{list-style:none; margin:0; padding:0}
-.tl li{display:flex; gap:14px; padding:7px 0; border-bottom:1.5px dashed var(--line-soft); align-items:baseline}
+.tl li{display:flex; gap:14px; padding:7px 0; border-bottom:1px dashed var(--line-soft); align-items:baseline}
 .tl li:last-child{border-bottom:none}
-.tl .tt{font-variant-numeric:tabular-nums; font-weight:800; font-size:13.5px; color:var(--primary-deep); flex:none; width:88px; letter-spacing:.02em}
+.tl .tt{font-variant-numeric:tabular-nums; font-weight:700; font-size:13.5px; color:var(--sea); flex:none; width:88px; letter-spacing:.02em}
 .tl .tx{font-size:14.5px}
 .tl .tx small{display:block; color:var(--ink-faint); font-size:12.5px}
-.warnline{display:flex; gap:8px; background:var(--alert-wash); color:var(--alert); border:1.5px dashed var(--alert); border-radius:11px; padding:9px 12px; font-size:13.5px; margin-top:12px; align-items:flex-start}
+.warnline{display:flex; gap:8px; background:var(--alert-wash); color:var(--alert); border-radius:8px; padding:9px 12px; font-size:13.5px; margin-top:12px; align-items:flex-start}
 .warnline b{font-weight:750; flex:none; white-space:nowrap}
-.hintline{display:flex; gap:8px; background:var(--sun-wash); border:1.5px dashed var(--sun); border-radius:11px; padding:9px 12px; font-size:13.5px; margin-top:12px; color:var(--ink-soft); align-items:flex-start}
+.hintline{display:flex; gap:8px; background:var(--sun-wash); border-radius:8px; padding:9px 12px; font-size:13.5px; margin-top:12px; color:var(--ink-soft); align-items:flex-start}
 .hintline b{color:var(--ink)}
 .hintline > span:first-child{flex:none}
 
 /* stay card */
-.stay{border:2px solid var(--frame); border-radius:14px; margin-top:14px; padding:13px 15px; background:var(--card-alt); box-shadow:2px 3px 0 var(--shadow-c)}
-.stay .s-label{font-size:11px; letter-spacing:.16em; font-weight:750; color:var(--primary-deep); text-transform:uppercase}
+.stay{border:1px solid var(--line); border-radius:10px; margin-top:14px; padding:13px 15px; background:linear-gradient(0deg,var(--sea-wash),var(--sea-wash))}
+.stay .s-label{font-size:11px; letter-spacing:.16em; font-weight:750; color:var(--sea-deep); text-transform:uppercase}
 .stay .s-name{font-weight:800; font-size:16px; margin:3px 0 1px}
 .stay .s-sub{font-size:13.5px; color:var(--ink-soft)}
 .stay .s-row{display:flex; flex-wrap:wrap; gap:6px 14px; margin-top:9px; font-size:13px; color:var(--ink-soft); align-items:center}
 .stay .s-row .kv b{color:var(--ink); font-variant-numeric:tabular-nums; font-weight:700}
-.s-info{display:grid; grid-template-columns:1fr 1fr; gap:8px 16px; margin-top:11px; padding-top:11px; border-top:1.5px solid var(--line)}
+.s-info{display:grid; grid-template-columns:1fr 1fr; gap:8px 16px; margin-top:11px; padding-top:11px; border-top:1px solid var(--line)}
 @media (max-width:560px){.s-info{grid-template-columns:1fr}}
 .s-info .kv2{font-size:13px; color:var(--ink-soft); line-height:1.5}
 .s-info .kv2 .k{display:block; font-size:10.5px; letter-spacing:.14em; color:var(--ink-faint); font-weight:750; text-transform:uppercase; margin-bottom:1px}
 .s-info .kv2 b{color:var(--ink); font-weight:650; font-variant-numeric:tabular-nums}
 .s-info .kv2.wide{grid-column:1 / -1}
-.s-note{font-size:12.5px; color:var(--ink-faint); margin-top:10px; padding-top:9px; border-top:1.5px dashed var(--line); line-height:1.6}
+.s-note{font-size:12.5px; color:var(--ink-faint); margin-top:10px; padding-top:9px; border-top:1px dashed var(--line); line-height:1.6}
 .s-note b{color:var(--ink-soft)}
-.badge{display:inline-block; border-radius:999px; padding:2px 11px; font-size:12px; font-weight:750; letter-spacing:.04em; white-space:nowrap; border:1.5px solid currentColor}
+.badge{display:inline-block; border-radius:999px; padding:2px 11px; font-size:12px; font-weight:750; letter-spacing:.04em; white-space:nowrap}
 .badge.paid{background:var(--leaf-wash); color:var(--leaf)}
 .badge.onsite{background:var(--sun-wash); color:var(--sun)}
 .badge.nonref{background:var(--alert-wash); color:var(--alert)}
@@ -194,55 +157,72 @@ section{margin-top:48px}
 .drive{display:flex; flex-wrap:wrap; gap:10px; margin-top:14px; align-items:center; justify-content:space-between}
 .km{font-size:13px; color:var(--ink-faint)}
 .km b{color:var(--ink-soft); font-variant-numeric:tabular-nums}
-.maplink{display:inline-flex; align-items:center; gap:7px; background:var(--primary-deep); color:#fff; border:2px solid var(--frame); border-radius:12px; padding:7px 15px; font-size:13.5px; font-weight:750; white-space:nowrap; box-shadow:2px 2px 0 var(--shadow-c); transition:transform .12s}
-.maplink:hover{text-decoration:none; transform:translate(1px,1px); box-shadow:1px 1px 0 var(--shadow-c)}
-:root[data-theme="dark"] .maplink{color:#131A28}
-@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .maplink{color:#131A28} }
+.maplink{display:inline-flex; align-items:center; gap:7px; background:var(--sea); color:#fff; border-radius:8px; padding:8px 15px; font-size:13.5px; font-weight:700; white-space:nowrap; transition:background .15s}
+.maplink:hover{background:var(--sea-deep); text-decoration:none}
+:root[data-theme="dark"] .maplink{background:var(--sea-wash); color:var(--sea)}
+:root[data-theme="dark"] .maplink:hover{background:var(--line-soft)}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .maplink{background:var(--sea-wash); color:var(--sea)}
+  :root:not([data-theme="light"]) .maplink:hover{background:var(--line-soft)}
+}
 .maplink svg{flex:none}
 
 /* ---------- bookings table ---------- */
-.tablebox{background:var(--card-alt); border:2.5px solid var(--frame); border-radius:16px; box-shadow:3px 4px 0 var(--shadow-c); overflow-x:auto}
+.tablebox{background:var(--card); border:1px solid var(--line); border-radius:10px; box-shadow:var(--shadow); overflow-x:auto}
 table{border-collapse:collapse; width:100%; min-width:660px; font-size:13.5px}
-th{font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-faint); text-align:left; padding:12px 14px 8px; border-bottom:2.5px solid var(--frame); white-space:nowrap}
-td{padding:11px 14px; border-bottom:1.5px solid var(--line-soft); vertical-align:top}
+th{font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-faint); text-align:left; padding:12px 14px 8px; border-bottom:2px solid var(--line); white-space:nowrap}
+td{padding:11px 14px; border-bottom:1px solid var(--line-soft); vertical-align:top}
 tr:last-child td{border-bottom:none}
 td.num{font-variant-numeric:tabular-nums; white-space:nowrap}
 td .sub{display:block; font-size:12px; color:var(--ink-faint)}
-.foot{margin-top:44px; font-size:12.5px; color:var(--ink-faint); border-top:2px dashed var(--line); padding-top:14px}
-
+.foot{margin-top:40px; font-size:12.5px; color:var(--ink-faint); border-top:1px solid var(--line); padding-top:14px}
 /* header 花費總覽帶（三頁手帖共用版式） */
-.costband{margin-top:16px; background:var(--card); border:3px solid var(--frame); border-radius:18px; padding:14px 17px; box-shadow:3px 4px 0 var(--shadow-c); display:flex; flex-wrap:wrap; align-items:baseline; gap:8px 22px}
+.costband{margin-top:14px; background:var(--card); border:1px solid var(--line); border-radius:12px; padding:13px 16px; box-shadow:var(--shadow); display:flex; flex-wrap:wrap; align-items:baseline; gap:8px 22px}
 .costband .cb-total{display:flex; align-items:baseline; gap:8px}
 .costband .cb-total span{font-size:11.5px; letter-spacing:.14em; font-weight:750; color:var(--ink-faint); text-transform:uppercase}
 .costband .cb-total b{font-size:21px}
 .costband .cb-items{display:flex; flex-wrap:wrap; gap:5px 18px; font-size:13.5px; color:var(--ink-soft)}
 .costband .cb-i b{color:var(--ink)}
 .costband .cb-note{flex-basis:100%; font-size:11.5px; color:var(--ink-faint)}
-
 /* 地震改線：原行程反灰留存 */
-.day.cancelled{opacity:.6; filter:grayscale(.8)}
-.day.cancelled .day-band{background:var(--line-soft); color:var(--ink-soft)}
-.day.cancelled .dnum{background:var(--card); color:var(--ink-faint); transform:none}
+.day.cancelled{opacity:.55; filter:grayscale(.75)}
+.day.cancelled .day-band{background:var(--ink-faint)!important; color:#fff!important}
 .day.cancelled .dtheme::after{content:"（7/28 地震取消）"; font-weight:750}
 .badge.cxl{background:var(--alert-wash); color:var(--alert); font-weight:700}
-.quake{background:var(--card-alt); border:3px solid var(--frame); border-left:7px solid var(--alert); border-radius:18px; padding:16px 18px; box-shadow:3px 4px 0 var(--shadow-c)}
+.quake{background:var(--card); border:1px solid var(--alert); border-left:6px solid var(--alert); border-radius:12px; padding:16px 18px; box-shadow:var(--shadow)}
 .quake .q-date{font-size:12px; letter-spacing:.14em; font-weight:750; color:var(--alert); text-transform:uppercase}
 .quake .q-title{font-weight:800; font-size:18px; margin:4px 0 8px}
 .quake p{font-size:14px; color:var(--ink-soft); margin:.4em 0}
 .quake b{color:var(--ink)}
-
 /* 保險與上網快速參考（三頁手帖共用版式） */
 .ess-grid{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:14px}
 .ess-grid .stay{min-width:0; max-width:100%}
 @media (max-width:760px){ .ess-grid{grid-template-columns:1fr} }
 .ess-grid .stay{margin-top:0}
 .ess-grid table{min-width:0}
-@media (max-width:560px){
-  .fact:nth-child(odd),.fact:nth-child(even){transform:none}
-  .day-band{flex-wrap:wrap; gap:8px 10px}
-  .day-band .dtheme{margin-left:0; text-align:left; flex-basis:100%}
-}
-@media (prefers-reduced-motion: reduce){ *{transition:none!important} html{scroll-behavior:auto} }
+@media (prefers-reduced-motion: reduce){ *{transition:none!important} }
+
+/* ---------- sticky day nav ---------- */
+.daynav{position:sticky; top:10px; z-index:60; margin-top:28px}
+.daynav-in{display:flex; gap:4px; overflow-x:auto; background:var(--card); border:1px solid var(--line); border-radius:999px; padding:5px 7px; box-shadow:var(--shadow); scrollbar-width:none; align-items:stretch}
+.daynav-in::-webkit-scrollbar{display:none}
+.daynav a{flex:none; font-size:12.5px; font-weight:750; color:var(--ink-soft); padding:5px 11px; border-radius:999px; letter-spacing:.02em; line-height:1.4}
+.daynav a:hover{background:var(--sea-wash); text-decoration:none; color:var(--sea-deep)}
+.daynav a.on{background:var(--sea); color:#fff}
+:root[data-theme="dark"] .daynav a.on{background:var(--sea-wash); color:var(--sea-deep)}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .daynav a.on{background:var(--sea-wash); color:var(--sea-deep)} }
+.daynav .dn-sep{flex:none; width:1.5px; background:var(--line); margin:4px 3px; border-radius:2px}
+
+/* ---------- 行前準備紀錄（收合） ---------- */
+.predep{background:var(--card); border:1px solid var(--line); border-radius:12px; box-shadow:var(--shadow); overflow:hidden}
+.predep summary{cursor:pointer; list-style:none; display:flex; align-items:baseline; gap:11px; flex-wrap:wrap; padding:15px 18px; font-weight:800}
+.predep summary::-webkit-details-marker{display:none}
+.predep summary::before{content:"▸"; color:var(--sea); font-size:15px; transition:transform .15s; align-self:center}
+.predep[open] summary::before{transform:rotate(90deg)}
+.predep .sum-h{font-size:17px}
+.predep .sum-en{font-size:10.5px; letter-spacing:.16em; color:var(--ink-faint); text-transform:uppercase; font-weight:750}
+.predep .sum-hint{font-size:12.5px; color:var(--ink-faint); font-weight:500; margin-left:auto}
+.predep-body{padding:2px 18px 16px}
 </style>
 
 <div class="wrap">
