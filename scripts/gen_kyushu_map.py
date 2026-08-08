@@ -88,37 +88,97 @@ P = {
 }
 C = {k: XY(*v) for k, v in P.items()}
 
-def q(a, b, bend=0.18, side=1):
-    """兩點間 quadratic 曲線，bend 為垂直偏移比例。回傳 path d 與中點。"""
+def q(a, b, bend=0.18, side=1, r_start=0.0, r_end=0.0):
+    """兩點間 quadratic 曲線；r_start/r_end 為起訖端沿曲線的絕對截斷半徑
+    （箭頭尖剛好停在節點圓外，不再用百分比 lerp——百分比對長段縮過頭、短段縮不夠）。
+    回傳 (path d, 原曲線中點, 截斷後終點)。"""
     (x1, y1), (x2, y2) = a, b
     mx, my = (x1 + x2) / 2, (y1 + y2) / 2
     dx, dy = x2 - x1, y2 - y1
-    L = math.hypot(dx, dy) or 1
-    ox, oy = -dy / L * L * bend * side, dx / L * L * bend * side
-    cx, cy = mx + ox, my + oy
-    return f"M{x1},{y1} Q{round(cx,1)},{round(cy,1)} {x2},{y2}", (round((mx+cx)/2,1), round((my+cy)/2,1))
+    cx, cy = mx - dy * bend * side, my + dx * bend * side
+    def B(t):
+        w = 1 - t
+        return (w*w*x1 + 2*w*t*cx + t*t*x2, w*w*y1 + 2*w*t*cy + t*t*y2)
+    u, v = 0.0, 1.0
+    if r_start > 0:
+        for i in range(1, 401):
+            t = i / 400
+            if math.hypot(B(t)[0]-x1, B(t)[1]-y1) >= r_start:
+                u = t; break
+    if r_end > 0:
+        for i in range(1, 401):
+            t = 1 - i / 400
+            if math.hypot(B(t)[0]-x2, B(t)[1]-y2) >= r_end:
+                v = t; break
+    if v - u < 0.05:  # 段太短兩端截不下：保留中段最小可見弧
+        u, v = min(u, .40), max(v, .60)
+    # De Casteljau：取 [u,v] 子曲線的控制點
+    q0, q2 = B(u), B(v)
+    dbu = (2*(1-u)*(cx-x1) + 2*u*(x2-cx), 2*(1-u)*(cy-y1) + 2*u*(y2-cy))
+    q1 = (q0[0] + (v-u)*dbu[0]/2, q0[1] + (v-u)*dbu[1]/2)
+    d = f"M{round(q0[0],1)},{round(q0[1],1)} Q{round(q1[0],1)},{round(q1[1],1)} {round(q2[0],1)},{round(q2[1],1)}"
+    mid = B(.5)
+    return d, (round(mid[0],1), round(mid[1],1)), (round(q2[0],1), round(q2[1],1))
+
+def q2seg(a, b, bend=0.18, side=1, r_start=0.0, r_end=0.0):
+    """同 q()，但把截斷後曲線於中點一分為二——前段掛 marker-end 形成「中段箭頭」。
+    用於終點區太擠放不下箭頭的段（如 D2：海之中道圓貼著博多圓與文字）。
+    回傳 (前段 d, 後段 d, 原曲線中點, 分割點)。"""
+    (x1, y1), (x2, y2) = a, b
+    mx, my = (x1 + x2) / 2, (y1 + y2) / 2
+    dx, dy = x2 - x1, y2 - y1
+    cx, cy = mx - dy * bend * side, my + dx * bend * side
+    def B(t):
+        w = 1 - t
+        return (w*w*x1 + 2*w*t*cx + t*t*x2, w*w*y1 + 2*w*t*cy + t*t*y2)
+    u, v = 0.0, 1.0
+    if r_start > 0:
+        for i in range(1, 401):
+            t = i / 400
+            if math.hypot(B(t)[0]-x1, B(t)[1]-y1) >= r_start:
+                u = t; break
+    if r_end > 0:
+        for i in range(1, 401):
+            t = 1 - i / 400
+            if math.hypot(B(t)[0]-x2, B(t)[1]-y2) >= r_end:
+                v = t; break
+    q0, q2 = B(u), B(v)
+    dbu = (2*(1-u)*(cx-x1) + 2*u*(x2-cx), 2*(1-u)*(cy-y1) + 2*u*(y2-cy))
+    q1 = (q0[0] + (v-u)*dbu[0]/2, q0[1] + (v-u)*dbu[1]/2)
+    m01 = ((q0[0]+q1[0])/2, (q0[1]+q1[1])/2)
+    m12 = ((q1[0]+q2[0])/2, (q1[1]+q2[1])/2)
+    bm  = ((m01[0]+m12[0])/2, (m01[1]+m12[1])/2)
+    r = lambda p: (round(p[0], 1), round(p[1], 1))
+    q0, q1, q2, m01, m12, bm = map(r, (q0, q1, q2, m01, m12, bm))
+    df = f"M{q0[0]},{q0[1]} Q{m01[0]},{m01[1]} {bm[0]},{bm[1]}"
+    db = f"M{bm[0]},{bm[1]} Q{m12[0]},{m12[1]} {q2[0]},{q2[1]}"
+    mid = r(B(.5))
+    return df, db, mid, bm
 
 def shift(pt, dx, dy):
     return (round(pt[0] + dx, 1), round(pt[1] + dy, 1))
 
-# 路徑（起訖略縮避免壓節點圓）
 def lerp(a, b, t):
     return (round(a[0]+(b[0]-a[0])*t,1), round(a[1]+(b[1]-a[1])*t,1))
 
+# 各端截斷半徑＝節點圓外緣（r＋stroke/2）＋2~3px 箭頭餘裕
 segs = []
-d1, m1 = q(lerp(C["airport"], C["htb"], .04), lerp(C["airport"], C["htb"], .97), .10, -1)
-d2a, m2 = q(lerp(C["htb"], C["uminaka"], .03), lerp(C["htb"], C["uminaka"], .93), .13, -1)
-d2b, _ = q(lerp(C["uminaka"], C["hakata"], .2), lerp(C["uminaka"], C["hakata"], .72), .3, 1)
-d3, m3 = q(lerp(C["hakata"], C["kokura"], .07), lerp(C["hakata"], C["kokura"], .93), .10, -1)
-d4a, m4 = q(lerp(C["kokura"], C["harmony"], .05), lerp(C["kokura"], C["harmony"], .90), .13, -1)
-d4b, _ = q(lerp(C["harmony"], C["beppu"], .18), lerp(C["harmony"], C["beppu"], .70), .2, -1)
-d5, m5 = q(lerp(C["beppu"], C["safari"], .2), lerp(C["beppu"], C["safari"], .8), .25, 1)
-d6, m6 = q(lerp(C["beppu"], C["hakata"], .05), lerp(C["beppu"], C["hakata"], .88), .22, -1)
+d1, m1, e1   = q(C["airport"], C["htb"],     .10, -1, r_start=6,  r_end=14)
+# D2：箭頭放中段（海面上）——海之中道圓下緣貼博多文字框（淨空 0）、與博多圓重疊
+# （圓心距 17.1 < 外緣和 19.8），終點區放不下箭頭；uminaka→hakata 段同理不畫線。
+d2af, d2ab, m2, e2a = q2seg(C["htb"], C["uminaka"], .13, -1, r_start=12, r_end=0)
+d3, m3, e3   = q(C["hakata"], C["kokura"],   .10, -1, r_start=13, r_end=14)
+d4a, m4, _   = q(C["kokura"], C["harmony"],  .13, -1, r_start=13, r_end=12)
+d4b, _, e4b  = q(C["harmony"], C["beppu"],   .20, -1, r_start=11, r_end=14)
+# d5 不畫線：beppu 圓（外緣11）與 safari 圓（外緣7.5）圓心僅距 17.9px，兩圓重疊，
+# 真實比例下無可見線段可畫；D5 徽章（可點）＋Safari 旁「D5 動物園」已表達往返。
+_, m5, _     = q(C["beppu"], C["safari"],    .55,  1)
+d6, m6, e6   = q(C["beppu"], C["hakata"],    .22, -1, r_start=13, r_end=16)   # 終點多留：避開「福岡機場」字頭
 
-gx1, _ = q(C["hakata"], C["kumamoto"], .12, 1)
-gx2, _ = q(C["kumamoto"], C["aso"], .15, -1)
-gx3, _ = q(C["aso"], C["takachiho"], .15, 1)
-gx4, _ = q(C["takachiho"], C["beppu"], .12, 1)
+gx1, _, _ = q(C["hakata"], C["kumamoto"], .12, 1)
+gx2, _, _ = q(C["kumamoto"], C["aso"], .15, -1)
+gx3, _, _ = q(C["aso"], C["takachiho"], .15, 1)
+gx4, _, _ = q(C["takachiho"], C["beppu"], .12, 1)
 
 # 徽章位置：以路徑中點為錨，自動避讓（節點淨空>=6、徽章互距>=26、留邊）
 _anchor = {
@@ -156,9 +216,7 @@ def _hits_text(x, y, pad=4):
         if x0 - 11 - pad < x < x1 + 11 + pad and y0 - 11 - pad < y < y1 + 11 + pad:
             return True
     return False
-_arrow_tips = [lerp(C["airport"], C["htb"], .97), lerp(C["uminaka"], C["hakata"], .72),
-               lerp(C["hakata"], C["kokura"], .93), lerp(C["harmony"], C["beppu"], .70),
-               lerp(C["beppu"], C["safari"], .8), lerp(C["beppu"], C["hakata"], .88)]
+_arrow_tips = [e1, e2a, e3, e4b, e6]  # 各段截斷後的實際箭頭尖（d5 無線）
 def _ok(pt, placed):
     x, y = pt
     if not (20 <= x <= 720 and 20 <= y <= 620):
@@ -261,10 +319,9 @@ svg = f'''    <svg viewBox="{VX0} {VY0} {VW} {VH}" xmlns="http://www.w3.org/2000
       <!-- 行程路徑（點擊跳至該日行程卡） -->
       <g stroke="var(--sea)" stroke-width="3" fill="none" stroke-linecap="round">
         <a href="#day1" class="geo-day"><title>D1 8/1 機場 → 豪斯登堡（點擊看當日行程）</title><path d="{d1}" marker-end="url(#arr)"/></a>
-        <a href="#day2" class="geo-day"><title>D2 8/2 豪斯登堡 → 海洋世界 → 博多（點擊看當日行程）</title><path d="{d2a}"/><path d="{d2b}" marker-end="url(#arr)"/></a>
+        <a href="#day2" class="geo-day"><title>D2 8/2 豪斯登堡 → 海洋世界 → 博多（點擊看當日行程）</title><path d="{d2af}" marker-end="url(#arr)"/><path d="{d2ab}"/></a>
         <a href="#day3" class="geo-day"><title>D3 8/3 KidZania → 小倉（點擊看當日行程）</title><path d="{d3}" marker-end="url(#arr)"/></a>
         <a href="#day4" class="geo-day"><title>D4 8/4 Harmonyland → 別府（點擊看當日行程）</title><path d="{d4a}"/><path d="{d4b}" marker-end="url(#arr)"/></a>
-        <a href="#day5" class="geo-day"><title>D5 8/5 African Safari（點擊看當日行程）</title><path d="{d5}" stroke-width="2.5" stroke-dasharray="2 5" marker-end="url(#arr)"/></a>
         <a href="#day6" class="geo-day"><title>D6 8/6 海地獄 → 筑紫野公園 → 福岡（點擊看當日行程）</title><path d="{d6}" marker-end="url(#arr)"/></a>
       </g>
 
@@ -365,3 +422,21 @@ for bn,(bx,by) in B.items():
         gap = math.hypot(bx-nx, by-ny) - 11 - R[nn]
         if gap < 6:
             print(f"  ! 徽章 {bn} 距節點 {nn} 淨空 {gap:.1f}px")
+
+# ---- 自檢：箭頭尖 vs 節點圓外緣（必須在圓外，淨空 >= 1）----
+_r_outer = {"airport":4,"hakata":11,"uminaka":8.8,"kokura":11,"htb":11,"harmony":8.8,"beppu":11,"safari":7.5}
+_tip_names = ["d1→htb","d2 中段箭頭","d3→kokura","d4b→beppu","d6→hakata"]
+_tip_targets = ["htb","uminaka","kokura","beppu","hakata"]
+_fail = False
+for nm, tgt, (tx, ty) in zip(_tip_names, _tip_targets, _arrow_tips):
+    gap = math.hypot(tx - C[tgt][0], ty - C[tgt][1]) - _r_outer[tgt]
+    flag = "" if gap >= 1 else "  !! 被節點蓋住"
+    if gap < 1: _fail = True
+    print(f"  tip {nm}: 距圓外緣 {gap:.1f}px{flag}")
+for nm, (tx, ty) in zip(_tip_names, _arrow_tips):
+    for (x0, x1, y0, y1) in _texts:
+        if x0 - 3 < tx < x1 + 3 and y0 - 3 < ty < y1 + 3:
+            print(f"  !! tip {nm} 落在文字框內 ({tx},{ty})")
+            _fail = True
+if _fail:
+    raise SystemExit("箭頭自檢未過")
