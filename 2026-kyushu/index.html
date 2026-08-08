@@ -9,87 +9,127 @@
 </head>
 <body>
 <style>
+/* ============================================================
+   DoodleTheme・粉藍盤（claude.ai/design「Design System」）
+   手繪語彙：cream 紙卡＋ink 粗框＋實心位移影＋貼紙 chip＋筆記本格線
+   ============================================================ */
 :root{
-  --bg:#F7FAFB; --card:#FFFFFF; --ink:#1B2A32; --ink-soft:#4E6470; --ink-faint:#7E939E;
-  --line:#DCE7EB; --line-soft:#E9F1F4;
-  --sea:#0E7490; --sea-deep:#0B5C73; --sea-wash:#E3F1F5;
-  --sun:#D97706; --sun-wash:#FBF0DE;
-  --leaf:#2E8B62; --leaf-wash:#E2F2EA;
-  --alert:#C2410C; --alert-wash:#FBE9DF;
-  --shadow:0 1px 2px rgba(27,42,50,.05),0 4px 14px rgba(27,42,50,.06);
+  --bg:#F8FBFF; --card:#F0F8FF; --card-alt:#FFFDF9;
+  --ink:#2A3F5C; --ink-soft:#5F7B9C; --ink-faint:#8CA0B8;
+  --line:#C9DCEF; --line-soft:#DFEBF7;
+  --primary:#5AA3FF; --primary-deep:#3D7FD9; --secondary:#00D4C4;
+  --cream-deep:#D6ECFF;
+  --sea:var(--primary); --sea-deep:var(--primary-deep); --sea-wash:var(--cream-deep);
+  --sun:#9A7A22; --sun-wash:#FBF2D2;
+  --leaf:#1F6E5C; --leaf-wash:#DFF2EE;
+  --alert:#B54848; --alert-wash:#FBE3E3;
+  --gold:#E8D090;
+  --frame:#2A3F5C; --shadow-c:#2A3F5C;
+  --rule:rgba(42,63,92,.045);
+  --band-bg:var(--primary); --band-fg:#FFFFFF;
+  --nav-on-bg:var(--primary-deep); --nav-on-fg:#FFFFFF;
+  --sticker-bg:#FFFFFF; --sticker-fg:var(--primary-deep);
 }
 @media (prefers-color-scheme: dark){
-  :root{
-    --bg:#0F1619; --card:#172227; --ink:#E6EEF1; --ink-soft:#A9BCC5; --ink-faint:#7A8F99;
-    --line:#27363D; --line-soft:#1E2C32;
-    --sea:#4FB3CB; --sea-deep:#7FCBDD; --sea-wash:#122B33;
-    --sun:#E8A33D; --sun-wash:#2C2214;
-    --leaf:#5CBD93; --leaf-wash:#14291F;
-    --alert:#E8794A; --alert-wash:#301A10;
-    --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 14px rgba(0,0,0,.25);
+  :root:not([data-theme="light"]){
+    --bg:#131A28; --card:#1B2534; --card-alt:#212C3E;
+    --ink:#E7EEF9; --ink-soft:#AEBED6; --ink-faint:#7D8FA9;
+    --line:#33445F; --line-soft:#26344A;
+    --primary:#6FB0FF; --primary-deep:#9CC8FF; --secondary:#2BD9CA;
+    --cream-deep:#24354F;
+    --sun:#E5A952; --sun-wash:#2E2413;
+    --leaf:#57C4A8; --leaf-wash:#12291F;
+    --alert:#E88585; --alert-wash:#331717;
+    --gold:#D9C077;
+    --frame:#3E5170; --shadow-c:rgba(0,0,0,.5);
+    --rule:rgba(231,238,249,.035);
+    --band-bg:var(--cream-deep); --band-fg:var(--primary-deep);
+    --nav-on-bg:var(--primary); --nav-on-fg:#131A28;
+    --sticker-bg:#1B2534; --sticker-fg:var(--primary);
   }
 }
-:root[data-theme="light"]{
-  --bg:#F7FAFB; --card:#FFFFFF; --ink:#1B2A32; --ink-soft:#4E6470; --ink-faint:#7E939E;
-  --line:#DCE7EB; --line-soft:#E9F1F4;
-  --sea:#0E7490; --sea-deep:#0B5C73; --sea-wash:#E3F1F5;
-  --sun:#D97706; --sun-wash:#FBF0DE;
-  --leaf:#2E8B62; --leaf-wash:#E2F2EA;
-  --alert:#C2410C; --alert-wash:#FBE9DF;
-  --shadow:0 1px 2px rgba(27,42,50,.05),0 4px 14px rgba(27,42,50,.06);
-}
 :root[data-theme="dark"]{
-  --bg:#0F1619; --card:#172227; --ink:#E6EEF1; --ink-soft:#A9BCC5; --ink-faint:#7A8F99;
-  --line:#27363D; --line-soft:#1E2C32;
-  --sea:#4FB3CB; --sea-deep:#7FCBDD; --sea-wash:#122B33;
-  --sun:#E8A33D; --sun-wash:#2C2214;
-  --leaf:#5CBD93; --leaf-wash:#14291F;
-  --alert:#E8794A; --alert-wash:#301A10;
-  --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 14px rgba(0,0,0,.25);
+  --bg:#131A28; --card:#1B2534; --card-alt:#212C3E;
+  --ink:#E7EEF9; --ink-soft:#AEBED6; --ink-faint:#7D8FA9;
+  --line:#33445F; --line-soft:#26344A;
+  --primary:#6FB0FF; --primary-deep:#9CC8FF; --secondary:#2BD9CA;
+  --cream-deep:#24354F;
+  --sun:#E5A952; --sun-wash:#2E2413;
+  --leaf:#57C4A8; --leaf-wash:#12291F;
+  --alert:#E88585; --alert-wash:#331717;
+  --gold:#D9C077;
+  --frame:#3E5170; --shadow-c:rgba(0,0,0,.5);
+  --rule:rgba(231,238,249,.035);
+  --band-bg:var(--cream-deep); --band-fg:var(--primary-deep);
+  --nav-on-bg:var(--primary); --nav-on-fg:#131A28;
+  --sticker-bg:#1B2534; --sticker-fg:var(--primary);
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth; scroll-padding-top:66px}
 body{
-  background:var(--bg); color:var(--ink);
-  font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Hiragino Sans","Noto Sans TC","Microsoft JhengHei",sans-serif;
+  background:var(--bg);
+  background-image:repeating-linear-gradient(0deg, transparent, transparent 25px, var(--rule) 25px, var(--rule) 26px);
+  color:var(--ink);
+  font-family:ui-rounded,"SF Pro Rounded","Hiragino Maru Gothic ProN","PingFang TC","Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif;
   line-height:1.65; margin:0; padding:0 16px 72px;
   font-size:15.5px;
 }
 .wrap{max-width:760px; margin:0 auto}
-a{color:var(--sea); text-decoration:none}
+a{color:var(--primary-deep); text-decoration:none}
 a:hover{text-decoration:underline}
-a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--sea); outline-offset:2px; border-radius:4px}
+a:focus-visible,button:focus-visible,input:focus-visible,summary:focus-visible{outline:2.5px solid var(--primary); outline-offset:2px; border-radius:6px}
 
 /* ---------- header ---------- */
-header{padding:40px 0 8px}
-.kicker{font-size:12px; letter-spacing:.18em; color:var(--sea); font-weight:700; text-transform:uppercase}
-h1{font-size:clamp(26px,6vw,38px); font-weight:800; letter-spacing:.01em; margin:.2em 0 .1em; text-wrap:balance; line-height:1.25}
+header{padding:42px 0 8px}
+.kicker{font-size:12px; letter-spacing:.18em; color:var(--primary-deep); font-weight:800; text-transform:uppercase}
+h1{font-size:clamp(27px,6vw,39px); font-weight:800; letter-spacing:.01em; margin:.2em 0 .12em; text-wrap:balance; line-height:1.25}
 .subtitle{color:var(--ink-soft); margin:0 0 18px; font-size:15px}
-.facts{display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 4px}
-.fact{background:var(--card); border:1px solid var(--line); border-radius:999px; padding:5px 14px; font-size:13px; color:var(--ink-soft); white-space:nowrap}
-.fact b{color:var(--ink); font-weight:650; font-variant-numeric:tabular-nums}
+.facts{display:flex; flex-wrap:wrap; gap:9px; margin:16px 0 4px}
+.fact{background:var(--card-alt); border:2px solid var(--frame); border-radius:11px; padding:5px 13px; font-size:13px; color:var(--ink-soft); white-space:nowrap; box-shadow:2px 2px 0 var(--shadow-c); font-weight:600}
+.fact:nth-child(odd){transform:rotate(-.7deg)}
+.fact:nth-child(even){transform:rotate(.6deg)}
+.fact b{color:var(--ink); font-weight:750; font-variant-numeric:tabular-nums}
 
 /* ---------- flight ---------- */
-.flights{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:20px 0 0}
+.flights{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:22px 0 0}
 @media (max-width:560px){.flights{grid-template-columns:1fr}}
-.flight{background:var(--card); border:1px solid var(--line); border-radius:10px; padding:14px 16px; box-shadow:var(--shadow)}
-.flight .tag{font-size:11px; letter-spacing:.14em; color:var(--ink-faint); font-weight:700}
+.flight{background:var(--card-alt); border:2.5px solid var(--frame); border-radius:16px; padding:14px 16px; box-shadow:2.5px 3.5px 0 var(--shadow-c)}
+.flight .tag{font-size:11px; letter-spacing:.14em; color:var(--ink-faint); font-weight:750}
 .flight .no{font-weight:800; font-size:17px; margin-top:2px}
 .flight .route{display:flex; align-items:baseline; gap:10px; margin-top:6px; font-variant-numeric:tabular-nums}
 .flight .apt{font-size:22px; font-weight:800; letter-spacing:.02em}
 .flight .t{font-size:13px; color:var(--ink-soft)}
-.flight .arrow{color:var(--sea); flex:1; text-align:center; font-size:14px}
+.flight .arrow{color:var(--primary-deep); flex:1; text-align:center; font-size:14px}
 .flight .d{font-size:12.5px; color:var(--ink-faint); margin-top:4px}
 
 /* ---------- section ---------- */
-section{margin-top:44px}
-.sec-head{display:flex; align-items:baseline; gap:10px; border-bottom:2px solid var(--ink); padding-bottom:8px; margin-bottom:18px}
-.sec-head h2{font-size:20px; font-weight:800; margin:0; letter-spacing:.02em}
-.sec-head .en{font-size:11px; letter-spacing:.16em; color:var(--ink-faint); text-transform:uppercase; font-weight:700}
+section{margin-top:48px}
+.sec-head{display:flex; align-items:baseline; gap:11px; margin-bottom:18px}
+.sec-head h2{font-size:20.5px; font-weight:800; margin:0; letter-spacing:.02em; padding:0 6px;
+  background:linear-gradient(transparent 60%, var(--cream-deep) 60%, var(--cream-deep) 94%, transparent 94%)}
+.sec-head .en{font-size:11px; letter-spacing:.16em; color:var(--ink-faint); text-transform:uppercase; font-weight:750}
 
-/* ---------- todo ---------- */
-.todo-note{font-size:13.5px; color:var(--ink-soft); margin:-6px 0 14px}
-.todo{background:var(--card); border:1px solid var(--line); border-left:4px solid var(--sun); border-radius:10px; padding:14px 16px 14px 14px; margin-bottom:10px; box-shadow:var(--shadow)}
+/* ---------- sticky day nav ---------- */
+.daynav{position:sticky; top:10px; z-index:60; margin-top:30px}
+.daynav-in{display:flex; gap:4px; overflow-x:auto; background:var(--card-alt); border:2.5px solid var(--frame); border-radius:999px; padding:5px 7px; box-shadow:2.5px 3px 0 var(--shadow-c); scrollbar-width:none; align-items:stretch}
+.daynav-in::-webkit-scrollbar{display:none}
+.daynav a{flex:none; font-size:12.5px; font-weight:800; color:var(--ink-soft); padding:5px 11px; border-radius:999px; letter-spacing:.02em; line-height:1.4}
+.daynav a:hover{background:var(--cream-deep); text-decoration:none; color:var(--ink)}
+.daynav a.on{background:var(--nav-on-bg); color:var(--nav-on-fg)}
+.daynav .dn-sep{flex:none; width:2px; background:var(--line); margin:4px 3px; border-radius:2px}
+
+/* ---------- todo（行前準備紀錄・收合） ---------- */
+.predep{background:var(--card-alt); border:2.5px solid var(--frame); border-radius:18px; box-shadow:2.5px 4px 0 var(--shadow-c); overflow:hidden}
+.predep summary{cursor:pointer; list-style:none; display:flex; align-items:baseline; gap:11px; flex-wrap:wrap; padding:15px 18px; font-weight:800}
+.predep summary::-webkit-details-marker{display:none}
+.predep summary::before{content:"▸"; color:var(--primary-deep); font-size:15px; transition:transform .15s; align-self:center}
+.predep[open] summary::before{transform:rotate(90deg)}
+.predep .sum-h{font-size:17px}
+.predep .sum-en{font-size:10.5px; letter-spacing:.16em; color:var(--ink-faint); text-transform:uppercase; font-weight:750}
+.predep .sum-hint{font-size:12.5px; color:var(--ink-faint); font-weight:500; margin-left:auto}
+.predep-body{padding:2px 18px 16px}
+.todo-note{font-size:13.5px; color:var(--ink-soft); margin:0 0 14px}
+.todo{background:var(--card); border:2px solid var(--frame); border-left:6px solid var(--sun); border-radius:13px; padding:13px 15px 13px 13px; margin-bottom:10px; box-shadow:2px 2.5px 0 var(--shadow-c)}
 .todo label{display:flex; gap:12px; align-items:flex-start; cursor:pointer}
 .todo input{width:19px; height:19px; margin-top:3px; accent-color:var(--leaf); flex:none; cursor:pointer}
 .todo .t-title{font-weight:750}
@@ -97,8 +137,8 @@ section{margin-top:44px}
 .todo .t-body b{color:var(--ink)}
 .todo.done{border-left-color:var(--leaf); opacity:.62}
 .todo.done .t-title{text-decoration:line-through}
-.checks{background:var(--card); border:1px solid var(--line); border-radius:10px; padding:6px 16px; box-shadow:var(--shadow)}
-.checks label{display:flex; gap:12px; align-items:flex-start; padding:10px 0; border-bottom:1px solid var(--line-soft); font-size:14px; color:var(--ink-soft); cursor:pointer}
+.checks{background:var(--card); border:2px solid var(--frame); border-radius:13px; padding:6px 16px; box-shadow:2px 2.5px 0 var(--shadow-c)}
+.checks label{display:flex; gap:12px; align-items:flex-start; padding:10px 0; border-bottom:1.5px dashed var(--line); font-size:14px; color:var(--ink-soft); cursor:pointer}
 .checks label:last-child{border-bottom:none}
 .checks input{width:17px; height:17px; margin-top:3px; accent-color:var(--leaf); flex:none; cursor:pointer}
 .checks b{color:var(--ink)}
@@ -106,49 +146,46 @@ section{margin-top:44px}
 .checks label.done span{text-decoration:line-through}
 
 /* ---------- route map ---------- */
-.mapbox{background:var(--card); border:1px solid var(--line); border-radius:10px; box-shadow:var(--shadow); overflow-x:auto; padding:10px 6px}
-.mapbox svg{display:block; min-width:700px; width:100%; height:auto}
-.map-cap{font-size:12.5px; color:var(--ink-faint); margin-top:8px}
+.mapbox{background:var(--card); border:3px solid var(--frame); border-radius:20px; box-shadow:3px 5px 0 var(--shadow-c); overflow-x:auto; padding:12px 8px}
+.mapbox svg{display:block; min-width:600px; width:100%; height:auto}
+.map-cap{font-size:12.5px; color:var(--ink-faint); margin-top:9px}
+#geomap a.geo-day > circle:first-of-type{fill:var(--primary-deep)}
 
 /* ---------- day card ---------- */
-.day{background:var(--card); border:1px solid var(--line); border-radius:12px; margin-bottom:22px; box-shadow:var(--shadow); overflow:hidden}
-.day-band{display:flex; align-items:center; gap:12px; padding:10px 18px; background:var(--sea); color:#fff}
-:root[data-theme="dark"] .day-band, :root:not([data-theme="light"]) .day-band{color:#fff}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .day-band{background:var(--sea-wash); color:var(--sea-deep)}}
-:root[data-theme="dark"] .day-band{background:var(--sea-wash); color:var(--sea-deep)}
-:root[data-theme="light"] .day-band{background:var(--sea); color:#fff}
-.day-band .dnum{font-weight:800; font-size:15px; letter-spacing:.06em; white-space:nowrap}
-.day-band .ddate{font-size:13.5px; opacity:.85; white-space:nowrap; font-variant-numeric:tabular-nums}
-.day-band .dtheme{font-size:13.5px; font-weight:650; margin-left:auto; text-align:right}
+.day{background:var(--card); border:3px solid var(--frame); border-radius:20px; margin-bottom:26px; box-shadow:3px 5px 0 var(--shadow-c); overflow:hidden}
+.day-band{display:flex; align-items:center; gap:12px; padding:11px 16px; background:var(--band-bg); color:var(--band-fg); border-bottom:2.5px solid var(--frame)}
+.day-band .dnum{font-weight:800; font-size:13.5px; letter-spacing:.05em; white-space:nowrap; background:var(--sticker-bg); color:var(--sticker-fg); border:2px solid var(--frame); border-radius:9px; padding:2px 10px; box-shadow:1.5px 1.5px 0 var(--shadow-c); transform:rotate(-1.4deg)}
+.day-band .ddate{font-size:13.5px; opacity:.92; white-space:nowrap; font-variant-numeric:tabular-nums; font-weight:700}
+.day-band .dtheme{font-size:13.5px; font-weight:700; margin-left:auto; text-align:right}
 .day-inner{padding:16px 18px 18px}
 .tl{list-style:none; margin:0; padding:0}
-.tl li{display:flex; gap:14px; padding:7px 0; border-bottom:1px dashed var(--line-soft); align-items:baseline}
+.tl li{display:flex; gap:14px; padding:7px 0; border-bottom:1.5px dashed var(--line-soft); align-items:baseline}
 .tl li:last-child{border-bottom:none}
-.tl .tt{font-variant-numeric:tabular-nums; font-weight:700; font-size:13.5px; color:var(--sea); flex:none; width:88px; letter-spacing:.02em}
+.tl .tt{font-variant-numeric:tabular-nums; font-weight:800; font-size:13.5px; color:var(--primary-deep); flex:none; width:88px; letter-spacing:.02em}
 .tl .tx{font-size:14.5px}
 .tl .tx small{display:block; color:var(--ink-faint); font-size:12.5px}
-.warnline{display:flex; gap:8px; background:var(--alert-wash); color:var(--alert); border-radius:8px; padding:9px 12px; font-size:13.5px; margin-top:12px; align-items:flex-start}
+.warnline{display:flex; gap:8px; background:var(--alert-wash); color:var(--alert); border:1.5px dashed var(--alert); border-radius:11px; padding:9px 12px; font-size:13.5px; margin-top:12px; align-items:flex-start}
 .warnline b{font-weight:750; flex:none; white-space:nowrap}
-.hintline{display:flex; gap:8px; background:var(--sun-wash); border-radius:8px; padding:9px 12px; font-size:13.5px; margin-top:12px; color:var(--ink-soft); align-items:flex-start}
+.hintline{display:flex; gap:8px; background:var(--sun-wash); border:1.5px dashed var(--sun); border-radius:11px; padding:9px 12px; font-size:13.5px; margin-top:12px; color:var(--ink-soft); align-items:flex-start}
 .hintline b{color:var(--ink)}
 .hintline > span:first-child{flex:none}
 
 /* stay card */
-.stay{border:1px solid var(--line); border-radius:10px; margin-top:14px; padding:13px 15px; background:linear-gradient(0deg,var(--sea-wash),var(--sea-wash))}
-.stay .s-label{font-size:11px; letter-spacing:.16em; font-weight:750; color:var(--sea-deep); text-transform:uppercase}
+.stay{border:2px solid var(--frame); border-radius:14px; margin-top:14px; padding:13px 15px; background:var(--card-alt); box-shadow:2px 3px 0 var(--shadow-c)}
+.stay .s-label{font-size:11px; letter-spacing:.16em; font-weight:750; color:var(--primary-deep); text-transform:uppercase}
 .stay .s-name{font-weight:800; font-size:16px; margin:3px 0 1px}
 .stay .s-sub{font-size:13.5px; color:var(--ink-soft)}
 .stay .s-row{display:flex; flex-wrap:wrap; gap:6px 14px; margin-top:9px; font-size:13px; color:var(--ink-soft); align-items:center}
 .stay .s-row .kv b{color:var(--ink); font-variant-numeric:tabular-nums; font-weight:700}
-.s-info{display:grid; grid-template-columns:1fr 1fr; gap:8px 16px; margin-top:11px; padding-top:11px; border-top:1px solid var(--line)}
+.s-info{display:grid; grid-template-columns:1fr 1fr; gap:8px 16px; margin-top:11px; padding-top:11px; border-top:1.5px solid var(--line)}
 @media (max-width:560px){.s-info{grid-template-columns:1fr}}
 .s-info .kv2{font-size:13px; color:var(--ink-soft); line-height:1.5}
 .s-info .kv2 .k{display:block; font-size:10.5px; letter-spacing:.14em; color:var(--ink-faint); font-weight:750; text-transform:uppercase; margin-bottom:1px}
 .s-info .kv2 b{color:var(--ink); font-weight:650; font-variant-numeric:tabular-nums}
 .s-info .kv2.wide{grid-column:1 / -1}
-.s-note{font-size:12.5px; color:var(--ink-faint); margin-top:10px; padding-top:9px; border-top:1px dashed var(--line); line-height:1.6}
+.s-note{font-size:12.5px; color:var(--ink-faint); margin-top:10px; padding-top:9px; border-top:1.5px dashed var(--line); line-height:1.6}
 .s-note b{color:var(--ink-soft)}
-.badge{display:inline-block; border-radius:999px; padding:2px 11px; font-size:12px; font-weight:750; letter-spacing:.04em; white-space:nowrap}
+.badge{display:inline-block; border-radius:999px; padding:2px 11px; font-size:12px; font-weight:750; letter-spacing:.04em; white-space:nowrap; border:1.5px solid currentColor}
 .badge.paid{background:var(--leaf-wash); color:var(--leaf)}
 .badge.onsite{background:var(--sun-wash); color:var(--sun)}
 .badge.nonref{background:var(--alert-wash); color:var(--alert)}
@@ -157,50 +194,55 @@ section{margin-top:44px}
 .drive{display:flex; flex-wrap:wrap; gap:10px; margin-top:14px; align-items:center; justify-content:space-between}
 .km{font-size:13px; color:var(--ink-faint)}
 .km b{color:var(--ink-soft); font-variant-numeric:tabular-nums}
-.maplink{display:inline-flex; align-items:center; gap:7px; background:var(--sea); color:#fff; border-radius:8px; padding:8px 15px; font-size:13.5px; font-weight:700; white-space:nowrap; transition:background .15s}
-.maplink:hover{background:var(--sea-deep); text-decoration:none}
-:root[data-theme="dark"] .maplink{background:var(--sea-wash); color:var(--sea)}
-:root[data-theme="dark"] .maplink:hover{background:var(--line-soft)}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]) .maplink{background:var(--sea-wash); color:var(--sea)}
-  :root:not([data-theme="light"]) .maplink:hover{background:var(--line-soft)}
-}
+.maplink{display:inline-flex; align-items:center; gap:7px; background:var(--primary-deep); color:#fff; border:2px solid var(--frame); border-radius:12px; padding:7px 15px; font-size:13.5px; font-weight:750; white-space:nowrap; box-shadow:2px 2px 0 var(--shadow-c); transition:transform .12s}
+.maplink:hover{text-decoration:none; transform:translate(1px,1px); box-shadow:1px 1px 0 var(--shadow-c)}
+:root[data-theme="dark"] .maplink{color:#131A28}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .maplink{color:#131A28} }
 .maplink svg{flex:none}
 
 /* ---------- bookings table ---------- */
-.tablebox{background:var(--card); border:1px solid var(--line); border-radius:10px; box-shadow:var(--shadow); overflow-x:auto}
+.tablebox{background:var(--card-alt); border:2.5px solid var(--frame); border-radius:16px; box-shadow:3px 4px 0 var(--shadow-c); overflow-x:auto}
 table{border-collapse:collapse; width:100%; min-width:660px; font-size:13.5px}
-th{font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-faint); text-align:left; padding:12px 14px 8px; border-bottom:2px solid var(--line); white-space:nowrap}
-td{padding:11px 14px; border-bottom:1px solid var(--line-soft); vertical-align:top}
+th{font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-faint); text-align:left; padding:12px 14px 8px; border-bottom:2.5px solid var(--frame); white-space:nowrap}
+td{padding:11px 14px; border-bottom:1.5px solid var(--line-soft); vertical-align:top}
 tr:last-child td{border-bottom:none}
 td.num{font-variant-numeric:tabular-nums; white-space:nowrap}
 td .sub{display:block; font-size:12px; color:var(--ink-faint)}
-.foot{margin-top:40px; font-size:12.5px; color:var(--ink-faint); border-top:1px solid var(--line); padding-top:14px}
+.foot{margin-top:44px; font-size:12.5px; color:var(--ink-faint); border-top:2px dashed var(--line); padding-top:14px}
+
 /* header 花費總覽帶（三頁手帖共用版式） */
-.costband{margin-top:14px; background:var(--card); border:1px solid var(--line); border-radius:12px; padding:13px 16px; box-shadow:var(--shadow); display:flex; flex-wrap:wrap; align-items:baseline; gap:8px 22px}
+.costband{margin-top:16px; background:var(--card); border:3px solid var(--frame); border-radius:18px; padding:14px 17px; box-shadow:3px 4px 0 var(--shadow-c); display:flex; flex-wrap:wrap; align-items:baseline; gap:8px 22px}
 .costband .cb-total{display:flex; align-items:baseline; gap:8px}
 .costband .cb-total span{font-size:11.5px; letter-spacing:.14em; font-weight:750; color:var(--ink-faint); text-transform:uppercase}
 .costband .cb-total b{font-size:21px}
 .costband .cb-items{display:flex; flex-wrap:wrap; gap:5px 18px; font-size:13.5px; color:var(--ink-soft)}
 .costband .cb-i b{color:var(--ink)}
 .costband .cb-note{flex-basis:100%; font-size:11.5px; color:var(--ink-faint)}
+
 /* 地震改線：原行程反灰留存 */
-.day.cancelled{opacity:.55; filter:grayscale(.75)}
-.day.cancelled .day-band{background:var(--ink-faint)!important; color:#fff!important}
+.day.cancelled{opacity:.6; filter:grayscale(.8)}
+.day.cancelled .day-band{background:var(--line-soft); color:var(--ink-soft)}
+.day.cancelled .dnum{background:var(--card); color:var(--ink-faint); transform:none}
 .day.cancelled .dtheme::after{content:"（7/28 地震取消）"; font-weight:750}
 .badge.cxl{background:var(--alert-wash); color:var(--alert); font-weight:700}
-.quake{background:var(--card); border:1px solid var(--alert); border-left:6px solid var(--alert); border-radius:12px; padding:16px 18px; box-shadow:var(--shadow)}
+.quake{background:var(--card-alt); border:3px solid var(--frame); border-left:7px solid var(--alert); border-radius:18px; padding:16px 18px; box-shadow:3px 4px 0 var(--shadow-c)}
 .quake .q-date{font-size:12px; letter-spacing:.14em; font-weight:750; color:var(--alert); text-transform:uppercase}
 .quake .q-title{font-weight:800; font-size:18px; margin:4px 0 8px}
 .quake p{font-size:14px; color:var(--ink-soft); margin:.4em 0}
 .quake b{color:var(--ink)}
+
 /* 保險與上網快速參考（三頁手帖共用版式） */
 .ess-grid{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:14px}
 .ess-grid .stay{min-width:0; max-width:100%}
 @media (max-width:760px){ .ess-grid{grid-template-columns:1fr} }
 .ess-grid .stay{margin-top:0}
 .ess-grid table{min-width:0}
-@media (prefers-reduced-motion: reduce){ *{transition:none!important} }
+@media (max-width:560px){
+  .fact:nth-child(odd),.fact:nth-child(even){transform:none}
+  .day-band{flex-wrap:wrap; gap:8px 10px}
+  .day-band .dtheme{margin-left:0; text-align:left; flex-basis:100%}
+}
+@media (prefers-reduced-motion: reduce){ *{transition:none!important} html{scroll-behavior:auto} }
 </style>
 
 <div class="wrap">
@@ -371,110 +413,19 @@ td .sub{display:block; font-size:12px; color:var(--ink-faint)}
   <p class="map-cap">真實比例地圖（九州縣界開源圖資投影，32.35°N 以南截幅）：實線＝改線後行程（D1–D8，箭頭為行進方向；D5 虛線＝別府當地往返，D7 福岡市區日不移動）；空心小點＝建議休息站；灰虛線＝7/28 地震取消的原路線；✕＝震央（M7.1，宇城市/氷川町）——行程各點與震央的距離即真實比例。實際導航用各日卡「當日路線」。</p>
 </section>
 
-<section id="earthquake">
-  <div class="sec-head"><h2>行程變更記事</h2><span class="en">The Earthquake, and Plan B</span></div>
-  <div class="quake">
-    <div class="q-date">2026.07.28（二）16:27 JST・出發前 4 天</div>
-    <div class="q-title">熊本 M7.1 大地震——行程史上第一次改線</div>
-    <p><b>熊本縣宇城市・氷川町觀測到最大震度 7</b>（震源深度 10 km），有明海・八代海一度發布海嘯注意報，JR 九州全線停駛、熊本城石垣崩落。震央正是原行程 D2–D3 的核心區（熊本市區 → 阿蘇 → 高千穗），山區餘震期土石流風險高。</p>
-    <p><b>當晚全家的決定：</b>取消熊本與高千穗段——Dormy Inn 熊本、旅館四季見、高千穗峽划船三筆全數取消（趕在收費線前，<b>取消費 0、全額退款</b>）；行程改走北線：福岡海之中道海洋世界、KidZania 職業體驗，8/4 改由東九州道南下別府接回原行程，<b>全程避開震區</b>。</p>
-    <p>原 D2–D4 行程保留在下方（灰色）作為紀念——阿蘇的草千里、高千穗峽的船，留給下一次。</p>
+<nav class="daynav" aria-label="日次快速跳轉">
+  <div class="daynav-in">
+    <a href="#day1">D1</a><a href="#day2">D2</a><a href="#day3">D3</a><a href="#day4">D4</a><a href="#day5">D5</a><a href="#day6">D6</a><a href="#day7">D7</a><a href="#day8">D8</a>
+    <span class="dn-sep" role="presentation"></span>
+    <a href="#earthquake">記事</a><a href="#bookings">訂單</a><a href="#spending">花費</a>
   </div>
-</section>
+</nav>
 
-<section id="todo">
-  <div class="sec-head"><h2>行前必辦</h2><span class="en">Before we go</span></div>
-  <p class="todo-note">7/10 已核對 Gmail 全部訂房信、7/22 旅平險與 eSIM 辦妥；<b>7/28 熊本地震改線</b>（見上方記事）——博多＋小倉住宿與 KidZania 均已補訂，<b>8 晚住宿全數訂妥</b>，剩下面三件事。勾選狀態會存在這台裝置上。</p>
-  <div class="todo" data-key="hotel0803">
-    <label><input type="checkbox" checked>
-      <div>
-        <div class="t-title">✅ 7/29 已訂——8/3 晚住宿（Daiwa Roynet 小倉站前）</div>
-        <div class="t-body">預約號 <b>T9C04DCD323AD</b>・角落雙床房・NT$4,474 已刷卡・17:00 後入住；2 名兒童與大人同床免費（訂房時已申報 2 名）。隔天 D4 從小倉直奔 Harmonyland（東九州道正路線上）→ 海地獄 → 別府。</div>
-      </div>
-    </label>
-  </div>
-  <div class="todo" data-key="dining">
-    <label><input type="checkbox">
-      <div>
-        <div class="t-title">餐廳預約 ×2（媽媽的餐廳手冊）</div>
-        <div class="t-body">出發前訂好：<b>8/6 博多華味鳥 天神店</b>（HotPepper 訂個室）、<b>8/7 おおやま 福岡PARCO店</b>（HotPepper／ぐるなび）。逐日用餐地圖與備案見 <a href="./dining/">🍜 九州餐廳手冊</a>（7/24 查證；D2–D4 改線後餐食待媽媽更新手冊）。<s>8/3 四季見會席</s>——已隨地震取消。</div>
-      </div>
-    </label>
-  </div>
-  <div class="todo cancelled-item" data-key="boat" style="opacity:.55">
-    <label><input type="checkbox" checked>
-      <div>
-        <div class="t-title" style="text-decoration:line-through">高千穗峽划船（8/4 09:30）——7/28 地震取消</div>
-        <div class="t-body">原預約番號 LH6HB4H4・¥5,100 <b>已 100% 全額退款</b>（系統自動退回信用卡，免手續）。高千穗峽的船，留給下一次。</div>
-      </div>
-    </label>
-  </div>
-  <div class="todo" data-key="gate">
-    <label><input type="checkbox">
-      <div>
-        <div class="t-title">GATE HOTEL 把兩個小孩加進訂單＋確認兒童早餐</div>
-        <div class="t-body">福岡兩晚（8/6–8/8）訂單目前<b>只登記 2 位大人</b>。飯店已回信：12 歲以下不加床同住免費，但早餐只含 2 份。此方案<b>不可退款</b>，要用改訂單處理：<b>gatehotel.fukuoka@hulichm.jp</b>／+81-92-406-2605。</div>
-      </div>
-    </label>
-  </div>
-  <div class="todo" data-key="seat">
-    <label><input type="checkbox">
-      <div>
-        <div class="t-title">TOYOTA 租車加購兒童安全座椅</div>
-        <div class="t-body">目前預約（99965316000）座椅數量是 <b>0</b>；日本法規 6 歲未滿強制使用。電話 <b>0800-7000-815</b> 報預約號加購（junior seat 建議兩個孩子都用）。</div>
-      </div>
-    </label>
-  </div>
 
-  <div class="checks" id="checks">
-    <label data-key="quakecheck"><input type="checkbox"><span><b>出發前 1–2 天做地震後總確認</b>——高速公路通行（NEXCO 西日本）、豪斯登堡／海洋世界／KidZania／Harmonyland（8/4 二）／Sunshine Pool（8/6 四）／杉乃井官網臨時公告、JR 復駛與餘震動態；餘震期兩週內任何設施都可能臨時休。</span></label>
-    <label data-key="htb"><input type="checkbox"><span><b>確認豪斯登堡門票組合</b>——入住日（8/1）進園需門票（傍晚票種）；住宿方案多含隔日 1-Day Passport、住客隔天可提早約 1 小時入園——訂房頁或電話 0570-064-110 確認清楚再決定買什麼票。8/1、8/2 晚 20:45 都有花火秀。</span></label>
-    <label data-key="parking"><input type="checkbox"><span><b>查好福岡 GATE HOTEL 附近停車場</b>——飯店無停車場，8/6 晚–8/8 早要停天神周邊收費停車場（實際 8/6 停天神地下街地下停車場、8/7 開車往返海之中道），先查 Times 位置與夜間最大料金。</span></label>
-    <label data-key="safari"><input type="checkbox"><span><b>African Safari 早點到</b>——8 月 9:15 開園、8:50 開始受付；Jungle Bus 今夏不開放預約、只能當日現場排隊（開自己車遊園免預約）。</span></label>
-    <label data-key="typhoon"><input type="checkbox"><span><b>出發前 3 天看颱風</b>——8 月上旬是颱風季，戶外行程比重高（水族館以外多為戶外：動物園、泳池、Harmonyland）。</span></label>
-  </div>
-</section>
 
-<section id="map">
-  <div class="sec-head"><h2>全程路線</h2><span class="en">Route Overview</span></div>
-  <div class="mapbox">
-    <svg viewBox="0 0 880 190" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="八天路線圖（7/28 地震改線）：福岡機場、豪斯登堡、福岡海之中道、別府、福岡、福岡機場；原熊本阿蘇高千穗段取消">
-      <line x1="50" y1="80" x2="830" y2="80" stroke="var(--line)" stroke-width="5" stroke-linecap="round"/>
-      <line x1="50" y1="80" x2="830" y2="80" stroke="var(--sea)" stroke-width="5" stroke-linecap="round" stroke-dasharray="0"/>
-      <!-- stops -->
-      <g font-family="inherit" text-anchor="middle">
-        <!-- 福岡機場 -->
-        <circle cx="50" cy="80" r="9" fill="var(--card)" stroke="var(--sea)" stroke-width="4"/>
-        <text x="50" y="52" font-size="13" font-weight="800" fill="var(--ink)">福岡機場</text>
-        <text x="50" y="112" font-size="11" fill="var(--ink-faint)">8/1 取車</text>
-        <!-- 豪斯登堡 -->
-        <circle cx="190" cy="80" r="9" fill="var(--card)" stroke="var(--sea)" stroke-width="4"/>
-        <text x="190" y="52" font-size="13" font-weight="800" fill="var(--ink)">豪斯登堡</text>
-        <text x="190" y="112" font-size="11" fill="var(--ink-faint)">D1 泊</text>
-                <!-- 福岡・海之中道 -->
-        <circle cx="360" cy="80" r="9" fill="var(--card)" stroke="var(--sea)" stroke-width="4"/>
-        <text x="360" y="52" font-size="13" font-weight="800" fill="var(--ink)">福岡・博多</text>
-        <text x="360" y="112" font-size="11" fill="var(--ink-faint)">D2 泊博多・D3 泊小倉</text>
-        <text x="360" y="128" font-size="11" fill="var(--ink-faint)">海洋世界・KidZania</text>
-        <!-- 原熊本高千穗（取消標記） -->
-        <text x="360" y="165" font-size="11" fill="var(--ink-faint)">熊本・阿蘇・高千穗</text>
-        <text x="480" y="165" font-size="11" fill="var(--alert)">✕ 7/28 地震取消</text>
-        <!-- 別府 -->
-        <circle cx="560" cy="80" r="9" fill="var(--card)" stroke="var(--sea)" stroke-width="4"/>
-        <text x="560" y="52" font-size="13" font-weight="800" fill="var(--ink)">別府</text>
-        <text x="560" y="112" font-size="11" fill="var(--ink-faint)">D4–D5 泊 ×2</text>
-                <!-- 福岡 -->
-        <circle cx="740" cy="80" r="9" fill="var(--card)" stroke="var(--sea)" stroke-width="4"/>
-        <text x="740" y="52" font-size="13" font-weight="800" fill="var(--ink)">福岡</text>
-        <text x="740" y="112" font-size="11" fill="var(--ink-faint)">D6–D7 泊 ×2</text>
-                <!-- 機場終點 -->
-        <circle cx="830" cy="80" r="6" fill="var(--sea)"/>
-        <text x="830" y="160" font-size="11" fill="var(--ink-faint)">8/8 還車返台</text>
-      </g>
-    </svg>
-  </div>
-  <p class="map-cap">單日最長車程 156 km（D2）；行車距離為估算值，實際以當天導航為準。每天卡片下方可一鍵開啟 Google Maps 當日路線。</p>
-</section>
+
+
+
 
 <section id="days">
   <div class="sec-head"><h2>每日行程</h2><span class="en">Day by Day</span></div>
@@ -552,43 +503,7 @@ td .sub{display:block; font-size:12px; color:var(--ink-faint)}
     </div>
   </article>
 
-  <article class="day cancelled">
-    <div class="day-band"><span class="dnum">DAY 2</span><span class="ddate">8/2（日）</span><span class="dtheme">豪斯登堡整天・熊本夜逛</span></div>
-    <div class="day-inner">
-      <ul class="tl">
-        <li><span class="tt">08:30–13:00</span><span class="tx">豪斯登堡白天行程<small>一般 10:00 開園；我們是園內飯店住客可提早自由進出。午餐出發前在園內解決（昨晚沒吃到的那家漢堡）</small></span></li>
-        <li><span class="tt">13:30</span><span class="tx">出發前往熊本</span></li>
-        <li><span class="tt">約 16:00</span><span class="tx">抵達熊本 SAKURAMACHI 櫻町商場<small>逛街（Dormy Inn 就在旁邊 600 m）</small></span></li>
-        <li><span class="tt">晚餐</span><span class="tx">あか牛Dining yoka-yoka（商場 3F・免預約）<small>熊本名物紅牛丼、漢堡排、牛排，11:00–22:00；備案：天草 牛深丸（壽司，小孩接受度高）或 B1 美食街各吃各的</small></span></li>
-        <li><span class="tt">19:00</span><span class="tx">入住 Dormy Inn 六花之湯</span></li>
-        <li><span class="tt">19:30–21:30</span><span class="tx">熊本市區散步</span></li>
-        <li><span class="tt">宵夜</span><span class="tx">Dormy Inn 免費夜鳴拉麵</span></li>
-      </ul>
-      <div class="stay">
-        <div class="s-label">今晚住宿 · 1 晚</div>
-        <div class="s-name">天然溫泉 六花之湯 Dormy Inn 熊本</div>
-        <div class="s-sub">禁煙和洋室・含早餐・合計 4 名</div>
-        <div class="s-row">
-          <span class="kv">訂單 <b>0015681335</b>（JTB）</span>
-          <span class="kv">¥<b>37,800</b></span>
-          <span class="badge paid">已付清</span>
-        </div>
-        <div class="s-info">
-          <div class="kv2"><span class="k">地址</span><a href="https://www.google.com/maps/search/?api=1&amp;query=%E3%83%89%E3%83%BC%E3%83%9F%E3%83%BC%E3%82%A4%E3%83%B3%E7%86%8A%E6%9C%AC" target="_blank" rel="noopener">〒860-0804 熊本市中央区辛島町3-1</a></div>
-          <div class="kv2"><span class="k">電話</span><a href="tel:+81963115489">096-311-5489</a></div>
-          <div class="kv2"><span class="k">Check-in / out</span><b>15:00</b>／<b>11:00</b></div>
-          <div class="kv2"><span class="k">早餐</span>1F buffet <b>6:30–9:30</b>（熊本名物太平燕）</div>
-          <div class="kv2 wide"><span class="k">停車</span>館內 52 格先到先停 <b>¥1,500/泊</b>（15:00–翌11:00）；客滿改停「タイムズ24辛島公園」¥1,200/泊，停車券拿去櫃台</div>
-          <div class="kv2 wide"><span class="k">大浴場</span>13F 天然溫泉「六花の湯」<b>15:00–翌10:00</b>（露天＋桑拿；6 歲以下可跟爸媽同浴）</div>
-        </div>
-        <div class="s-note">Dormy 傳統的免費宵夜拉麵（夜鳴きそば）約 21:30 起，時段依現場公告。晚餐在 600 m 外的 SAKURAMACHI 解決最順。</div>
-      </div>
-      <div class="drive">
-        <span class="km">豪斯登堡 → 櫻町 151.7 km・→ 飯店 0.6 km（合計 <b>156.0 km</b>）</span>
-        <a class="maplink" href="https://maps.app.goo.gl/rXskvLsTz3bWYfGJ6" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>當日路線</a>
-      </div>
-    </div>
-  </article>
+  
 
   <!-- Day 3 -->
   <article class="day" id="day3">
@@ -625,46 +540,7 @@ td .sub{display:block; font-size:12px; color:var(--ink-faint)}
     </div>
   </article>
 
-  <article class="day cancelled">
-    <div class="day-band"><span class="dnum">DAY 3</span><span class="ddate">8/3（一）</span><span class="dtheme">JASM 外圍・阿蘇景觀・宿高千穗</span></div>
-    <div class="day-inner">
-      <ul class="tl">
-        <li><span class="tt">08:15</span><span class="tx">熊本出發</span></li>
-        <li><span class="tt">08:45–09:05</span><span class="tx">JASM／台積電熊本廠外圍短停</span></li>
-        <li><span class="tt">10:00–11:00</span><span class="tx">草千里<small>阿蘇火山博物館也在這裡</small></span></li>
-        <li><span class="tt">11:10–12:00</span><span class="tx">阿蘇中岳火口周邊（視管制情況）</span></li>
-        <li><span class="tt">午餐</span><span class="tx">草千里食堂（ニュー草千里 2F・免預約）<small>火山博物館旁順路首選，看著草千里吃あか牛丼，9:00–16:00；いまきん食堂雖是創始百年老店但常排 2 小時，帶小孩不建議硬排</small></span></li>
-        <li><span class="tt">13:15–14:00</span><span class="tx">大觀峰</span></li>
-        <li><span class="tt">15:30–16:00</span><span class="tx">入住四季見（高千穗）</span></li>
-        <li><span class="tt">晚餐</span><span class="tx">旅館四季見 會席（需預約）<small>首選：直接向旅館加訂，高千穗晚上營業的店少；備案：居酒屋けんちゃん（市街中心，先電話確認）、大舞神（高千穗神社前，チキン南蛮定食可外帶）</small></span></li>
-      </ul>
-      <div class="warnline"><b>⚠ 火口目前封閉：</b><span>阿蘇火山警戒 2 級、火口周邊 1 km 管制、上山收費道路全線封閉（無解除時間表）。7/25 再查；沒開就以草千里＋火山博物館為主，提早去大觀峰。</span></div>
-      <div class="stay">
-        <div class="s-label">今晚住宿 · 1 晚</div>
-        <div class="s-name">ホテル四季見（高千穗）</div>
-        <div class="s-sub">新館獨立房（特別和式房）・含早餐・大人 2＋兒童 B1＋兒童 C1</div>
-        <div class="s-row">
-          <span class="kv">訂單 <b>6192745235</b>（JAPANiCAN）</span>
-          <span class="kv">¥<b>71,102</b></span>
-          <span class="badge onsite">到店現場付</span>
-        </div>
-        <div class="s-info">
-          <div class="kv2"><span class="k">地址</span><a href="https://www.google.com/maps/search/?api=1&amp;query=%E3%83%9B%E3%83%86%E3%83%AB%E5%9B%9B%E5%AD%A3%E8%A6%8B%20%E9%AB%98%E5%8D%83%E7%A9%82" target="_blank" rel="noopener">〒882-1101 宮崎県西臼杵郡高千穂町三田井729-29</a></div>
-          <div class="kv2"><span class="k">電話</span><a href="tel:+81982723733">0982-72-3733</a></div>
-          <div class="kv2"><span class="k">Check-in / out</span><b>15:00</b>（最終 22:00）／<b>10:00</b></div>
-          <div class="kv2"><span class="k">早餐</span>2F 餐廳「逢初」笊盛り御膳（約 <b>7:00–9:00</b>）</div>
-          <div class="kv2 wide"><span class="k">停車</span>免費約 10 格、先到先停（旺季車位少，抵達前可先電話確認）</div>
-          <div class="kv2 wide"><span class="k">浴場</span>人工鐳溫泉大浴場 <b>6:00–9:00／16:00–23:00</b></div>
-        </div>
-        <div class="s-note"><b>Check-in 需出示：</b>訂單畫面＋訂房信用卡＋護照。取消費：8/1 起 20%、8/3 起 50%。JAPANiCAN 中文客服 +81-3-6219-8682（9:00–22:00）。</div>
-      </div>
-      <div class="hintline"><span>💡</span><span>訂單登記 18:00 抵達、我們約 15:30 就到——先打聲招呼。<b>晚餐不含、致電加訂會席</b>「高千穂蘇食物語」（18:00 起、最終入席 19:30，定時定席）——已列入行前必辦餐廳預約；訂不到就用時間軸晚餐項的備案（けんちゃん／大舞神）。</span></div>
-      <div class="drive">
-        <span class="km">熊本 → JASM → 草千里 → 中岳 → 大觀峰 → 高千穗（合計 <b>139.1 km</b>）</span>
-        <a class="maplink" href="https://maps.app.goo.gl/4ZMUgaxmkBa8zwBE6" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>當日路線</a>
-      </div>
-    </div>
-  </article>
+  
 
   <!-- Day 4 -->
   <article class="day" id="day4">
@@ -702,25 +578,7 @@ td .sub{display:block; font-size:12px; color:var(--ink-faint)}
     </div>
   </article>
 
-  <article class="day cancelled">
-    <div class="day-band"><span class="dnum">DAY 4</span><span class="ddate">8/4（二）</span><span class="dtheme">高千穗峽划船・海地獄・宿別府</span></div>
-    <div class="day-inner">
-      <ul class="tl">
-        <li><span class="tt">08:20</span><span class="tx">出發前往高千穗峽<small>划船無專用停車場，早到找位（滿車狀況見觀光協會網站）</small></span></li>
-        <li><span class="tt">09:00</span><span class="tx">划船受付報到<small>出示預約確認 mail（預約番號 LH6HB4H4）</small></span></li>
-        <li><span class="tt">09:30</span><span class="tx">高千穗峽划船<small>✅ 已預約（7/21）・一艘 4 人（大人 3＋未就學兒 1）・¥5,100 已付；增水／雷雨會臨時停駛，停駛就改走步道</small></span></li>
-        <li><span class="tt">09:30–10:20</span><span class="tx">峽谷步道・真名井瀑布</span></li>
-        <li><span class="tt">午餐</span><span class="tx">二選一：田舎屋（高千穗峽內）或 地獄蒸し工房 鉄輪（別府）<small>田舎屋＝肉舖直營、划完船走過去，流水麵定食・チキン南蛮，11:00–16:00 免預約；地獄蒸し＝海地獄旁溫泉蒸氣自己蒸、43 種食材，10:00–19:00 免預約</small></span></li>
-        <li><span class="tt">11:30</span><span class="tx">出發往別府</span></li>
-        <li><span class="tt">14:20–15:00</span><span class="tx">海地獄短停</span></li>
-        <li><span class="tt">15:20–15:40</span><span class="tx">入住杉乃井 宙館<small>check-in 15:00 開始，剛剛好；晚餐＝宙館 SORA buffet（一泊二食已含），飯後泡棚湯</small></span></li>
-      </ul>
-      <div class="drive">
-        <span class="km">四季見 → 划船場 1.1 km・→ 海地獄 107.2 km・→ 杉乃井 5.1 km（合計 <b>113.4 km</b>）</span>
-        <a class="maplink" data-route="d4" href="#" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>當日路線</a>
-      </div>
-    </div>
-  </article>
+  
 
   <!-- Day 5 -->
   <article class="day" id="day5">
@@ -822,6 +680,118 @@ td .sub{display:block; font-size:12px; color:var(--ink-faint)}
       <div class="drive">
         <span class="km">飯店 → 還車點 10.4 km・→ 航廈 0.1 km（合計 <b>10.5 km</b>）</span>
         <a class="maplink" data-route="d8" href="#" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>當日路線</a>
+      </div>
+    </div>
+  </article>
+</section>
+
+<section id="earthquake">
+  <div class="sec-head"><h2>行程變更記事</h2><span class="en">The Earthquake, and Plan B</span></div>
+  <div class="quake">
+    <div class="q-date">2026.07.28（二）16:27 JST・出發前 4 天</div>
+    <div class="q-title">熊本 M7.1 大地震——行程史上第一次改線</div>
+    <p><b>熊本縣宇城市・氷川町觀測到最大震度 7</b>（震源深度 10 km），有明海・八代海一度發布海嘯注意報，JR 九州全線停駛、熊本城石垣崩落。震央正是原行程 D2–D3 的核心區（熊本市區 → 阿蘇 → 高千穗），山區餘震期土石流風險高。</p>
+    <p><b>當晚全家的決定：</b>取消熊本與高千穗段——Dormy Inn 熊本、旅館四季見、高千穗峽划船三筆全數取消（趕在收費線前，<b>取消費 0、全額退款</b>）；行程改走北線：福岡海之中道海洋世界、KidZania 職業體驗，8/4 改由東九州道南下別府接回原行程，<b>全程避開震區</b>。</p>
+    <p>原 D2–D4 行程保留在下方（灰色）作為紀念——阿蘇的草千里、高千穗峽的船，留給下一次。</p>
+  </div>
+
+
+  <!-- 原 D2–D4 計畫（7/28 地震取消，紀念留存） -->
+  <article class="day cancelled">
+    <div class="day-band"><span class="dnum">DAY 2</span><span class="ddate">8/2（日）</span><span class="dtheme">豪斯登堡整天・熊本夜逛</span></div>
+    <div class="day-inner">
+      <ul class="tl">
+        <li><span class="tt">08:30–13:00</span><span class="tx">豪斯登堡白天行程<small>一般 10:00 開園；我們是園內飯店住客可提早自由進出。午餐出發前在園內解決（昨晚沒吃到的那家漢堡）</small></span></li>
+        <li><span class="tt">13:30</span><span class="tx">出發前往熊本</span></li>
+        <li><span class="tt">約 16:00</span><span class="tx">抵達熊本 SAKURAMACHI 櫻町商場<small>逛街（Dormy Inn 就在旁邊 600 m）</small></span></li>
+        <li><span class="tt">晚餐</span><span class="tx">あか牛Dining yoka-yoka（商場 3F・免預約）<small>熊本名物紅牛丼、漢堡排、牛排，11:00–22:00；備案：天草 牛深丸（壽司，小孩接受度高）或 B1 美食街各吃各的</small></span></li>
+        <li><span class="tt">19:00</span><span class="tx">入住 Dormy Inn 六花之湯</span></li>
+        <li><span class="tt">19:30–21:30</span><span class="tx">熊本市區散步</span></li>
+        <li><span class="tt">宵夜</span><span class="tx">Dormy Inn 免費夜鳴拉麵</span></li>
+      </ul>
+      <div class="stay">
+        <div class="s-label">今晚住宿 · 1 晚</div>
+        <div class="s-name">天然溫泉 六花之湯 Dormy Inn 熊本</div>
+        <div class="s-sub">禁煙和洋室・含早餐・合計 4 名</div>
+        <div class="s-row">
+          <span class="kv">訂單 <b>0015681335</b>（JTB）</span>
+          <span class="kv">¥<b>37,800</b></span>
+          <span class="badge paid">已付清</span>
+        </div>
+        <div class="s-info">
+          <div class="kv2"><span class="k">地址</span><a href="https://www.google.com/maps/search/?api=1&amp;query=%E3%83%89%E3%83%BC%E3%83%9F%E3%83%BC%E3%82%A4%E3%83%B3%E7%86%8A%E6%9C%AC" target="_blank" rel="noopener">〒860-0804 熊本市中央区辛島町3-1</a></div>
+          <div class="kv2"><span class="k">電話</span><a href="tel:+81963115489">096-311-5489</a></div>
+          <div class="kv2"><span class="k">Check-in / out</span><b>15:00</b>／<b>11:00</b></div>
+          <div class="kv2"><span class="k">早餐</span>1F buffet <b>6:30–9:30</b>（熊本名物太平燕）</div>
+          <div class="kv2 wide"><span class="k">停車</span>館內 52 格先到先停 <b>¥1,500/泊</b>（15:00–翌11:00）；客滿改停「タイムズ24辛島公園」¥1,200/泊，停車券拿去櫃台</div>
+          <div class="kv2 wide"><span class="k">大浴場</span>13F 天然溫泉「六花の湯」<b>15:00–翌10:00</b>（露天＋桑拿；6 歲以下可跟爸媽同浴）</div>
+        </div>
+        <div class="s-note">Dormy 傳統的免費宵夜拉麵（夜鳴きそば）約 21:30 起，時段依現場公告。晚餐在 600 m 外的 SAKURAMACHI 解決最順。</div>
+      </div>
+      <div class="drive">
+        <span class="km">豪斯登堡 → 櫻町 151.7 km・→ 飯店 0.6 km（合計 <b>156.0 km</b>）</span>
+        <a class="maplink" href="https://maps.app.goo.gl/rXskvLsTz3bWYfGJ6" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>當日路線</a>
+      </div>
+    </div>
+  </article>
+
+  <article class="day cancelled">
+    <div class="day-band"><span class="dnum">DAY 3</span><span class="ddate">8/3（一）</span><span class="dtheme">JASM 外圍・阿蘇景觀・宿高千穗</span></div>
+    <div class="day-inner">
+      <ul class="tl">
+        <li><span class="tt">08:15</span><span class="tx">熊本出發</span></li>
+        <li><span class="tt">08:45–09:05</span><span class="tx">JASM／台積電熊本廠外圍短停</span></li>
+        <li><span class="tt">10:00–11:00</span><span class="tx">草千里<small>阿蘇火山博物館也在這裡</small></span></li>
+        <li><span class="tt">11:10–12:00</span><span class="tx">阿蘇中岳火口周邊（視管制情況）</span></li>
+        <li><span class="tt">午餐</span><span class="tx">草千里食堂（ニュー草千里 2F・免預約）<small>火山博物館旁順路首選，看著草千里吃あか牛丼，9:00–16:00；いまきん食堂雖是創始百年老店但常排 2 小時，帶小孩不建議硬排</small></span></li>
+        <li><span class="tt">13:15–14:00</span><span class="tx">大觀峰</span></li>
+        <li><span class="tt">15:30–16:00</span><span class="tx">入住四季見（高千穗）</span></li>
+        <li><span class="tt">晚餐</span><span class="tx">旅館四季見 會席（需預約）<small>首選：直接向旅館加訂，高千穗晚上營業的店少；備案：居酒屋けんちゃん（市街中心，先電話確認）、大舞神（高千穗神社前，チキン南蛮定食可外帶）</small></span></li>
+      </ul>
+      <div class="warnline"><b>⚠ 火口目前封閉：</b><span>阿蘇火山警戒 2 級、火口周邊 1 km 管制、上山收費道路全線封閉（無解除時間表）。7/25 再查；沒開就以草千里＋火山博物館為主，提早去大觀峰。</span></div>
+      <div class="stay">
+        <div class="s-label">今晚住宿 · 1 晚</div>
+        <div class="s-name">ホテル四季見（高千穗）</div>
+        <div class="s-sub">新館獨立房（特別和式房）・含早餐・大人 2＋兒童 B1＋兒童 C1</div>
+        <div class="s-row">
+          <span class="kv">訂單 <b>6192745235</b>（JAPANiCAN）</span>
+          <span class="kv">¥<b>71,102</b></span>
+          <span class="badge onsite">到店現場付</span>
+        </div>
+        <div class="s-info">
+          <div class="kv2"><span class="k">地址</span><a href="https://www.google.com/maps/search/?api=1&amp;query=%E3%83%9B%E3%83%86%E3%83%AB%E5%9B%9B%E5%AD%A3%E8%A6%8B%20%E9%AB%98%E5%8D%83%E7%A9%82" target="_blank" rel="noopener">〒882-1101 宮崎県西臼杵郡高千穂町三田井729-29</a></div>
+          <div class="kv2"><span class="k">電話</span><a href="tel:+81982723733">0982-72-3733</a></div>
+          <div class="kv2"><span class="k">Check-in / out</span><b>15:00</b>（最終 22:00）／<b>10:00</b></div>
+          <div class="kv2"><span class="k">早餐</span>2F 餐廳「逢初」笊盛り御膳（約 <b>7:00–9:00</b>）</div>
+          <div class="kv2 wide"><span class="k">停車</span>免費約 10 格、先到先停（旺季車位少，抵達前可先電話確認）</div>
+          <div class="kv2 wide"><span class="k">浴場</span>人工鐳溫泉大浴場 <b>6:00–9:00／16:00–23:00</b></div>
+        </div>
+        <div class="s-note"><b>Check-in 需出示：</b>訂單畫面＋訂房信用卡＋護照。取消費：8/1 起 20%、8/3 起 50%。JAPANiCAN 中文客服 +81-3-6219-8682（9:00–22:00）。</div>
+      </div>
+      <div class="hintline"><span>💡</span><span>訂單登記 18:00 抵達、我們約 15:30 就到——先打聲招呼。<b>晚餐不含、致電加訂會席</b>「高千穂蘇食物語」（18:00 起、最終入席 19:30，定時定席）——已列入行前必辦餐廳預約；訂不到就用時間軸晚餐項的備案（けんちゃん／大舞神）。</span></div>
+      <div class="drive">
+        <span class="km">熊本 → JASM → 草千里 → 中岳 → 大觀峰 → 高千穗（合計 <b>139.1 km</b>）</span>
+        <a class="maplink" href="https://maps.app.goo.gl/4ZMUgaxmkBa8zwBE6" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>當日路線</a>
+      </div>
+    </div>
+  </article>
+
+  <article class="day cancelled">
+    <div class="day-band"><span class="dnum">DAY 4</span><span class="ddate">8/4（二）</span><span class="dtheme">高千穗峽划船・海地獄・宿別府</span></div>
+    <div class="day-inner">
+      <ul class="tl">
+        <li><span class="tt">08:20</span><span class="tx">出發前往高千穗峽<small>划船無專用停車場，早到找位（滿車狀況見觀光協會網站）</small></span></li>
+        <li><span class="tt">09:00</span><span class="tx">划船受付報到<small>出示預約確認 mail（預約番號 LH6HB4H4）</small></span></li>
+        <li><span class="tt">09:30</span><span class="tx">高千穗峽划船<small>✅ 已預約（7/21）・一艘 4 人（大人 3＋未就學兒 1）・¥5,100 已付；增水／雷雨會臨時停駛，停駛就改走步道</small></span></li>
+        <li><span class="tt">09:30–10:20</span><span class="tx">峽谷步道・真名井瀑布</span></li>
+        <li><span class="tt">午餐</span><span class="tx">二選一：田舎屋（高千穗峽內）或 地獄蒸し工房 鉄輪（別府）<small>田舎屋＝肉舖直營、划完船走過去，流水麵定食・チキン南蛮，11:00–16:00 免預約；地獄蒸し＝海地獄旁溫泉蒸氣自己蒸、43 種食材，10:00–19:00 免預約</small></span></li>
+        <li><span class="tt">11:30</span><span class="tx">出發往別府</span></li>
+        <li><span class="tt">14:20–15:00</span><span class="tx">海地獄短停</span></li>
+        <li><span class="tt">15:20–15:40</span><span class="tx">入住杉乃井 宙館<small>check-in 15:00 開始，剛剛好；晚餐＝宙館 SORA buffet（一泊二食已含），飯後泡棚湯</small></span></li>
+      </ul>
+      <div class="drive">
+        <span class="km">四季見 → 划船場 1.1 km・→ 海地獄 107.2 km・→ 杉乃井 5.1 km（合計 <b>113.4 km</b>）</span>
+        <a class="maplink" data-route="d4" href="#" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>當日路線</a>
       </div>
     </div>
   </article>
@@ -937,6 +907,63 @@ td .sub{display:block; font-size:12px; color:var(--ink-faint)}
   <p class="map-cap">行前淨付 NT$203,724＝原已付 197,389 − Dormy 退款 7,624 ＋ 博多都酒店 9,485 ＋ 小倉 Daiwa Roynet 4,474；另 KidZania ¥19,400 已預約（台幣待入帳）。<b>7/28 地震取消退款</b>：Dormy ¥37,800 全額退（聯邦卡，退款入帳待下期）、划船 ¥5,100 全額退（未入帳互抵）、四季見到店付款單取消費 0（原 ¥71,102 不再發生）；沉沒成本僅 Dormy 原結匯手續費 NT$114。富邦旅平險 NT$5,764 於保期結束後扣款。尚未發生：當地餐飲・門票・加油與過路費。資料來源：信用卡帳單明細（2026/7/10 核對）＋各訂單/取消確認信（至 2026/7/28）。</p>
 </section>
 
+<section id="todo">
+  <details class="predep">
+  <summary><span class="sum-h">行前準備紀錄</span><span class="sum-en">Before we went</span><span class="sum-hint">旅程已出發——點開回顧</span></summary>
+  <div class="predep-body">
+  <p class="todo-note">7/10 已核對 Gmail 全部訂房信、7/22 旅平險與 eSIM 辦妥；<b>7/28 熊本地震改線</b>（見上方記事）——博多＋小倉住宿與 KidZania 均已補訂，<b>8 晚住宿全數訂妥</b>，剩下面三件事。勾選狀態會存在這台裝置上。</p>
+  <div class="todo" data-key="hotel0803">
+    <label><input type="checkbox" checked>
+      <div>
+        <div class="t-title">✅ 7/29 已訂——8/3 晚住宿（Daiwa Roynet 小倉站前）</div>
+        <div class="t-body">預約號 <b>T9C04DCD323AD</b>・角落雙床房・NT$4,474 已刷卡・17:00 後入住；2 名兒童與大人同床免費（訂房時已申報 2 名）。隔天 D4 從小倉直奔 Harmonyland（東九州道正路線上）→ 海地獄 → 別府。</div>
+      </div>
+    </label>
+  </div>
+  <div class="todo" data-key="dining">
+    <label><input type="checkbox">
+      <div>
+        <div class="t-title">餐廳預約 ×2（媽媽的餐廳手冊）</div>
+        <div class="t-body">出發前訂好：<b>8/6 博多華味鳥 天神店</b>（HotPepper 訂個室）、<b>8/7 おおやま 福岡PARCO店</b>（HotPepper／ぐるなび）。逐日用餐地圖與備案見 <a href="./dining/">🍜 九州餐廳手冊</a>（7/24 查證；D2–D4 改線後餐食待媽媽更新手冊）。<s>8/3 四季見會席</s>——已隨地震取消。</div>
+      </div>
+    </label>
+  </div>
+  <div class="todo cancelled-item" data-key="boat" style="opacity:.55">
+    <label><input type="checkbox" checked>
+      <div>
+        <div class="t-title" style="text-decoration:line-through">高千穗峽划船（8/4 09:30）——7/28 地震取消</div>
+        <div class="t-body">原預約番號 LH6HB4H4・¥5,100 <b>已 100% 全額退款</b>（系統自動退回信用卡，免手續）。高千穗峽的船，留給下一次。</div>
+      </div>
+    </label>
+  </div>
+  <div class="todo" data-key="gate">
+    <label><input type="checkbox">
+      <div>
+        <div class="t-title">GATE HOTEL 把兩個小孩加進訂單＋確認兒童早餐</div>
+        <div class="t-body">福岡兩晚（8/6–8/8）訂單目前<b>只登記 2 位大人</b>。飯店已回信：12 歲以下不加床同住免費，但早餐只含 2 份。此方案<b>不可退款</b>，要用改訂單處理：<b>gatehotel.fukuoka@hulichm.jp</b>／+81-92-406-2605。</div>
+      </div>
+    </label>
+  </div>
+  <div class="todo" data-key="seat">
+    <label><input type="checkbox">
+      <div>
+        <div class="t-title">TOYOTA 租車加購兒童安全座椅</div>
+        <div class="t-body">目前預約（99965316000）座椅數量是 <b>0</b>；日本法規 6 歲未滿強制使用。電話 <b>0800-7000-815</b> 報預約號加購（junior seat 建議兩個孩子都用）。</div>
+      </div>
+    </label>
+  </div>
+
+  <div class="checks" id="checks">
+    <label data-key="quakecheck"><input type="checkbox"><span><b>出發前 1–2 天做地震後總確認</b>——高速公路通行（NEXCO 西日本）、豪斯登堡／海洋世界／KidZania／Harmonyland（8/4 二）／Sunshine Pool（8/6 四）／杉乃井官網臨時公告、JR 復駛與餘震動態；餘震期兩週內任何設施都可能臨時休。</span></label>
+    <label data-key="htb"><input type="checkbox"><span><b>確認豪斯登堡門票組合</b>——入住日（8/1）進園需門票（傍晚票種）；住宿方案多含隔日 1-Day Passport、住客隔天可提早約 1 小時入園——訂房頁或電話 0570-064-110 確認清楚再決定買什麼票。8/1、8/2 晚 20:45 都有花火秀。</span></label>
+    <label data-key="parking"><input type="checkbox"><span><b>查好福岡 GATE HOTEL 附近停車場</b>——飯店無停車場，8/6 晚–8/8 早要停天神周邊收費停車場（實際 8/6 停天神地下街地下停車場、8/7 開車往返海之中道），先查 Times 位置與夜間最大料金。</span></label>
+    <label data-key="safari"><input type="checkbox"><span><b>African Safari 早點到</b>——8 月 9:15 開園、8:50 開始受付；Jungle Bus 今夏不開放預約、只能當日現場排隊（開自己車遊園免預約）。</span></label>
+    <label data-key="typhoon"><input type="checkbox"><span><b>出發前 3 天看颱風</b>——8 月上旬是颱風季，戶外行程比重高（水族館以外多為戶外：動物園、泳池、Harmonyland）。</span></label>
+  </div>
+  </div>
+</details>
+</section>
+
 <div class="foot">
   住宿訂單與操作資訊核對於 2026/7/10（來源：Gmail 訂房確認信＋各飯店官方網站＋信用卡帳單明細）；景點營運資訊查證於官方網站，出發前建議再確認。行車距離為估算值，實際以當天導航為準。家庭內部使用。
 </div>
@@ -985,5 +1012,22 @@ td .sub{display:block; font-size:12px; color:var(--ink-faint)}
 })();
 </script>
 
+<script>
+(function(){
+  var links = document.querySelectorAll('.daynav a[href^="#day"]');
+  if (!('IntersectionObserver' in window) || !links.length) return;
+  var map = {}, cur = null;
+  links.forEach(function(a){ map[a.getAttribute('href').slice(1)] = a; });
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting && map[e.target.id]) {
+        if (cur) cur.classList.remove('on');
+        cur = map[e.target.id]; cur.classList.add('on');
+      }
+    });
+  }, {rootMargin:'-15% 0px -70% 0px'});
+  Object.keys(map).forEach(function(id){ var el = document.getElementById(id); if (el) io.observe(el); });
+})();
+</script>
 </body>
 </html>
