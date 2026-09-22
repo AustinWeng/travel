@@ -1,3 +1,4 @@
 *_plain.html
 *.plain.html
 .DS_Store
+scripts/japan.geojson
