@@ -1,0 +1,707 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>北海道冬旅 2027｜1/20–1/24</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>❄️</text></svg>">
+</head>
+<body>
+<style>
+:root{
+  --bg:#F7FAFB; --card:#FFFFFF; --ink:#1B2A32; --ink-soft:#4E6470; --ink-faint:#7E939E;
+  --line:#DCE7EB; --line-soft:#E9F1F4;
+  --sea:#0E7490; --sea-deep:#0B5C73; --sea-wash:#E3F1F5;
+  --sun:#D97706; --sun-wash:#FBF0DE;
+  --leaf:#2E8B62; --leaf-wash:#E2F2EA;
+  --alert:#C2410C; --alert-wash:#FBE9DF;
+  --shadow:0 1px 2px rgba(27,42,50,.05),0 4px 14px rgba(27,42,50,.06);
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#0F1619; --card:#172227; --ink:#E6EEF1; --ink-soft:#A9BCC5; --ink-faint:#7A8F99;
+    --line:#27363D; --line-soft:#1E2C32;
+    --sea:#4FB3CB; --sea-deep:#7FCBDD; --sea-wash:#122B33;
+    --sun:#E8A33D; --sun-wash:#2C2214;
+    --leaf:#5CBD93; --leaf-wash:#14291F;
+    --alert:#E8794A; --alert-wash:#301A10;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 14px rgba(0,0,0,.25);
+  }
+}
+:root[data-theme="light"]{
+  --bg:#F7FAFB; --card:#FFFFFF; --ink:#1B2A32; --ink-soft:#4E6470; --ink-faint:#7E939E;
+  --line:#DCE7EB; --line-soft:#E9F1F4;
+  --sea:#0E7490; --sea-deep:#0B5C73; --sea-wash:#E3F1F5;
+  --sun:#D97706; --sun-wash:#FBF0DE;
+  --leaf:#2E8B62; --leaf-wash:#E2F2EA;
+  --alert:#C2410C; --alert-wash:#FBE9DF;
+  --shadow:0 1px 2px rgba(27,42,50,.05),0 4px 14px rgba(27,42,50,.06);
+}
+:root[data-theme="dark"]{
+  --bg:#0F1619; --card:#172227; --ink:#E6EEF1; --ink-soft:#A9BCC5; --ink-faint:#7A8F99;
+  --line:#27363D; --line-soft:#1E2C32;
+  --sea:#4FB3CB; --sea-deep:#7FCBDD; --sea-wash:#122B33;
+  --sun:#E8A33D; --sun-wash:#2C2214;
+  --leaf:#5CBD93; --leaf-wash:#14291F;
+  --alert:#E8794A; --alert-wash:#301A10;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 14px rgba(0,0,0,.25);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth; scroll-padding-top:66px}
+body{
+  background:var(--bg); color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Hiragino Sans","Noto Sans TC","Microsoft JhengHei",sans-serif;
+  line-height:1.65; margin:0; padding:0 16px 72px;
+  font-size:15.5px;
+}
+.wrap{max-width:760px; margin:0 auto}
+a{color:var(--sea); text-decoration:none}
+a:hover{text-decoration:underline}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--sea); outline-offset:2px; border-radius:4px}
+
+/* ---------- header ---------- */
+header{padding:40px 0 8px}
+.kicker{font-size:12px; letter-spacing:.22em; color:var(--sea); font-weight:750; text-transform:uppercase}
+h1{font-size:clamp(26px,6vw,38px); font-weight:800; letter-spacing:.01em; margin:.2em 0 .1em; text-wrap:balance; line-height:1.25}
+.subtitle{color:var(--ink-soft); margin:0 0 18px; font-size:15px}
+.facts{display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 4px}
+.fact{display:inline-flex; align-items:center; gap:6px; height:30px; background:var(--card); border:1px solid var(--line); border-radius:999px; padding:0 14px; font-size:13px; color:var(--ink-soft); white-space:nowrap}
+.fact b{color:var(--ink); font-weight:650; font-variant-numeric:tabular-nums}
+
+/* ---------- flight ---------- */
+.flights{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:20px 0 0}
+@media (max-width:560px){.flights{grid-template-columns:1fr}}
+.flight{background:var(--card); border:1px solid var(--line); border-radius:10px; padding:14px 16px; box-shadow:var(--shadow)}
+.flight .tag{font-size:11px; letter-spacing:.14em; color:var(--ink-faint); font-weight:700}
+.flight .no{font-weight:800; font-size:17px; margin-top:2px}
+.flight .route{display:flex; align-items:baseline; gap:10px; margin-top:6px; font-variant-numeric:tabular-nums}
+.flight .apt{font-size:22px; font-weight:800; letter-spacing:.02em}
+.flight .t{font-size:13px; color:var(--ink-soft)}
+.flight .arrow{color:var(--sea); flex:1; text-align:center; font-size:14px}
+.flight .d{font-size:12.5px; color:var(--ink-faint); margin-top:4px}
+
+/* ---------- section ---------- */
+section{margin-top:52px}
+.sec-head{display:flex; align-items:baseline; gap:12px; margin-bottom:18px}
+.sec-head .no{font-size:26px; font-weight:800; color:var(--sea-wash); -webkit-text-stroke:1.2px var(--sea); font-variant-numeric:tabular-nums; letter-spacing:.02em}
+.sec-head h2{font-size:21px; font-weight:800; margin:0; letter-spacing:.02em}
+.sec-head .en{font-size:11px; letter-spacing:.16em; color:var(--ink-faint); text-transform:uppercase; font-weight:700}
+
+/* ---------- todo ---------- */
+.todo-note{font-size:13.5px; color:var(--ink-soft); margin:-6px 0 14px}
+.todo{background:var(--card); border:1px solid var(--line); border-left:4px solid var(--sun); border-radius:10px; padding:14px 16px 14px 14px; margin-bottom:10px; box-shadow:var(--shadow)}
+.todo label{display:flex; gap:12px; align-items:flex-start; cursor:pointer}
+.todo input{width:19px; height:19px; margin-top:3px; accent-color:var(--leaf); flex:none; cursor:pointer}
+.todo .t-title{font-weight:750}
+.todo .t-body{font-size:14px; color:var(--ink-soft); margin-top:2px}
+.todo .t-body b{color:var(--ink)}
+.todo.done{border-left-color:var(--leaf); opacity:.62}
+.todo.done .t-title{text-decoration:line-through}
+.checks{background:var(--card); border:1px solid var(--line); border-radius:10px; padding:6px 16px; box-shadow:var(--shadow)}
+.checks label{display:flex; gap:12px; align-items:flex-start; padding:10px 0; border-bottom:1px solid var(--line-soft); font-size:14px; color:var(--ink-soft); cursor:pointer}
+.checks label:last-child{border-bottom:none}
+.checks input{width:17px; height:17px; margin-top:3px; accent-color:var(--leaf); flex:none; cursor:pointer}
+.checks b{color:var(--ink)}
+.checks label.done{opacity:.55}
+.checks label.done span{text-decoration:line-through}
+
+/* ---------- route map ---------- */
+.mapbox{background:var(--card); border:1px solid var(--line); border-radius:12px; box-shadow:var(--shadow); overflow-x:auto; padding:10px 6px}
+.mapbox svg{display:block; min-width:700px; width:100%; height:auto}
+.map-cap{font-size:12.5px; color:var(--ink-faint); margin-top:8px}
+
+/* ---------- day card ---------- */
+.day{background:var(--card); border:1px solid var(--line); border-radius:14px; margin-bottom:24px; box-shadow:var(--shadow); overflow:hidden}
+.day-band{display:flex; align-items:baseline; gap:12px; padding:14px 18px 10px; border-left:6px solid var(--sea)}
+.day-band .dnum{font-weight:800; font-size:19px; letter-spacing:.03em; white-space:nowrap; color:var(--sea)}
+.day-band .ddate{font-size:13.5px; color:var(--ink-faint); white-space:nowrap; font-variant-numeric:tabular-nums}
+.day-band .dtheme{font-size:14.5px; font-weight:700; margin-left:auto; text-align:right}
+.day-inner{padding:6px 18px 18px 24px}
+.tl{list-style:none; margin:0; padding:0; position:relative}
+.tl::before{content:""; position:absolute; left:5px; top:12px; bottom:12px; width:2px; background:var(--line-soft); border-radius:2px}
+.tl li{display:flex; gap:14px; padding:7px 0 7px 22px; border-bottom:1px solid var(--line-soft); align-items:baseline; position:relative}
+.tl li::before{content:""; position:absolute; left:0; top:13px; width:12px; height:12px; border-radius:50%; background:var(--card); border:2.5px solid var(--sea)}
+.tl li:last-child{border-bottom:none}
+.tl .tt{font-variant-numeric:tabular-nums; font-weight:750; font-size:13.5px; color:var(--sea); flex:none; width:88px; letter-spacing:.02em}
+.tl .tx{font-size:14.5px}
+.tl .tx small{display:block; color:var(--ink-faint); font-size:12.5px}
+.warnline{display:flex; gap:8px; background:var(--alert-wash); color:var(--alert); border-radius:9px; padding:9px 12px; font-size:13.5px; margin-top:12px; align-items:flex-start}
+.warnline b{font-weight:750; flex:none; white-space:nowrap}
+.hintline{display:flex; gap:8px; background:var(--sun-wash); border-radius:9px; padding:9px 12px; font-size:13.5px; margin-top:12px; color:var(--ink-soft); align-items:flex-start}
+.hintline b{color:var(--ink)}
+.hintline > span:first-child{flex:none}
+
+/* stay card */
+.stay{border:1px solid var(--line); border-radius:11px; margin-top:14px; padding:13px 15px; background:linear-gradient(0deg,var(--sea-wash),var(--sea-wash))}
+.stay .s-label{font-size:11px; letter-spacing:.16em; font-weight:750; color:var(--sea-deep); text-transform:uppercase}
+.stay .s-name{font-weight:800; font-size:16px; margin:3px 0 1px}
+.stay .s-sub{font-size:13.5px; color:var(--ink-soft)}
+.stay .s-row{display:flex; flex-wrap:wrap; gap:6px 14px; margin-top:9px; font-size:13px; color:var(--ink-soft); align-items:center}
+.stay .s-row .kv b{color:var(--ink); font-variant-numeric:tabular-nums; font-weight:700}
+.s-info{display:grid; grid-template-columns:1fr 1fr; gap:8px 16px; margin-top:11px; padding-top:11px; border-top:1px solid var(--line)}
+@media (max-width:560px){.s-info{grid-template-columns:1fr}}
+.s-info .kv2{font-size:13px; color:var(--ink-soft); line-height:1.5}
+.s-info .kv2 .k{display:block; font-size:10.5px; letter-spacing:.14em; color:var(--ink-faint); font-weight:750; text-transform:uppercase; margin-bottom:1px}
+.s-info .kv2 b{color:var(--ink); font-weight:650; font-variant-numeric:tabular-nums}
+.s-info .kv2.wide{grid-column:1 / -1}
+.s-note{font-size:12.5px; color:var(--ink-faint); margin-top:10px; padding-top:9px; border-top:1px dashed var(--line); line-height:1.6}
+.s-note b{color:var(--ink-soft)}
+.badge{display:inline-block; border-radius:999px; padding:2px 11px; font-size:12px; font-weight:750; letter-spacing:.04em; white-space:nowrap}
+.badge.paid{background:var(--leaf-wash); color:var(--leaf)}
+.badge.onsite{background:var(--sun-wash); color:var(--sun)}
+.badge.nonref{background:var(--alert-wash); color:var(--alert)}
+
+/* drive + map link */
+.drive{display:flex; flex-wrap:wrap; gap:10px; margin-top:14px; align-items:center; justify-content:space-between}
+.km{font-size:13px; color:var(--ink-faint)}
+.km b{color:var(--ink-soft); font-variant-numeric:tabular-nums}
+.maplink{display:inline-flex; align-items:center; gap:7px; background:var(--sea); color:#fff; border-radius:9px; padding:8px 15px; font-size:13.5px; font-weight:700; white-space:nowrap; transition:background .15s}
+.maplink:hover{background:var(--sea-deep); text-decoration:none}
+:root[data-theme="dark"] .maplink{background:var(--sea-wash); color:var(--sea)}
+:root[data-theme="dark"] .maplink:hover{background:var(--line-soft)}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .maplink{background:var(--sea-wash); color:var(--sea)}
+  :root:not([data-theme="light"]) .maplink:hover{background:var(--line-soft)}
+}
+.maplink svg{flex:none}
+
+/* ---------- bookings table ---------- */
+.tablebox{background:var(--card); border:1px solid var(--line); border-radius:12px; box-shadow:var(--shadow); overflow-x:auto}
+table{border-collapse:collapse; width:100%; min-width:660px; font-size:13.5px}
+th{font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-faint); text-align:left; padding:12px 14px 8px; border-bottom:2px solid var(--line); white-space:nowrap}
+td{padding:11px 14px; border-bottom:1px solid var(--line-soft); vertical-align:top}
+tr:last-child td{border-bottom:none}
+td.num{font-variant-numeric:tabular-nums; white-space:nowrap}
+td .sub{display:block; font-size:12px; color:var(--ink-faint)}
+#spending h3{font-size:13px; letter-spacing:.08em; color:var(--ink-faint); text-transform:uppercase; font-weight:700; margin:26px 0 10px}
+.foot{margin-top:40px; font-size:12.5px; color:var(--ink-faint); border-top:1px solid var(--line); padding-top:14px}
+/* header 花費總覽帶（三頁手帖共用版式） */
+.costband{margin-top:14px; background:var(--card); border:1px solid var(--line); border-radius:12px; padding:13px 16px; box-shadow:var(--shadow); display:flex; flex-wrap:wrap; align-items:baseline; gap:8px 22px}
+.costband .cb-total{display:flex; align-items:baseline; gap:8px}
+.costband .cb-total span{font-size:11.5px; letter-spacing:.14em; font-weight:750; color:var(--ink-faint); text-transform:uppercase}
+.costband .cb-total b{font-size:22px; letter-spacing:-.01em}
+.costband .cb-total span.cb-sub{font-size:12.5px; letter-spacing:0; font-weight:500; color:var(--ink-faint); text-transform:none}
+.costband .cb-items{display:flex; flex-wrap:wrap; gap:5px 20px; font-size:13.5px; color:var(--ink-soft); flex-basis:100%; border-top:1px solid var(--line-soft); padding-top:9px}
+.costband .cb-i b{color:var(--ink)}
+.costband .cb-note{flex-basis:100%; font-size:11.5px; color:var(--ink-faint)}
+/* 地震改線：原行程反灰留存 */
+.day.cancelled{opacity:.55; filter:grayscale(.75)}
+.day.cancelled .day-band{border-left-color:var(--ink-faint)}
+.day.cancelled .dnum{color:var(--ink-faint)}
+.day.cancelled .dtheme::after{color:var(--alert)}
+.day.cancelled .dtheme::after{content:"（7/28 地震取消）"; font-weight:750}
+.badge.cxl{background:var(--alert-wash); color:var(--alert); font-weight:700}
+.quake{background:var(--card); border:1px solid var(--alert); border-left:6px solid var(--alert); border-radius:12px; padding:16px 18px; box-shadow:var(--shadow)}
+.quake .q-date{font-size:12px; letter-spacing:.14em; font-weight:750; color:var(--alert); text-transform:uppercase}
+.quake .q-title{font-weight:800; font-size:18px; margin:4px 0 8px}
+.quake p{font-size:14px; color:var(--ink-soft); margin:.4em 0}
+.quake b{color:var(--ink)}
+/* 保險與上網快速參考（三頁手帖共用版式） */
+.ess-grid{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:14px}
+.ess-grid .stay{min-width:0; max-width:100%}
+@media (max-width:760px){ .ess-grid{grid-template-columns:1fr} }
+.ess-grid .stay{margin-top:0}
+.ess-grid table{min-width:0}
+@media (max-width:560px){
+  .day-inner{padding-left:18px}
+  .day-band{flex-wrap:wrap; gap:6px 10px; padding:12px 16px 8px}
+  .day-band .dtheme{margin-left:0; text-align:left; flex-basis:100%}
+  .fact{height:auto; min-height:30px; white-space:normal; padding:4px 14px}
+}
+@media (prefers-reduced-motion: reduce){ *{transition:none!important} }
+
+/* ---------- sticky day nav ---------- */
+.daynav{position:sticky; top:10px; z-index:60; margin-top:28px}
+.daynav-in{display:flex; gap:4px; overflow-x:auto; background:var(--card); border:1px solid var(--line); border-radius:999px; padding:5px 7px; box-shadow:var(--shadow); scrollbar-width:none; align-items:stretch}
+.daynav-in::-webkit-scrollbar{display:none}
+.daynav a{flex:none; font-size:12.5px; font-weight:750; color:var(--ink-soft); padding:5px 11px; border-radius:999px; letter-spacing:.02em; line-height:1.4}
+.daynav a:hover{background:var(--sea-wash); text-decoration:none; color:var(--sea-deep)}
+.daynav a.on{background:var(--sea); color:#fff}
+:root[data-theme="dark"] .daynav a.on{background:var(--sea-wash); color:var(--sea-deep)}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .daynav a.on{background:var(--sea-wash); color:var(--sea-deep)} }
+.daynav .dn-sep{flex:none; width:1.5px; background:var(--line); margin:4px 3px; border-radius:2px}
+
+/* ---------- 行前準備紀錄（收合） ---------- */
+.predep{background:var(--card); border:1px solid var(--line); border-radius:12px; box-shadow:var(--shadow); overflow:hidden}
+.predep summary{cursor:pointer; list-style:none; display:flex; align-items:baseline; gap:11px; flex-wrap:wrap; padding:15px 18px; font-weight:800}
+.predep summary::-webkit-details-marker{display:none}
+.predep summary::before{content:"▸"; color:var(--sea); font-size:15px; transition:transform .15s; align-self:center}
+.predep[open] summary::before{transform:rotate(90deg)}
+.predep .sum-h{font-size:17px}
+.predep .sum-en{font-size:10.5px; letter-spacing:.16em; color:var(--ink-faint); text-transform:uppercase; font-weight:750}
+.predep .sum-hint{font-size:12.5px; color:var(--ink-faint); font-weight:500; margin-left:auto}
+.predep-body{padding:2px 18px 16px}
+</style>
+<div class="wrap">
+
+<header>
+  <div class="kicker">Angela &amp; Patty · Hokkaido</div>
+  <h1>北海道冬旅行前手帖</h1>
+  <p class="subtitle">2027/1/20（三）– 1/24（日）・5 天 4 夜・一家四口（2 大 2 小）</p>
+  <div class="facts">
+    <span class="fact">🚗 自駕 3 天 <b>約 240 km</b></span>
+    <span class="fact">❄️ 玩雪滑雪 <b>Rusutsu 2 晚</b></span>
+    <span class="fact">♨️ 溫泉 <b>洞爺湖湖畔＋雪場</b></span>
+    <span class="fact">🦀 雪場蟹吃到飽 <b>2 餐</b></span>
+  </div>
+  <div class="flights">
+    <div class="flight">
+      <div class="tag">去程 OUTBOUND・1/20（三）</div>
+      <div class="no">中華航空 CI130</div>
+      <div class="route"><span class="apt">TPE</span><span class="t">08:35</span>
+        <span class="arrow">✈ 3h45m</span>
+        <span class="apt">CTS</span><span class="t">13:20</span></div>
+      <div class="d">桃園 T2 → 新千歳 國際線・訂位代號 D64TFT</div>
+    </div>
+    <div class="flight">
+      <div class="tag">回程 INBOUND・1/24（日）</div>
+      <div class="no">中華航空 CI131</div>
+      <div class="route"><span class="apt">CTS</span><span class="t">14:40</span>
+        <span class="arrow">✈ 4h35m</span>
+        <span class="apt">TPE</span><span class="t">18:15</span></div>
+      <div class="d">新千歳 國際線 → 桃園 T2・12:40 前到機場</div>
+    </div>
+  </div>
+</header>
+
+<section id="geomap" aria-label="行程地圖">
+  <div class="sec-head"><span class="no">01</span><h2>行程地圖</h2><span class="en">Route Map · D1–D5</span></div>
+  <div class="mapbox">
+    <svg viewBox="68.3 38.0 517.4 374.2" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="真實比例行程地圖：新千歳空港、洞爺湖温泉、ルスツリゾート、札幌，五天路線與日次標注，末段札幌回新千歳為 JR 虛線">
+      <style>
+        .geo-lbl text{paint-order:stroke; stroke:var(--bg); stroke-width:3.5px; stroke-linejoin:round}
+        a.geo-day{cursor:pointer}
+        a.geo-day:hover path{stroke-width:4.5px}
+        a.geo-day:hover circle{r:13px}
+      </style>
+      <defs>
+        <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="var(--sea)"/>
+        </marker>
+      </defs>
+
+      <!-- 北海道道央真實輪廓（dataofjapan/land GeoJSON，等距投影） -->
+      <g fill="var(--leaf-wash)" opacity=".5" stroke="var(--line)" stroke-width="1">
+      <path d="M436.7,-763.8 L458.1,-883.6 L553.6,-915.1 L891.9,-492.8 L1072.6,-359.5 L1293.2,-298.1 L1344.7,-224.5 L1469.4,-218.8 L1642.0,-400.0 L1557.0,-140.5 L1644.7,-67.5 L1598.2,-73.6 L1658.9,61.2 L1797.5,20.2 L1526.9,197.0 L1470.9,163.4 L1462.7,218.3 L1300.7,187.8 L1188.2,244.0 L1017.9,445.0 L973.3,659.6 L803.8,545.8 L788.1,543.0 L776.0,531.2 L759.9,520.4 L745.5,516.2 L735.4,510.0 L731.3,510.5 L725.3,506.8 L715.2,493.9 L702.9,491.5 L691.2,484.8 L661.0,461.9 L634.7,431.1 L628.2,427.1 L581.2,414.9 L575.0,405.7 L567.3,401.9 L552.7,386.2 L546.0,383.0 L539.6,374.0 L530.7,368.6 L515.1,361.7 L513.4,363.6 L511.1,359.4 L508.1,363.3 L507.5,358.6 L490.5,354.3 L466.8,350.8 L453.5,351.8 L475.1,341.1 L474.2,338.9 L453.3,348.1 L451.7,344.7 L451.4,350.7 L448.3,351.3 L449.1,353.7 L444.1,352.5 L410.3,362.6 L363.4,389.3 L317.5,427.6 L301.9,433.4 L290.9,443.2 L280.6,453.4 L267.8,470.2 L268.4,472.6 L265.3,473.3 L262.2,479.7 L259.5,479.7 L253.3,489.9 L253.9,493.1 L251.3,494.8 L234.2,487.8 L228.6,479.7 L235.1,474.6 L238.4,479.7 L241.6,480.5 L242.1,484.7 L244.8,485.0 L246.7,481.3 L244.6,476.5 L253.4,474.5 L243.4,474.0 L246.6,471.5 L245.2,469.8 L241.8,471.0 L224.3,465.1 L221.4,460.6 L218.7,443.2 L209.6,425.2 L199.0,420.9 L187.1,408.4 L180.4,408.1 L180.0,401.9 L182.2,400.0 L177.6,398.3 L177.9,394.8 L179.3,395.5 L178.3,391.9 L162.3,375.6 L158.4,375.5 L157.5,371.4 L136.0,370.2 L117.1,378.5 L101.4,369.1 L88.3,371.0 L82.8,369.1 L61.8,389.1 L49.2,406.7 L31.0,443.2 L23.8,464.3 L18.5,490.8 L18.5,503.6 L21.8,516.2 L28.2,522.4 L39.0,527.4 L52.8,528.9 L57.7,532.2 L60.8,537.7 L89.2,561.8 L95.4,570.4 L105.0,576.5 L118.6,579.1 L141.5,570.4 L151.3,571.4 L156.6,566.1 L173.8,575.8 L178.2,589.1 L187.1,593.1 L187.8,601.9 L193.2,611.1 L221.2,633.7 L231.9,655.4 L234.9,654.4 L237.5,662.9 L254.5,673.3 L274.5,676.0 L299.1,691.8 L240.4,753.5 L135.5,706.9 L-6.3,890.3 L-74.8,823.2 L-30.4,693.0 L-31.2,686.2 L-34.6,686.7 L-33.4,683.2 L-31.7,685.0 L-28.6,683.3 L-25.6,672.9 L-25.2,661.0 L-29.4,641.6 L-27.7,637.6 L-31.6,625.6 L-36.5,623.9 L-38.2,614.3 L-43.5,610.8 L-42.5,608.7 L-52.1,590.5 L-66.5,574.0 L-73.5,570.6 L-95.1,568.5 L-103.7,546.4 L-108.3,542.4 L-108.5,536.1 L-113.9,530.9 L-129.7,529.9 L-130.5,526.4 L-135.5,525.6 L-142.5,513.1 L-139.1,507.0 L-145.2,490.8 L-140.4,472.1 L-134.5,469.2 L-129.0,461.0 L-128.6,456.3 L-125.2,454.7 L-120.3,439.4 L-120.4,426.8 L-117.7,424.3 L-118.8,411.1 L-120.7,408.3 L-119.5,396.1 L-127.0,366.5 L-125.4,365.9 L-127.0,358.3 L-121.0,352.7 L-112.4,335.2 L-103.4,329.5 L-94.2,325.4 L-73.9,323.7 L-69.4,326.1 L-55.6,322.9 L-49.5,317.5 L-46.5,308.2 L-24.7,297.3 L-18.7,279.2 L-10.5,264.6 L-4.5,272.2 L5.1,278.0 L8.9,290.4 L19.9,289.9 L27.8,286.1 L27.8,264.2 L40.1,252.2 L50.7,234.7 L55.1,222.8 L58.0,222.4 L67.9,211.3 L97.4,192.9 L99.5,186.1 L98.7,175.2 L92.4,172.9 L93.0,170.4 L88.7,161.1 L86.0,156.2 L78.8,151.3 L77.2,143.1 L74.2,141.2 L71.7,133.2 L67.4,129.2 L67.8,126.6 L45.5,110.1 L34.3,92.2 L37.7,77.5 L35.1,75.6 L39.1,72.7 L40.2,68.2 L37.8,65.5 L40.6,65.0 L45.3,51.0 L41.0,42.8 L51.4,44.6 L60.1,42.1 L66.1,44.9 L77.5,37.8 L80.9,29.2 L78.3,26.2 L89.2,25.7 L94.8,32.7 L99.4,32.1 L103.4,40.2 L116.1,52.9 L123.7,56.4 L124.5,59.3 L132.0,58.6 L133.7,63.6 L136.9,64.0 L134.1,68.2 L135.5,72.3 L160.3,79.5 L165.8,82.8 L167.4,86.6 L179.2,90.4 L178.9,99.9 L184.0,103.7 L202.2,102.0 L205.0,100.1 L204.1,94.1 L206.3,93.5 L209.9,98.9 L223.1,96.6 L227.3,89.5 L234.7,89.3 L245.1,84.2 L256.1,84.3 L255.2,86.8 L257.5,90.8 L251.4,99.6 L255.5,103.3 L254.4,105.0 L302.7,125.8 L325.5,114.9 L343.4,102.5 L345.8,96.8 L349.4,95.7 L346.8,95.0 L352.1,93.2 L381.4,54.2 L386.9,45.3 L388.4,31.6 L388.4,5.4 L365.9,-38.2 L367.1,-47.4 L374.8,-67.5 L374.2,-72.4 L363.6,-93.1 L362.9,-104.0 L356.7,-123.6 L359.3,-134.0 L369.9,-151.7 L370.2,-157.2 L458.7,-224.4 L503.6,-505.3 L436.7,-763.8 Z"/>
+      </g>
+
+      <!-- 行程路徑（點擊跳至該日行程卡） -->
+      <g stroke="var(--sea)" stroke-width="3" fill="none" stroke-linecap="round">
+        <a href="#day1" class="geo-day"><title>D1 1/20 新千歳空港 → 道央道 → 洞爺湖温泉（點擊看當日行程）</title><path d="M464.4,292.4 Q343.8,358.5 207.7,377.4" marker-end="url(#arr)"/></a>
+        <a href="#day2" class="geo-day"><title>D2 1/21 洞爺湖 → ルスツリゾート（點擊看當日行程）</title><path d="M200.0,367.8 Q212.6,343.0 215.4,315.4" marker-end="url(#arr)"/></a>
+        <a href="#day4" class="geo-day"><title>D4 1/23 ルスツ → 国道230 中山峠 → 札幌（點擊看當日行程）</title><path d="M223.0,290.2 Q236.5,270.0 255.1,254.3"/><path d="M266.6,242.8 Q303.3,198.7 352.2,169.1" marker-end="url(#arr)"/></a>
+      </g>
+
+      <!-- JR 段（虛線，非自駕） -->
+      <g stroke="var(--sea)" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="7 6">
+        <a href="#day5" class="geo-day"><title>D5 1/24 札幌 → JR 快速エアポート 37 分 → 新千歳空港（點擊看當日行程）</title><path d="M374.2,170.6 Q426.8,217.0 465.2,275.7" marker-end="url(#arr)"/></a>
+      </g>
+
+      <!-- 路段距離／時間 -->
+      <g font-family="inherit" font-size="10.5" fill="var(--ink-faint)" class="geo-lbl">
+        <text x="335.8" y="373.4" text-anchor="middle">道央道 110 km／1.5 h</text>
+        <text x="234.3" y="345.8">30 km／40 分</text>
+        <text x="224.1" y="265.0" text-anchor="end">国道230 80 km／1.5 h</text>
+        <text x="445.7" y="214.6">JR 快速 37 分</text>
+      </g>
+
+      <!-- 圖例 -->
+      <g font-family="inherit" font-size="11" fill="var(--ink-faint)" class="geo-lbl">
+        <line x1="176.0" y1="58.0" x2="202.0" y2="58.0" stroke="var(--sea)" stroke-width="3" stroke-linecap="round"/>
+        <text x="209.0" y="62.0">自駕（租車）</text>
+        <line x1="176.0" y1="77.0" x2="202.0" y2="77.0" stroke="var(--sea)" stroke-width="3" stroke-linecap="round" stroke-dasharray="7 6"/>
+        <text x="209.0" y="81.0">JR 快速エアポート</text>
+      </g>
+
+      <!-- 途經點 -->
+      <g font-family="inherit" font-size="10.5" fill="var(--ink-faint)" class="geo-lbl">
+        <circle cx="261.4" cy="249.2" r="4" fill="var(--card)" stroke="var(--sea)" stroke-width="2"/>
+        <text x="252.4" y="243.2" text-anchor="end">中山峠</text>
+      </g>
+
+      <!-- 主要節點 -->
+      <g font-family="inherit" class="geo-lbl">
+        <circle cx="472.9" cy="287.7" r="9" fill="var(--card)" stroke="var(--sea)" stroke-width="4"/>
+        <text x="485.9" y="292.7" font-size="12" font-weight="700" fill="var(--ink)">新千歳空港 ✈</text>
+        <text x="485.9" y="306.7" font-size="10.5" fill="var(--ink-faint)">D1 抵達・D5 返程</text>
+        <circle cx="193.6" cy="379.2" r="9" fill="var(--card)" stroke="var(--sea)" stroke-width="4"/>
+        <text x="178.6" y="383.2" font-size="13" font-weight="800" fill="var(--ink)" text-anchor="end">洞爺湖温泉</text>
+        <text x="178.6" y="397.2" font-size="10.5" fill="var(--ink-faint)" text-anchor="end">D1 泊 乃の風・1 晚</text>
+        <circle cx="216.1" cy="301.3" r="9" fill="var(--card)" stroke="var(--sea)" stroke-width="4"/>
+        <text x="201.1" y="303.3" font-size="13" font-weight="800" fill="var(--ink)" text-anchor="end">ルスツリゾート</text>
+        <text x="201.1" y="317.3" font-size="10.5" fill="var(--ink-faint)" text-anchor="end">D2–D3 泊 2 晚・滑雪</text>
+        <circle cx="364.4" cy="162.1" r="9" fill="var(--card)" stroke="var(--sea)" stroke-width="4"/>
+        <text x="378.4" y="142.1" font-size="13" font-weight="800" fill="var(--ink)">札幌</text>
+        <text x="378.4" y="156.1" font-size="10.5" fill="var(--ink-faint)">D4 泊 1 晚・円山動物園</text>
+      </g>
+
+      <!-- 日次徽章 -->
+      <g font-family="inherit" font-size="11" font-weight="800" text-anchor="middle">
+        <a href="#day1" class="geo-day"><title>D1 1/20 桃園 → 新千歳 → 洞爺湖（點擊看當日行程）</title><circle cx="347.8" cy="327.4" r="11" fill="var(--sea)"/><text x="347.8" y="331.4" fill="#fff">D1</text></a>
+        <a href="#day2" class="geo-day"><title>D2 1/21 洞爺湖 → ルスツ（點擊看當日行程）</title><circle cx="184.3" cy="343.8" r="11" fill="var(--sea)"/><text x="184.3" y="347.8" fill="#fff">D2</text></a>
+        <a href="#day3" class="geo-day"><title>D3 1/22 ルスツ滑雪（點擊看當日行程）</title><circle cx="248.1" cy="315.3" r="11" fill="var(--sea)"/><text x="248.1" y="319.3" fill="#fff">D3</text></a>
+        <a href="#day4" class="geo-day"><title>D4 1/23 ルスツ → 中山峠 → 札幌（點擊看當日行程）</title><circle cx="328.5" cy="206.5" r="11" fill="var(--sea)"/><text x="328.5" y="210.5" fill="#fff">D4</text></a>
+        <a href="#day5" class="geo-day"><title>D5 1/24 札幌 → JR → 新千歳 → 桃園（點擊看當日行程）</title><circle cx="399.7" cy="230.6" r="11" fill="var(--sea)"/><text x="399.7" y="234.6" fill="#fff">D5</text></a>
+      </g>
+    </svg>
+  </div>
+  <p class="map-cap">實線＝自駕；虛線＝JR 快速機場線。新千歳 → 洞爺湖 走道央道 1.5 小時；洞爺湖 → 留壽都 30 km 冬季抓 40–50 分；留壽都 → 札幌 走國道 230 中山峠約 1.5 小時；最後一天從札幌站搭 JR 37 分鐘到機場，車已在前一晚還掉。點地圖上的日次徽章可跳到當日行程。</p>
+</section>
+
+<nav class="daynav" aria-label="日次快速跳轉">
+  <div class="daynav-in">
+    <a href="#day1">D1</a><a href="#day2">D2</a><a href="#day3">D3</a><a href="#day4">D4</a><a href="#day5">D5</a>
+    <span class="dn-sep" role="presentation"></span>
+    <a href="#bookings">訂單</a><a href="#essentials">速查</a><a href="#todo">必辦</a>
+  </div>
+</nav>
+
+<section id="days" aria-label="每日行程">
+  <div class="sec-head"><span class="no">02</span><h2>每日行程</h2><span class="en">Day by Day</span></div>
+
+  <article class="day" id="day1">
+    <div class="day-band"><span class="dnum">DAY 1</span><span class="ddate">1/20（三）</span><span class="dtheme">抵達・洞爺湖湖畔溫泉</span></div>
+    <div class="day-inner">
+      <ul class="tl">
+        <li><span class="tt">13:20</span><span class="tx">抵達新千歳機場<small>入境、提行李約 1 小時。國際線航廈 I。</small></span></li>
+        <li><span class="tt">14:30</span><span class="tx">Toyota 租車取車<small>4WD＋兩張兒童座椅。冬季雪胎標配。證件：台灣駕照正本＋日文譯本＋護照。</small></span></li>
+        <li><span class="tt">14:45</span><span class="tx">道央道 → 虻田洞爺湖 IC → 洞爺湖溫泉<small>約 110 km、1.5 小時，過路費約 ¥3,100。日落 16:33，天黑前抵達。</small></span></li>
+        <li><span class="tt">16:00</span><span class="tx">乃の風 入住<small>房內有湖景溫泉浴池。先上屋頂天空露天 TENQOO 看夜景，男女分開、每日對調。</small></span></li>
+        <li><span class="tt">17:30</span><span class="tx">Le Vent 湖景自助晚餐<small>17:00–21:00，含在房價內。</small></span></li>
+        <li><span class="tt">晚上</span><span class="tx">洞爺湖溫泉街燈光隧道<small>17:00–22:00 點燈，走路可到。2026-27 期程官方標「預定」。</small></span></li>
+      </ul>
+      <div class="hintline"><span>💡</span><span><b>泡湯規則</b>——7 歲以上不能進異性浴場：Angela 跟媽媽，Patty 跟誰都可以。屋頂露天 15:00 開到隔天 11:00，凌晨 1:30–4:00 清掃。</span></div>
+
+      <div class="stay">
+        <div class="s-label">今晚住宿 · 1 晚（1/20–1/21）</div>
+        <div class="s-name">ザ レイクビューTOYA 乃の風リゾート</div>
+        <div class="s-sub">野風俱樂部行政套房 112 ㎡・附全景溫泉浴池・2 大 2 小・<b>一泊二食（Le Vent 自助）</b></div>
+        <div class="s-row">
+          <span class="kv">訂單 <b>T11A7C38063EA</b>(tripla)</span>
+          <span class="kv">NT$<b>34,020</b>／1 晚</span>
+          <span class="badge paid">已付清</span>
+        </div>
+        <div class="s-info">
+          <div class="kv2"><span class="k">地址</span><a href="https://www.google.com/maps/search/?api=1&amp;query=%E4%B9%83%E3%81%AE%E9%A2%A8%E3%83%AA%E3%82%BE%E3%83%BC%E3%83%88" target="_blank" rel="noopener">北海道虻田郡洞爺湖町洞爺湖温泉 29-1</a></div>
+          <div class="kv2"><span class="k">電話</span><a href="tel:+81570026571">0570-026571</a>（10:00–17:00）</div>
+          <div class="kv2"><span class="k">Check-in / out</span><b>15:00</b>／<b>11:00</b></div>
+          <div class="kv2"><span class="k">餐食</span>晚 <b>17:00–21:00</b>・早 <b>7:00–10:00</b>，皆 Le Vent 自助</div>
+          <div class="kv2 wide"><span class="k">停車</span><b>免費</b></div>
+          <div class="kv2 wide"><span class="k">溫泉</span>屋頂天空露天 TENQOO・9F 展望大浴場 <b>15:00–翌 11:00</b>｜2F 昭和乃湯</div>
+        </div>
+        <div class="s-note"><b>取消：</b>1/13 前免費；之後 6–4 日前 20%、3–2 日前 50%、前日 80%、當日 100%。<b>現場另付：</b>入湯稅 13 歲以上每人每晚 ¥100、宿泊稅每人每晚 ¥1,500 級距（12 歲以下免町稅）。</div>
+      </div>
+
+      <div class="drive">
+        <span class="km">新千歳空港 → 乃の風 約 110 km・道央道</span>
+        <a class="maplink" data-route="d1" href="#" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>當日路線</a>
+      </div>
+    </div>
+  </article>
+
+  <article class="day" id="day2">
+    <div class="day-band"><span class="dnum">DAY 2</span><span class="ddate">1/21（四）</span><span class="dtheme">洞爺湖白天・進 Rusutsu</span></div>
+    <div class="day-inner">
+      <ul class="tl">
+        <li><span class="tt">07:00</span><span class="tx">日出，屋頂露天看雪看湖<small>這是整趟「邊泡湯邊看雪」的正場，開到 11:00。</small></span></li>
+        <li><span class="tt">08:00</span><span class="tx">早餐 Le Vent<small>7:00–10:00。</small></span></li>
+        <li><span class="tt">10:00</span><span class="tx">飯店旁足湯「洞龍之湯」、湖畔雕刻公園散步<small>足湯 10:00–16:00 免費。步道有除雪但結冰，穿防滑鞋。</small></span></li>
+        <li><span class="tt">11:00</span><span class="tx">退房，溫泉街先加滿油<small>往留壽都途中約 30 km 沒有商店。溫泉街有 Seicomart、7-11 與兩家加油站。</small></span></li>
+        <li><span class="tt">11:15</span><span class="tx">昭和新山熊牧場<small>車程約 10 分，8:30–16:30。大人 ¥1,000、6 歲以上 ¥500、未滿 6 歲免費；餵食餅乾 ¥200。全程露天，抓 45 分鐘。<a href="https://kumakuma.co.jp/" target="_blank" rel="noopener">官網</a></small></span></li>
+        <li><span class="tt">12:15</span><span class="tx">午餐 わかさいも本舗 2F 仙堂庵<small>11:00–15:00，和室座位，扇貝茶碗蒸御膳 ¥1,298，停車免費。備案：望羊蹄（週四有開，11:00–15:30）。</small></span></li>
+        <li><span class="tt">13:00</span><span class="tx">洞爺湖汽船 或 火山科學館（二選一）<small>汽船 9:00–16:00 每小時一班，45 分鐘繞湖不登島，甲板可餵海鷗，大人 ¥1,800、小學生 ¥900。天氣差改火山科學館，10:00–16:00，大人 ¥800、中小學生 ¥400、未就學免費，室內有防災模擬與三面銀幕。</small></span></li>
+        <li><span class="tt">14:15</span><span class="tx">出發往留壽都<small>道道 2 號接國道 230 號，30 km，冬季 40–50 分。</small></span></li>
+        <li><span class="tt">15:00</span><span class="tx">Rusutsu 本館入住<small>行李放好，從房間拿毛巾去サウスウイング 1F 造浪池，14:00–21:00 住客免費。</small></span></li>
+        <li><span class="tt">17:30</span><span class="tx">Oktoberfest 自助晚餐<small>開門就進場避開叫號等候。本ズワイガニ吃到飽已含在方案內。</small></span></li>
+        <li><span class="tt">20:00</span><span class="tx">溫泉 ことぶきの湯・旋轉木馬<small>ことぶきの湯 在ノースウイング 6F，14:00–25:00；旋轉木馬在ノース地面層，免費。</small></span></li>
+      </ul>
+      <div class="warnline"><b>路況</b><span>國道 230 花和～留壽都一段是地吹雪與連環車禍常發區，冬季常有交通管制。能見度變差就大減速、拉開車距。</span></div>
+      <div class="hintline"><span>💡</span><span><b>有珠山纜車</b>近五年有四年在 1 月中下旬檢修停駛，2027 年檢修日 11 月才公布，所以沒排進去；若有開就是 13:00 的好選項。造浪池滑水道限身高 130 cm，浪偏強，Patty 要抱著玩；泳池不提供毛巾也不租泳圈。</span></div>
+
+      <div class="stay">
+        <div class="s-label">今晚住宿 · 連住 2 晚（1/21–1/23）</div>
+        <div class="s-name">ルスツリゾートホテル＆コンベンション（本館）</div>
+        <div class="s-sub">トリプル 33 ㎡・3 張單人床＋沙發床・4 名・<b>一泊二食（自助）</b>・【先行販売】冬シンプルプラン</div>
+        <div class="s-row">
+          <span class="kv">訂單 <b>X-4TLQRR5WVIG</b>(489PRO)</span>
+          <span class="kv">¥<b>264,960</b>／2 晚</span>
+          <span class="badge paid">已付清</span>
+        </div>
+        <div class="s-info">
+          <div class="kv2"><span class="k">地址</span><a href="https://www.google.com/maps/search/?api=1&amp;query=%E3%83%AB%E3%82%B9%E3%83%84%E3%83%AA%E3%82%BE%E3%83%BC%E3%83%88%E3%83%9B%E3%83%86%E3%83%AB%EF%BC%86%E3%82%B3%E3%83%B3%E3%83%99%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%B3" target="_blank" rel="noopener">北海道虻田郡留寿都村字泉川 13 番地</a></div>
+          <div class="kv2"><span class="k">電話</span><a href="tel:+81136463111">0136-46-3111</a></div>
+          <div class="kv2"><span class="k">Check-in / out</span><b>15:00</b>／<b>10:00</b></div>
+          <div class="kv2"><span class="k">餐食</span>晚 <b>17:30–20:30</b>・早 <b>6:30–9:30</b>，Oktoberfest 或 Crescent Hall</div>
+          <div class="kv2 wide"><span class="k">停車</span><b>免費</b>，入住前與退房後都免費</div>
+          <div class="kv2 wide"><span class="k">泳池・溫泉</span>造浪池（サウス 1F）<b>14:00–21:00</b>｜ことぶきの湯（ノース 6F）<b>6:00–9:00／14:00–25:00</b>，7 歲以上不可進異性浴場</div>
+        </div>
+        <div class="s-note"><b>已登錄的備註：</b>兩名兒童中一名 5 歲（未就學）以小學生費率預約；希望サウスウイング泳池側房間（飯店不保證）。<b>取消：</b>11/22 前免費；之後 60–8 日前 10%、7–4 日前 20%、3–2 日前 50%、前日 80%、當日 100%。<b>現場另付：</b>入湯稅大人每晚 ¥150、宿泊稅每人每晚 ¥200–1,000。管理與收據：JTB Book&amp;Pay，取引番號 0016677113。</div>
+      </div>
+
+      <div class="drive">
+        <span class="km">乃の風 → 熊牧場 → 仙堂庵 → 汽船乘船場 → Rusutsu 約 45 km</span>
+        <a class="maplink" data-route="d2" href="#" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>當日路線</a>
+      </div>
+    </div>
+  </article>
+
+  <article class="day" id="day3">
+    <div class="day-band"><span class="dnum">DAY 3</span><span class="ddate">1/22（五）</span><span class="dtheme">Rusutsu 滑雪日</span></div>
+    <div class="day-inner">
+      <ul class="tl">
+        <li><span class="tt">07:00</span><span class="tx">早餐<small>Oktoberfest 最豐富但最擠；Crescent Hall 兒童菜色多、座位好入座。</small></span></li>
+        <li><span class="tt">08:30</span><span class="tx">雪具租借・纜車票<small>租借櫃台在ノースウイング 2F，8:15 起。大人纜車一日券線上買 ¥13,200（窗口 ¥16,700）。</small></span></li>
+        <li><span class="tt">10:00</span><span class="tx">小孩滑雪課，大人自己滑<small>Patty：Samurai Kids 4–7 歲英語班 2.5 小時 ¥18,000。Angela：一般團體班 7 歲以上 2 小時 ¥8,000。或兩姊妹一起上 2 小時私人團體課 ¥37,000。10 月上旬開放預約。</small></span></li>
+        <li><span class="tt">12:30</span><span class="tx">午餐<small>Pub Cricket（サウス 1F，蛋包飯、炸魚薯條）或 Neve Cafe（ノース 2F，有兒童草皮區）。</small></span></li>
+        <li><span class="tt">13:30</span><span class="tx">Samurai Kids Park・狗拉雪橇・雪上泛舟<small>雪樂園 9:00–16:00，一日券每人 ¥2,600，陪同大人同價，只收非現金。狗拉雪橇 10:00–14:30，¥5,830，4 歲以上可坐。雪上泛舟大人 ¥3,300、小孩 ¥2,500。</small></span></li>
+        <li><span class="tt">16:00</span><span class="tx">造浪池或溫泉<small>想再滑的人夜滑 16:00–20:00，大人 ¥4,000。</small></span></li>
+        <li><span class="tt">17:30</span><span class="tx">自助晚餐<small>第二晚可換 Crescent Hall 避開排隊。</small></span></li>
+      </ul>
+      <div class="hintline"><span>💡</span><span><b>Angela 的課</b>——Samurai Kids 只收 4–7 歲，8 歲要上一般班（日語授課）；想兩人一起、用英語，就訂 2–5 人的私人團體課。滑雪課都不含纜車票與雪具。</span></div>
+    </div>
+  </article>
+
+  <article class="day" id="day4">
+    <div class="day-band"><span class="dnum">DAY 4</span><span class="ddate">1/23（六）</span><span class="dtheme">円山動物園・札幌・雪場蟹</span></div>
+    <div class="day-inner">
+      <ul class="tl">
+        <li><span class="tt">07:30</span><span class="tx">早餐後收行李</span></li>
+        <li><span class="tt">10:00</span><span class="tx">退房，行李寄住客專用投幣櫃<small>向櫃台拿代幣免費。旋轉木馬與遊戲區再玩一下；泳池 14:00 才開用不到。</small></span></li>
+        <li><span class="tt">11:00</span><span class="tx">出發往札幌<small>國道 230 中山峠，約 80 km、90 分。出發前查即時路況。</small></span></li>
+        <li><span class="tt">12:45</span><span class="tx">札幌午餐</span></li>
+        <li><span class="tt">13:30</span><span class="tx">札幌市円山動物園<small>9:30–16:00、15:30 最後入園。大人 ¥800、國中以下免費，第一停車場 ¥700。北極熊水中隧道、雪豹、室內熱帶鳥類館。<a href="https://www.city.sapporo.jp/zoo/" target="_blank" rel="noopener">官網</a></small></span></li>
+        <li><span class="tt">16:30</span><span class="tx">入住札幌飯店</span></li>
+        <li><span class="tt">17:00</span><span class="tx">Toyota 札幌駅前店還車<small>北 5 条東 1 丁目，8:00–20:00，異地還車免費。之後靠地鐵。</small></span></li>
+        <li><span class="tt">18:00</span><span class="tx">薄野雪場蟹吃到飽<small>地鐵東豐線到豊水すすきの。難陀 90 分 ¥9,980、5–11 歲 ¥6,500，最後入店 19:30；えびかに合戦 ¥10,000、小學生半價，營業到 23:00；HARBOR SAPPORO 60 分 ¥6,600 起最省。三家都要 11 月下旬才開放 1/23 訂位。</small></span></li>
+        <li><span class="tt">20:00</span><span class="tx">站前通白色燈節<small>點燈到 2/11。</small></span></li>
+      </ul>
+      <div class="warnline"><b>還車時間</b><span>難陀最後入店 19:30，所以車要在 17:00 前後還掉，不能拖到 20:00 打烊前。</span></div>
+      <div class="hintline"><span>💡</span><span><b>備案</b>——若不想開往返旭川，動物園就是這裡的円山；若更想看企鵝遊行，1/23 一早 8:30 出發去登別尼克斯（11:00 與 14:15 各一場，大人 ¥3,200、4 歲到小學生 ¥1,600），13:30 離開 16:00 前回札幌，但那天早上就不能玩雪。</span></div>
+
+      <div class="stay">
+        <div class="s-label">今晚住宿 · 1 晚（1/23–1/24）</div>
+        <div class="s-name">札幌市區飯店（尚未訂）</div>
+        <div class="s-sub">2 大 2 小・靠札幌站或大通，隔天早上搭 JR 去機場</div>
+        <div class="s-row">
+          <span class="kv">候選 <b>JR タワーホテル日航札幌</b></span>
+          <span class="kv">¥<b>39,298</b>／1 晚 含早＋停車免費</span>
+          <span class="badge onsite">待訂</span>
+        </div>
+        <div class="s-info">
+          <div class="kv2 wide"><span class="k">為什麼</span>札幌站直結，1/24 早上拉行李走幾步就到 JR 月台；官網規定小學生以下每床可添い寝 1 名，一間雙床房就住得下。1/15 前免費取消，9/22 查時剩 3 間。</div>
+          <div class="kv2 wide"><span class="k">其他候選</span>札幌ビューホテル大通公園 可退方案 ¥47,600（四人房型多）；札幌グランドホテル 三人房 ¥33,279（官網九折）</div>
+        </div>
+        <div class="s-note"><b>札幌市宿泊稅</b>每人每晚 ¥300–1,000 現場另付，各家官網價都未含。</div>
+      </div>
+
+      <div class="drive">
+        <span class="km">Rusutsu → 円山動物園 → Toyota 札幌駅前店 約 95 km・中山峠</span>
+        <a class="maplink" data-route="d4" href="#" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>當日路線</a>
+      </div>
+    </div>
+  </article>
+
+  <article class="day" id="day5">
+    <div class="day-band"><span class="dnum">DAY 5</span><span class="ddate">1/24（日）</span><span class="dtheme">札幌早上・JR 回機場</span></div>
+    <div class="day-inner">
+      <ul class="tl">
+        <li><span class="tt">08:30</span><span class="tx">二条市場海鮮丼早餐，或狸小路買伴手禮</span></li>
+        <li><span class="tt">11:15</span><span class="tx">札幌站搭 JR 快速エアポート<small>白天約 10 分鐘一班，33–43 分。大人 ¥1,230、小學生 ¥620、未就學不佔位免費；指定席 uシート +¥1,000。</small></span></li>
+        <li><span class="tt">12:00</span><span class="tx">抵新千歳，國際線報到<small>CI131 14:40 起飛。</small></span></li>
+      </ul>
+      <div class="warnline"><b>JR 大雪風險</b><span>2026 年 1 月 29 日大雪時 JR 北海道晚間停駛 113 班，含機場線。前一晚查運行情報，停駛就改機場巴士或計程車。</span></div>
+      <div class="drive">
+        <span class="km">札幌駅 → 新千歳空港 JR 快速エアポート 37 分</span>
+        <a class="maplink" data-route="d5" href="#" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>JR 路線</a>
+      </div>
+    </div>
+  </article>
+</section>
+
+<section id="bookings" aria-label="訂購紀錄">
+  <div class="sec-head"><span class="no">03</span><h2>訂購紀錄</h2><span class="en">Bookings</span></div>
+  <div class="tablebox"><table>
+    <thead><tr><th>項目</th><th>日期</th><th>確認號</th><th>金額</th><th>狀態</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>中華航空 CI130／CI131<span class="sub">2 大 2 小・經濟艙・去程 48DEFG、回程 49DEFG</span></td>
+        <td class="num">1/20 去・1/24 回</td>
+        <td class="num">D64TFT</td>
+        <td class="num">NT$116,904</td>
+        <td><span class="badge paid">已開票</span></td>
+      </tr>
+      <tr>
+        <td>乃の風リゾート<span class="sub">野風俱樂部行政套房 112 ㎡・一泊二食・N Point 會員 5% 折後</span></td>
+        <td class="num">1/20–1/21（1 晚）</td>
+        <td class="num">T11A7C38063EA</td>
+        <td class="num">NT$34,020</td>
+        <td><span class="badge paid">已付清</span></td>
+      </tr>
+      <tr>
+        <td>ルスツリゾートホテル＆コンベンション<span class="sub">トリプル 4 名・冬シンプル 夕食ブッフェ＆朝食付・不含纜車票</span></td>
+        <td class="num">1/21–1/23（2 晚）</td>
+        <td class="num">X-4TLQRR5WVIG</td>
+        <td class="num">¥264,960</td>
+        <td><span class="badge paid">已付清</span></td>
+      </tr>
+      <tr>
+        <td>札幌市區飯店<span class="sub">候選 JR タワーホテル日航（含早＋停車免費）</span></td>
+        <td class="num">1/23–1/24（1 晚）</td>
+        <td class="num">—</td>
+        <td class="num">約 ¥39,298</td>
+        <td><span class="badge onsite">待訂</span></td>
+      </tr>
+      <tr>
+        <td>Toyota 租車<span class="sub">4WD＋兒童座椅 ×2・新千歳借 1/20 14:00・札幌駅前還 1/23 17:00・異地還車免費</span></td>
+        <td class="num">1/20–1/23</td>
+        <td class="num">—</td>
+        <td class="num">—</td>
+        <td><span class="badge onsite">待訂</span></td>
+      </tr>
+      <tr>
+        <td>Rusutsu 滑雪課<span class="sub">1/22 上午・10 月上旬開放預約</span></td>
+        <td class="num">1/22</td>
+        <td class="num">—</td>
+        <td class="num">¥26,000–37,000</td>
+        <td><span class="badge onsite">待訂</span></td>
+      </tr>
+      <tr>
+        <td>薄野雪場蟹吃到飽<span class="sub">難陀約 11/23、HARBOR 約 11/20 開放 1/23 訂位</span></td>
+        <td class="num">1/23 晚</td>
+        <td class="num">—</td>
+        <td class="num">約 ¥20,000–33,000</td>
+        <td><span class="badge onsite">待訂</span></td>
+      </tr>
+    </tbody>
+  </table></div>
+  <p class="map-cap">乃の風與 Rusutsu 皆為飯店官網訂房引擎（tripla、489PRO）直訂；兩家都已刷卡付清，入湯稅與宿泊稅現場另付。</p>
+</section>
+
+<section id="essentials" aria-label="費用與交通速查">
+  <div class="sec-head"><span class="no">04</span><h2>費用與交通速查</h2><span class="en">Prices &amp; Distances</span></div>
+  <h3>門票與現場費用</h3>
+  <div class="tablebox"><table>
+    <thead><tr><th>項目</th><th>大人</th><th>Angela（8 歲）</th><th>Patty（5 歲）</th><th>備註</th></tr></thead>
+    <tbody>
+      <tr><td>昭和新山熊牧場</td><td class="num">¥1,000</td><td class="num">¥500</td><td class="num">免費</td><td>8:30–16:30・餵食餅乾 ¥200・停車 ¥500</td></tr>
+      <tr><td>洞爺湖汽船（冬季周遊）</td><td class="num">¥1,800</td><td class="num">¥900</td><td class="num">未列</td><td>9:00–16:00 每小時一班・45 分・不登島</td></tr>
+      <tr><td>洞爺湖火山科學館</td><td class="num">¥800</td><td class="num">¥400</td><td class="num">免費</td><td>10:00–16:00・週一休</td></tr>
+      <tr><td>Rusutsu 纜車一日券（線上）</td><td class="num">¥13,200</td><td class="num">¥6,400</td><td class="num">¥6,400</td><td>窗口價 ¥16,700／¥8,300・夜滑 ¥4,000／¥1,400</td></tr>
+      <tr><td>Samurai Kids Park 一日券</td><td class="num">¥2,600</td><td class="num">¥2,600</td><td class="num">¥2,600</td><td>9:00–16:00・陪同大人同價・只收非現金</td></tr>
+      <tr><td>滑雪課</td><td class="num">私人 2h ¥30,000</td><td class="num">團體 2h ¥8,000</td><td class="num">Samurai Kids 2.5h ¥18,000</td><td>私人團體 2–5 人 2h ¥37,000・不含纜車與雪具</td></tr>
+      <tr><td>雪具全套 1 日</td><td class="num">雪具組 ¥10,800</td><td class="num">¥17,300</td><td class="num">¥17,300</td><td>大人雪衣另 ¥7,800・線上申請 11 月下旬開放</td></tr>
+      <tr><td>狗拉雪橇・雪上泛舟</td><td class="num">¥5,830・¥3,300</td><td class="num">¥5,830・¥2,500</td><td class="num">¥5,830・¥2,500</td><td>雪橇 4 歲以上、週四休・泛舟 3 歲以下免費同乘</td></tr>
+      <tr><td>Rusutsu 泳池溫泉（退房後）</td><td class="num">¥1,800</td><td class="num">¥900</td><td class="num">¥900</td><td>住宿期間免費</td></tr>
+      <tr><td>円山動物園</td><td class="num">¥800</td><td class="num">免費</td><td class="num">免費</td><td>9:30–16:00・停車 ¥700・窗口只收現金</td></tr>
+      <tr><td>難陀 蟹吃到飽 90 分</td><td class="num">¥9,980</td><td class="num">¥6,500</td><td class="num">¥6,500</td><td>70 分 ¥7,980／¥4,580・最後入店 19:30</td></tr>
+      <tr><td>JR 快速エアポート</td><td class="num">¥1,230</td><td class="num">¥620</td><td class="num">免費</td><td>未就學不佔位免費・uシート +¥1,000</td></tr>
+    </tbody>
+  </table></div>
+  <h3>距離與時間</h3>
+  <div class="tablebox"><table>
+    <thead><tr><th>路段</th><th>距離</th><th>一般路況</th><th>備註</th></tr></thead>
+    <tbody>
+      <tr><td>新千歳空港 → 洞爺湖溫泉</td><td class="num">約 110 km</td><td class="num">1.5 小時</td><td>道央道，過路費約 ¥3,100</td></tr>
+      <tr><td>洞爺湖溫泉 → 昭和新山</td><td class="num">約 7 km</td><td class="num">10 分</td><td>熊牧場・有珠山纜車同一區</td></tr>
+      <tr><td>洞爺湖溫泉 → Rusutsu</td><td class="num">30 km</td><td class="num">40–50 分（冬）</td><td>道道 2 號接國道 230・中途無商店</td></tr>
+      <tr><td>Rusutsu → 札幌市區</td><td class="num">約 80 km</td><td class="num">90 分</td><td>國道 230 中山峠，經定山溪</td></tr>
+      <tr><td>札幌市區 → 円山動物園</td><td class="num">約 5 km</td><td class="num">15–20 分</td><td>地鐵東西線円山公園站步行 15 分</td></tr>
+      <tr><td>札幌駅 → 新千歳空港（JR）</td><td class="num">—</td><td class="num">33–43 分</td><td>白天約 10 分一班</td></tr>
+    </tbody>
+  </table></div>
+  <p class="map-cap">冬季實際車程要再加兩到三成。札幌 1 月下旬 07:00 日出、16:31 日落，每天移動盡量在下午 3 點前抵達。道央道大雪時會預防性封閉；國道 230 花和～留壽都段常有地吹雪管制。</p>
+</section>
+
+<section id="todo" aria-label="行前必辦">
+  <div class="sec-head"><span class="no">05</span><h2>行前必辦</h2><span class="en">Before We Go</span></div>
+  <p class="todo-note">依時間先後排列，前面的先做。勾選狀態會存在這台裝置上。</p>
+
+  <div class="todo" data-key="car"><label><input type="checkbox"><div><div class="t-title">訂 Toyota 租車</div><div class="t-body">1/20 14:00 新千歳空港借、1/23 17:00 札幌駅前店還，<b>4WD＋兩張兒童座椅</b>訂車時就要申請。同區域異地還車免費；Nippon 要 ¥5,500，OTS 沒有札幌店。</div></div></label></div>
+
+  <div class="todo" data-key="sapporo"><label><input type="checkbox"><div><div class="t-title">訂札幌 1/23 那一晚</div><div class="t-body">首選 JR タワーホテル日航官網：雙床房＋小學生以下添い寝，含早餐與停車免費 ¥39,298，1/15 前免費取消。備選札幌ビューホテル大通公園（可退方案 ¥47,600）、札幌グランド（三人房 ¥33,279）。</div></div></label></div>
+
+  <div class="todo" data-key="lesson"><label><input type="checkbox"><div><div class="t-title">10 月上旬：訂 1/22 上午的滑雪課</div><div class="t-body">Rusutsu 滑雪學校 10 月上旬開放 2026-27 預約。Patty 走 <b>Samurai Kids</b>（4–7 歲、英語、2.5 小時 ¥18,000，須已完成如廁訓練）；Angela 走一般團體班（7 歲以上、日語、2 小時 ¥8,000）；或兩人一起上私人團體課 2 小時 ¥37,000。</div></div></label></div>
+
+  <div class="todo" data-key="usuzan"><label><input type="checkbox"><div><div class="t-title">11 月：查有珠山纜車 2027 年 1 月的檢修日</div><div class="t-body">近五年有四年在 1 月中下旬停駛（2026 年是 1/12–1/31）。若 1/21 有開，往復大人 ¥2,000、小學生 ¥1,000，可取代汽船排在 13:00。</div></div></label></div>
+
+  <div class="todo" data-key="crab"><label><input type="checkbox"><div><div class="t-title">11/20–11/23：訂 1/23 晚上的雪場蟹吃到飽</div><div class="t-body"><b>難陀</b>只開放 2 個月內訂位，約 11/23 才能訂 1/23，網路申請制要等店家確認；<b>HARBOR</b> 約 11/20 開放；<b>えびかに合戦</b> Hotpepper 月曆開到 1 月時即可訂，週六晚 18:00 四人。</div></div></label></div>
+
+  <div class="todo" data-key="rental"><label><input type="checkbox"><div><div class="t-title">11 月下旬：Rusutsu 雪具線上申請</div><div class="t-body">兒童全套（板、靴、杖、雪衣、安全帽、手套、風鏡）1 日 ¥17,300；大人雪具組 ¥10,800，雪衣另 ¥7,800。線上申請 11 月下旬開放，比現場便宜。</div></div></label></div>
+
+  <div class="todo" data-key="lift"><label><input type="checkbox"><div><div class="t-title">出發前：線上買 1/22 纜車一日券</div><div class="t-body">大人線上 ¥13,200、窗口 ¥16,700。小孩若只玩雪樂園與上課不一定需要纜車票，先問滑雪學校。</div></div></label></div>
+
+  <div class="todo" data-key="license"><label><input type="checkbox"><div><div class="t-title">辦台灣駕照日文譯本</div><div class="t-body">監理站現場辦。取車要帶<b>台灣駕照正本＋日文譯本＋護照</b>三樣。</div></div></label></div>
+
+  <div class="todo" data-key="confirm"><label><input type="checkbox"><div><div class="t-title">出發前一週：向兩家飯店再確認</div><div class="t-body">Rusutsu：Patty 5 歲以小學生費率預約的備註、サウスウイング泳池側房間、床護欄（本館免費出借）。乃の風：預計 16:00 前後抵達。</div></div></label></div>
+
+  <div class="checks" id="checks">
+    <label data-key="pack"><input type="checkbox"><span><b>行李</b>——泳衣、泳圈（Rusutsu 不租）、防滑雪靴、雪衣手套、Rusutsu 泳池自帶房間毛巾。</span></label>
+    <label data-key="road"><input type="checkbox"><span><b>每天出發前</b>——查道央道與國道 230 即時路況（NEXCO 東日本 iHighway）；1/21 離開洞爺湖前加滿油。</span></label>
+    <label data-key="jr"><input type="checkbox"><span><b>1/23 晚</b>——查 JR 北海道運行情報，確認 1/24 快速機場線正常；可先買 uシート 指定席。</span></label>
+    <label data-key="tax"><input type="checkbox"><span><b>現場付款</b>——乃の風與 Rusutsu 的入湯稅與宿泊稅、札幌宿泊稅，都在櫃台現場付。</span></label>
+    <label data-key="snowpark"><input type="checkbox"><span><b>選配</b>——Snow Park Toya（月浦，前一天 17:00 前預約）與サイロ展望台雪遊廣場 2026-27 季日程 11 月後再看，1/21 中午若想玩雪可替換汽船。</span></label>
+  </div>
+</section>
+
+<div class="foot">
+  住宿訂單與操作資訊核對於 2026/9/22（來源：Gmail 訂房確認信＋各飯店官方網站與訂房引擎）；景點營運資訊查證於各官方網站與 2025–2026 冬季住客評論，出發前建議再確認。行車距離與時間為估算值，實際以當天導航與路況為準。家庭內部使用。
+</div>
+
+</div>
+
+<script>
+(function(){
+  var enc = encodeURIComponent;
+  function dir(origin, dest, waypoints, mode){
+    var u = 'https://www.google.com/maps/dir/?api=1&travelmode=' + (mode || 'driving') + '&origin=' + enc(origin) + '&destination=' + enc(dest);
+    if (waypoints && waypoints.length) u += '&waypoints=' + waypoints.map(enc).join('%7C');
+    return u;
+  }
+  var routes = {
+    d1: dir('新千歳空港 国際線ターミナル', 'ザ レイクビューTOYA 乃の風リゾート'),
+    d2: dir('ザ レイクビューTOYA 乃の風リゾート', 'ルスツリゾートホテル＆コンベンション', ['昭和新山熊牧場', 'わかさいも本舗 洞爺湖本店', '洞爺湖汽船 洞爺湖温泉乗り場']),
+    d4: dir('ルスツリゾートホテル＆コンベンション', 'トヨタレンタカー 札幌駅前店', ['札幌市円山動物園']),
+    d5: dir('札幌駅', '新千歳空港', null, 'transit')
+  };
+  document.querySelectorAll('.maplink[data-route]').forEach(function(a){
+    a.href = routes[a.getAttribute('data-route')] || a.href;
+  });
+
+  var KEY = 'hokkaido2027-checklist';
+  var saved = {};
+  try { saved = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch(e){}
+  document.querySelectorAll('[data-key]').forEach(function(item){
+    var box = item.querySelector('input[type="checkbox"]');
+    if (!box) return;
+    var k = item.getAttribute('data-key');
+    function paint(){ item.classList.toggle('done', box.checked); }
+    if (k in saved) box.checked = !!saved[k]; paint();
+    box.addEventListener('change', function(){
+      saved[k] = box.checked;
+      try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch(e){}
+      paint();
+    });
+  });
+})();
+</script>
+<script>
+(function(){
+  var links = document.querySelectorAll('.daynav a[href^="#day"]');
+  if (!('IntersectionObserver' in window) || !links.length) return;
+  var map = {}, cur = null;
+  links.forEach(function(a){ map[a.getAttribute('href').slice(1)] = a; });
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting && map[e.target.id]) {
+        if (cur) cur.classList.remove('on');
+        cur = map[e.target.id]; cur.classList.add('on');
+      }
+    });
+  }, {rootMargin:'-15% 0px -70% 0px'});
+  Object.keys(map).forEach(function(id){ var el = document.getElementById(id); if (el) io.observe(el); });
+})();
+</script>
+
+</body>
+</html>
