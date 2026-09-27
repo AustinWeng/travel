@@ -1,350 +1,268 @@
-"""從 japan.geojson 生成東京迪士尼行程 SVG（2025-tokyo-disney #geomap 內容）。
-工具與 gen_kyushu_map.py / gen_ski_map.py 同源。東京灣區聚焦：
-上野吸收淺草/晴空塔（11/20px 內），台場・豐洲併一節點（17.6px）。"""
-import json, math
+"""東京迪士尼：首都圈定位、上野周邊與東京灣放大圖。
+
+預設只自檢（不寫檔、不連網）；--output 新路徑以 x 模式拒絕覆寫。
+海岸、原五點、原行程景點、路線一律用 XY，再作等比例仿射。
+地形取自现有 japan.geojson；虛線為行程連線，並非實際鐵路線形。
+"""
+import argparse
+import hashlib
+import json
+import math
+import re
+from html import escape
 from pathlib import Path
+from xml.etree import ElementTree as ET
 
-SC = Path(__file__).parent
-d = json.load(open(SC / "japan.geojson"))
-
+SC = Path(__file__).resolve().parent
+COS = math.cos(math.radians(35.7))
 PREF_IDS = {8, 11, 12, 13, 14}
-prefs = [f for f in d["features"] if f["properties"]["id"] in PREF_IDS]
+# 保留 b405eee 的五個原始點位；odaiba 原本即台場／豐洲區域代表點。
+P = {
+    'narita': (140.386, 35.772),
+    'maihama': (139.879, 35.632),
+    'odaiba': (139.782, 35.638),
+    'ueno': (139.777, 35.712),
+    'shinagawa': (139.736, 35.628),
+}
+# 只展開既有行程景點。官網交通頁地圖座標，2026-09-28 核對：
+# https://www.senso-ji.jp/access/ （淺草寺）
+# https://www.tokyo-skytree.jp/access/ （英文地圖中心）
+# https://teamlabplanets.dmm.com/en/guide （Google Maps 景點座標）
+DETAIL_P = {
+    'asakusa': (139.796730, 35.714634),
+    'skytree': (139.8107, 35.710063),
+    'toyosu': (139.7898285, 35.6491075),
+}
+POINTS = {**P, **DETAIL_P}
 
-def ring_area(r):
-    s = 0.0
-    for i in range(len(r) - 1):
-        s += r[i][0] * r[i + 1][1] - r[i + 1][0] * r[i][1]
-    return abs(s) / 2
-
-def rdp(pts, eps):
-    if len(pts) < 3:
-        return pts
-    (x1, y1), (x2, y2) = pts[0], pts[-1]
-    dmax, idx = 0.0, 0
-    dx, dy = x2 - x1, y2 - y1
-    L = math.hypot(dx, dy) or 1e-12
-    for i in range(1, len(pts) - 1):
-        px, py = pts[i]
-        dist = abs(dy * px - dx * py + x2 * y1 - y2 * x1) / L
-        if dist > dmax:
-            dmax, idx = dist, i
-    if dmax > eps:
-        a = rdp(pts[: idx + 1], eps)
-        b = rdp(pts[idx:], eps)
-        return a[:-1] + b
-    return [pts[0], pts[-1]]
-
-AREA_MIN = 0.008
-rings = []
-for f in prefs:
-    g = f["geometry"]
-    polys = g["coordinates"] if g["type"] == "MultiPolygon" else [g["coordinates"]]
-    for poly in polys:
-        outer = poly[0]
-        if ring_area(outer) >= AREA_MIN:
-            mid = len(outer) // 2
-            simp = rdp(outer[:mid + 1], 0.002)[:-1] + rdp(outer[mid:], 0.002)
-            rings.append((f["properties"]["id"], simp))
-
-# ---- 投影（手動窗：東京灣區＋成田） ----
-lat0, lat1 = 35.42, 35.98
-lon0, lon1 = 139.60, 140.55
-cosf = math.cos(math.radians((lat0 + lat1) / 2))
-W = 740
-PADL, PADR, PADT, PADB = 26, 120, 36, 26
-S = (W - PADL - PADR) / ((lon1 - lon0) * cosf)
-H = int((lat1 - lat0) * S + PADT + PADB)
 
 def XY(lon, lat):
-    return (round(PADL + (lon - lon0) * cosf * S, 1), round(PADT + (lat1 - lat) * S, 1))
+    """固定標準緯線；所有圖只變更等比例 scale / translate。"""
+    return ((lon - 139.6) * COS * 1000, (35.98 - lat) * 1000)
 
-def path_of(r):
-    pts = [XY(*p) for p in r]
-    return "M" + " L".join(f"{x},{y}" for x, y in pts) + " Z"
 
-land_paths = "\n".join(f'      <path d="{path_of(r)}"/>' for _, r in rings)
-
-# ---- 地點（真實經緯度） ----
-P = {
-    "narita":    (140.386, 35.772),
-    "maihama":   (139.879, 35.632),   # 東京迪士尼度假區（兩飯店都在區內）
-    "odaiba":    (139.782, 35.638),   # 台場・豐洲 teamLab 中點（兩地 17.6px 併）
-    "ueno":      (139.777, 35.712),   # &Here 上野；淺草 11px、晴空塔 20px 在旁
-    "shinagawa": (139.736, 35.628),   # Maxell Aqua Park
-}
-C = {k: XY(*v) for k, v in P.items()}
-
-def q(a, b, bend=0.18, side=1, r_start=0.0, r_end=0.0):
-    (x1, y1), (x2, y2) = a, b
-    mx, my = (x1 + x2) / 2, (y1 + y2) / 2
-    dx, dy = x2 - x1, y2 - y1
-    cx, cy = mx - dy * bend * side, my + dx * bend * side
-    def B(t):
-        w = 1 - t
-        return (w*w*x1 + 2*w*t*cx + t*t*x2, w*w*y1 + 2*w*t*cy + t*t*y2)
-    u, v = 0.0, 1.0
-    if r_start > 0:
-        for i in range(1, 401):
-            t = i / 400
-            if math.hypot(B(t)[0]-x1, B(t)[1]-y1) >= r_start:
-                u = t; break
-    if r_end > 0:
-        for i in range(1, 401):
-            t = 1 - i / 400
-            if math.hypot(B(t)[0]-x2, B(t)[1]-y2) >= r_end:
-                v = t; break
-    if v - u < 0.05:
-        u, v = min(u, .40), max(v, .60)
-    q0, q2 = B(u), B(v)
-    dbu = (2*(1-u)*(cx-x1) + 2*u*(x2-cx), 2*(1-u)*(cy-y1) + 2*u*(y2-cy))
-    q1 = (q0[0] + (v-u)*dbu[0]/2, q0[1] + (v-u)*dbu[1]/2)
-    dd = f"M{round(q0[0],1)},{round(q0[1],1)} Q{round(q1[0],1)},{round(q1[1],1)} {round(q2[0],1)},{round(q2[1],1)}"
-    mid = B(.5)
-    return dd, (round(mid[0],1), round(mid[1],1)), (round(q2[0],1), round(q2[1],1))
-
-def shift(pt, dx, dy):
-    return (round(pt[0] + dx, 1), round(pt[1] + dy, 1))
-
-# ---- 路線 ----
-d1,  m1,  e1  = q(C["narita"], C["maihama"],   .13, -1, r_start=9,  r_end=14)   # 抵達日（彎南沿灣）
-d4a, m4a, e4a = q(C["maihama"], C["odaiba"],   .16,  1, r_start=13, r_end=12)   # 舞浜 → 台場豐洲
-d4b, m4b, e4b = q(C["odaiba"], C["ueno"],      .14,  1, r_start=12, r_end=14)   # 台場 → 上野
-d5,  m5,  e5  = q(C["ueno"], C["shinagawa"],   .25, -1, r_start=13, r_end=12)   # 上野 → 品川（彎東側進，避台場文字帶）
-d7,  m7,  e7  = q(C["ueno"], C["narita"],      .13, -1, r_start=13, r_end=11)   # 回程（彎北內陸，與 d1 分流）
-
-_anchor = {
-    "D1": m1, "D2": shift(C["maihama"], -30, -20), "D3": shift(C["maihama"], 30, -20),
-    "D4": m4a, "D5": m5, "D6": shift(C["ueno"], -36, 2), "D7": m7,
-}
-_pinned_pos = {"D2": shift(C["maihama"], -30, -20), "D3": shift(C["maihama"], 30, -20),
-               "D6": shift(C["ueno"], -36, 2)}
-_nodesR = {"narita": 7, "maihama": 9, "odaiba": 7, "ueno": 9, "shinagawa": 7}
-
-def _bb(cx, cy, anchor, w, size):
-    if anchor == "start":  x0, x1 = cx, cx + w
-    elif anchor == "end":  x0, x1 = cx - w, cx
-    else:                  x0, x1 = cx - w / 2, cx + w / 2
-    return (x0, x1, cy - size, cy + 3)
-
-_texts = [
-    _bb(C["narita"][0]+13,  C["narita"][1]+5,   "start",  86, 12),
-    _bb(C["maihama"][0],    C["maihama"][1]+26, "middle", 65, 13),
-    _bb(C["maihama"][0],    C["maihama"][1]+40, "middle", 150, 10.5),
-    _bb(C["odaiba"][0]-18,  C["odaiba"][1]-21,  "end",  78, 12.5),
-    _bb(C["odaiba"][0]-18,  C["odaiba"][1]-8,   "end",  90, 10.5),
-    _bb(C["ueno"][0]-13,    C["ueno"][1]-12,    "end",  26, 13),   # 主標放圓左上斜角（西北無線帶；東北是 d7 出線）
-    _bb(C["ueno"][0]+15,    C["ueno"][1]+8,     "start",  150, 10.5),
-    _bb(C["shinagawa"][0]-12, C["shinagawa"][1]+2,  "end", 26, 13),
-    _bb(C["shinagawa"][0]-12, C["shinagawa"][1]+15, "end", 68, 10.5),
+C = {k: XY(*v) for k, v in POINTS.items()}
+# day, start, end, bend；日次及順序取自原頁每日行程。
+ROUTES = [
+    (1, 'narita', 'maihama', -.15),
+    (4, 'maihama', 'toyosu', -.15),
+    (4, 'toyosu', 'odaiba', -.12),
+    (4, 'odaiba', 'ueno', -.15),
+    (5, 'ueno', 'shinagawa', .22),
+    (5, 'shinagawa', 'skytree', .26),
+    (6, 'ueno', 'asakusa', -.18),
+    (6, 'asakusa', 'ueno', -.18),
+    (7, 'ueno', 'narita', -.16),
 ]
-def _hits_text(x, y, pad=4):
-    for (x0, x1, y0, y1) in _texts:
-        if x0 - 11 - pad < x < x1 + 11 + pad and y0 - 11 - pad < y < y1 + 11 + pad:
-            return True
-    return False
+# west, east, south, north；首都圈含完整東京灣，細圖按旅程適切放大。
+WINDOWS = {
+    'locator': (139.40, 140.62, 35.13, 36.02),
+    'city': (139.763, 139.822, 35.694, 35.730),
+    'bay': (139.702, 139.910, 35.593, 35.690),
+}
+STATIONS = {
+    'locator': ('narita', 'ueno', 'maihama'),
+    'city': ('ueno', 'asakusa', 'skytree'),
+    'bay': ('maihama', 'toyosu', 'odaiba', 'shinagawa'),
+}
+# x, y, width, 中文主標, 副標；引線連接地理點，不為排版搬動節點。
+LABELS = {
+    'locator': {
+        'narita': (186, 10, 144, '成田機場', 'D1 抵達・D7 返台'),
+        'ueno': (10, 87, 115, '上野', 'D4–D6 住宿'),
+        'maihama': (186, 293, 144, '舞濱・迪士尼', 'D1–D3 住宿'),
+    },
+    'city': {
+        'ueno': (10, 14, 144, '上野', 'D4–D6・&Here'),
+        'asakusa': (178, 14, 152, '淺草', 'D6 和服・淺草寺'),
+        'skytree': (178, 310, 152, '晴空塔', 'D5 寶可夢中心'),
+    },
+    'bay': {
+        'toyosu': (10, 12, 157, '豐洲', 'D4 teamLab Planets'),
+        'maihama': (182, 12, 148, '舞濱・迪士尼', 'D2 陸地・D3 海洋'),
+        'shinagawa': (10, 310, 151, '品川水族館', 'D5 Maxell Aqua Park'),
+        'odaiba': (178, 310, 152, '台場', 'D4 午餐'),
+    },
+}
+DAYS = [
+    ('8/3（日）', '成田・舞濱', '抵達・入住夢幻泉鄉', '電車約 60–75 分'),
+    ('8/4（一）', '迪士尼樂園', '陸地園區・夢幻泉鄉第 2 晚', '雙園行程第 1 日'),
+    ('8/5（二）', '迪士尼海洋', 'Fantasy Springs・換宿玩具總動員', '雙園行程第 2 日'),
+    ('8/6（三）', '豐洲・台場・上野', 'teamLab・入住 &Here', '舞濱 → 豐洲 → 台場 → 上野（電車）'),
+    ('8/7（四）', '品川・晴空塔', '水族館・寶可夢中心', '上野 → 品川 → 晴空塔（電車）'),
+    ('8/8（五）', '淺草和服日', '淺草寺・雷門・仲見世', '上野 ⇄ 淺草（電車 12–15 分）'),
+    ('8/9（六）', '上野・成田返台', '成田 T2・JX803', 'Skyliner 最快約 45 分'),
+]
 
-_arrow_tips = [e1, e4a, e4b, e5, e7]
 
-def _ok(pt, placed):
-    x, y = pt
-    if not (20 <= x <= W - 20 and 20 <= y <= H - 10):
-        return False
-    for tp in _arrow_tips:
-        if math.hypot(x - tp[0], y - tp[1]) < 24:
-            return False
-    for nn, rr in _nodesR.items():
-        if math.hypot(x - C[nn][0], y - C[nn][1]) - 11 - rr < 6:
-            return False
-    for q2_ in placed.values():
-        if math.hypot(x - q2_[0], y - q2_[1]) < 26:
-            return False
-    if _hits_text(x, y):
-        return False
-    return True
+def rdp(points, eps):
+    if len(points) < 3:
+        return points
+    (ax, ay), (bx, by) = points[0], points[-1]
+    dx, dy = bx - ax, by - ay
+    length = math.hypot(dx, dy) or 1e-12
+    distances = [abs(dy*x - dx*y + bx*ay - by*ax)/length for x, y in points[1:-1]]
+    idx = distances.index(max(distances)) + 1
+    if distances[idx-1] <= eps:
+        return [points[0], points[-1]]
+    return rdp(points[:idx+1], eps)[:-1] + rdp(points[idx:], eps)
 
-B = {}
-for name, anc in _anchor.items():
-    if name in _pinned_pos:
-        B[name] = _pinned_pos[name]
-        continue
-    if _ok(anc, B):
-        B[name] = anc
-        continue
-    best = None
-    for r in (10, 16, 22, 28, 36, 44, 54, 64):
-        for k in range(16):
-            a = k * math.pi / 8
-            cand = (round(anc[0] + r * math.cos(a), 1), round(anc[1] + r * math.sin(a), 1))
-            if _ok(cand, B):
-                best = cand
-                break
-        if best:
-            break
-    B[name] = best or anc
-    if not best:
-        print(f"  !! {name} 找不到避讓位，沿用錨點")
 
-# ---- 視窗緊貼內容 bbox ----
-_xs, _ys = [], []
-for k in _nodesR:
-    _xs += [C[k][0] - _nodesR[k], C[k][0] + _nodesR[k]]
-    _ys += [C[k][1] - _nodesR[k], C[k][1] + _nodesR[k]]
-for (tx0, tx1, ty0, ty1) in _texts:
-    _xs += [tx0, tx1]; _ys += [ty0, ty1]
-for (bx, by) in B.values():
-    _xs += [bx - 12, bx + 12]; _ys += [by - 12, by + 12]
-for (px, py) in (m1, m4a, m4b, m5, m7):
-    _xs += [px - 8, px + 8]; _ys += [py - 8, py + 8]
-_PAD = 12
-VX0, VY0 = round(min(_xs) - _PAD, 1), round(min(_ys) - _PAD, 1)
-VW, VH = round(max(_xs) + _PAD - VX0, 1), round(max(_ys) + _PAD - VY0, 1)
-print(f"content viewBox: {VX0} {VY0} {VW} {VH}")
-
-svg = f'''    <svg viewBox="{VX0} {VY0} {VW} {VH}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="真實比例行程地圖：成田機場、東京迪士尼、台場豐洲、上野、品川，七天路線與日次標注">
-      <style>
-        .geo-lbl text{{paint-order:stroke; stroke:var(--bg); stroke-width:3.5px; stroke-linejoin:round}}
-        a.geo-day{{cursor:pointer}}
-        a.geo-day:hover path{{stroke-width:4.5px}}
-        a.geo-day:hover circle{{r:13px}}
-      </style>
-      <defs>
-        <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto-start-reverse">
-          <path d="M0,0 L10,5 L0,10 z" fill="var(--sea)"/>
-        </marker>
-      </defs>
-
-      <!-- 東京灣區真實輪廓（dataofjapan/land GeoJSON，等距投影） -->
-      <g fill="var(--leaf-wash)" opacity=".5" stroke="var(--line)" stroke-width="1">
-{land_paths}
-      </g>
-
-      <!-- 行程路徑（點擊跳至該日行程卡） -->
-      <g stroke="var(--sea)" stroke-width="3" fill="none" stroke-linecap="round">
-        <a href="#day1" class="geo-day"><title>D1 8/3 成田 → 舞濱・夢幻泉鄉（點擊看當日行程）</title><path d="{d1}" marker-end="url(#arr)"/></a>
-        <a href="#day4" class="geo-day"><title>D4 8/6 teamLab 豐洲 → 台場 → 上野（點擊看當日行程）</title><path d="{d4a}" marker-end="url(#arr)"/><path d="{d4b}" marker-end="url(#arr)"/></a>
-        <a href="#day5" class="geo-day"><title>D5 8/7 品川水族館・晴空塔（點擊看當日行程）</title><path d="{d5}" marker-end="url(#arr)"/></a>
-        <a href="#day7" class="geo-day"><title>D7 8/9 上野 → 成田 返台（點擊看當日行程）</title><path d="{d7}" marker-end="url(#arr)"/></a>
-      </g>
-
-      <!-- 主要節點 -->
-      <g font-family="inherit" class="geo-lbl">
-        <circle cx="{C['narita'][0]}" cy="{C['narita'][1]}" r="7" fill="var(--card)" stroke="var(--sea)" stroke-width="3.5"/>
-        <text x="{C['narita'][0]+13}" y="{C['narita'][1]+5}" font-size="12" font-weight="700" fill="var(--ink)">成田機場 ✈</text>
-
-        <circle cx="{C['maihama'][0]}" cy="{C['maihama'][1]}" r="9" fill="var(--card)" stroke="var(--sea)" stroke-width="4"/>
-        <text x="{C['maihama'][0]}" y="{C['maihama'][1]+26}" font-size="13" font-weight="800" fill="var(--ink)" text-anchor="middle">東京迪士尼</text>
-        <text x="{C['maihama'][0]}" y="{C['maihama'][1]+40}" font-size="10.5" fill="var(--ink-faint)" text-anchor="middle">D1–D3 泊・D2 陸地・D3 海洋</text>
-
-        <circle cx="{C['odaiba'][0]}" cy="{C['odaiba'][1]}" r="7" fill="var(--card)" stroke="var(--sea)" stroke-width="3.5"/>
-        <text x="{C['odaiba'][0]-18}" y="{C['odaiba'][1]-21}" font-size="12.5" font-weight="700" fill="var(--ink)" text-anchor="end">台場・豐洲</text>
-        <text x="{C['odaiba'][0]-18}" y="{C['odaiba'][1]-8}" font-size="10.5" fill="var(--ink-faint)" text-anchor="end">D4 teamLab</text>
-
-        <circle cx="{C['ueno'][0]}" cy="{C['ueno'][1]}" r="9" fill="var(--card)" stroke="var(--sea)" stroke-width="4"/>
-        <text x="{C['ueno'][0]-13}" y="{C['ueno'][1]-12}" font-size="13" font-weight="800" fill="var(--ink)" text-anchor="end">上野</text>
-        <text x="{C['ueno'][0]+15}" y="{C['ueno'][1]+8}" font-size="10.5" fill="var(--ink-faint)">D4–D6 泊・D5 晴空塔・D6 淺草</text>
-
-        <circle cx="{C['shinagawa'][0]}" cy="{C['shinagawa'][1]}" r="7" fill="var(--card)" stroke="var(--sea)" stroke-width="3.5"/>
-        <text x="{C['shinagawa'][0]-12}" y="{C['shinagawa'][1]+2}" font-size="13" font-weight="800" fill="var(--ink)" text-anchor="end">品川</text>
-        <text x="{C['shinagawa'][0]-12}" y="{C['shinagawa'][1]+15}" font-size="10.5" fill="var(--ink-faint)" text-anchor="end">D5 水族館</text>
-      </g>
-
-      <!-- 日次徽章 -->
-      <g font-family="inherit" font-size="11" font-weight="800" text-anchor="middle">
-'''
-_day_title = {"D1": "8/3 抵達・夢幻泉鄉", "D2": "8/4 迪士尼樂園（陸地）", "D3": "8/5 迪士尼海洋",
-              "D4": "8/6 teamLab・台場 → 上野", "D5": "8/7 品川水族館・晴空塔",
-              "D6": "8/8 淺草和服日", "D7": "8/9 返台"}
-
-def _seg_enter_t(p, q_, bb, pad=2.5):
-    x0, x1, y0, y1 = bb[0]-pad, bb[1]+pad, bb[2]-pad, bb[3]+pad
-    dx, dy = q_[0]-p[0], q_[1]-p[1]
-    t0, t1 = 0.0, 1.0
-    for pp, qq in ((-dx, p[0]-x0), (dx, x1-p[0]), (-dy, p[1]-y0), (dy, y1-p[1])):
-        if pp == 0:
-            if qq < 0: return None
+def coast():
+    """保留東京灣小島／填海地；不使用舊版會刪小島的面積門檻。"""
+    features = json.loads((SC / 'japan.geojson').read_text())['features']
+    rings = []
+    for feature in features:
+        if feature['properties']['id'] not in PREF_IDS:
             continue
-        r = qq / pp
-        if pp < 0:
-            if r > t1: return None
-            t0 = max(t0, r)
-        else:
-            if r < t0: return None
-            t1 = min(t1, r)
-    return t0 if t0 > 0 else 0.0
+        geom = feature['geometry']
+        polygons = geom['coordinates'] if geom['type'] == 'MultiPolygon' else [geom['coordinates']]
+        for poly in polygons:
+            paths = []
+            for ring in poly:
+                xs, ys = zip(*ring)
+                if max(xs) < 139.3 or min(xs) > 140.7 or max(ys) < 35.1 or min(ys) > 36.1:
+                    continue
+                # 地形一次簡化、三圖共用；0.00012 度約十公尺級。
+                mid = len(ring)//2
+                simple = rdp(ring[:mid+1], .00012)[:-1] + rdp(ring[mid:], .00012)
+                paths.append('M' + ' L'.join(f'{x:.3f},{y:.3f}' for x,y in (XY(*p) for p in simple)) + ' Z')
+            if paths:
+                rings.append(' '.join(paths))
+    return rings
 
-for name, (bx, by) in B.items():
-    ax, ay = _anchor[name]
-    dist = math.hypot(bx - ax, by - ay)
-    if dist <= 22:
-        continue
-    ux, uy = (ax - bx) / dist, (ay - by) / dist
-    sx, sy = bx + ux * 12, by + uy * 12
-    t_end = 1.0
-    for bb in _texts:
-        t = _seg_enter_t((sx, sy), (ax, ay), bb)
-        if t is not None and t < t_end:
-            t_end = t
-    ex, ey = sx + (ax - sx) * max(t_end - 0.03, 0), sy + (ay - sy) * max(t_end - 0.03, 0)
-    if math.hypot(ex - sx, ey - sy) < 8:
-        continue
-    svg += f'        <line x1="{round(sx,1)}" y1="{round(sy,1)}" x2="{round(ex,1)}" y2="{round(ey,1)}" stroke="var(--ink-faint)" stroke-width="1" opacity=".55"/>\n'
 
-for name, (bx, by) in B.items():
-    n = name[1]
-    svg += f'        <a href="#day{n}" class="geo-day"><title>{name} {_day_title[name]}（點擊看當日行程）</title><circle cx="{bx}" cy="{by}" r="11" fill="var(--sea)"/><text x="{bx}" y="{by+4}" fill="#fff">{name}</text></a>\n'
-svg += '''      </g>
-    </svg>'''
+def affine(name):
+    west, east, south, north = WINDOWS[name]
+    x0, y0 = XY(west, north)
+    x1, y1 = XY(east, south)
+    s = min(292/(x1-x0), 278/(y1-y0))
+    return s, 170-(x0+x1)*s/2, 195-(y0+y1)*s/2
 
-(SC / "disney_map.svg.html").write_text(svg)
-print(f"rings={len(rings)}; pts={sum(len(r) for _, r in rings)}")
 
-# ---- 自檢 ----
-_r_outer = {"narita": 8.75, "maihama": 11, "odaiba": 8.75, "ueno": 11, "shinagawa": 8.75}
-_fail = False
-for nm, tgt, (tx, ty) in zip(
-        ["d1→maihama", "d4a→odaiba", "d4b→ueno", "d5→shinagawa", "d7→narita"],
-        ["maihama", "odaiba", "ueno", "shinagawa", "narita"], _arrow_tips):
-    gap = math.hypot(tx - C[tgt][0], ty - C[tgt][1]) - _r_outer[tgt]
-    flag = "" if gap >= 1 else "  !! 被節點蓋住"
-    if gap < 1: _fail = True
-    print(f"  tip {nm}: 距圓外緣 {gap:.1f}px{flag}")
-for nm, (tx, ty) in zip(["d1", "d4a", "d4b", "d5", "d7"], _arrow_tips):
-    for (x0, x1, y0, y1) in _texts:
-        if x0 - 3 < tx < x1 + 3 and y0 - 3 < ty < y1 + 3:
-            print(f"  !! tip {nm} 落在文字框內 ({tx},{ty})")
-            _fail = True
-for bn, (bx, by) in B.items():
-    for nn, (nx, ny) in C.items():
-        gap = math.hypot(bx - nx, by - ny) - 11 - _nodesR[nn]
-        if gap < 4:
-            print(f"  ! 徽章 {bn} 距節點 {nn} 淨空 {gap:.1f}px")
-# d1（NRT→舞浜）與 d7（上野→NRT）進出線分離檢查
-def _bpts(dd):
-    ps = dd.replace("M", "").replace(" Q", " ").split()
-    p0 = tuple(map(float, ps[0].split(",")))
-    c_ = tuple(map(float, ps[1].split(",")))
-    p2 = tuple(map(float, ps[2].split(",")))
-    return [( (1-t/60)**2*p0[0] + 2*(1-t/60)*(t/60)*c_[0] + (t/60)**2*p2[0],
-              (1-t/60)**2*p0[1] + 2*(1-t/60)*(t/60)*c_[1] + (t/60)**2*p2[1]) for t in range(61)]
-_min = min(math.hypot(a[0]-b2[0], a[1]-b2[1]) for a in _bpts(d1) for b2 in _bpts(d7))
-print(f"  d1/d7 進出線最小間距 {_min:.1f}px" + ("  !! 太近" if _min < 5 else ""))
-if _min < 5: _fail = True
-# 線身 × 文字框（取樣，框內縮 1px 嚴格內部才算穿）
-for nm, dd in [("d1", d1), ("d4a", d4a), ("d4b", d4b), ("d5", d5), ("d7", d7)]:
-    hit = None
-    for (x, y) in _bpts(dd):
-        for (x0, x1, y0, y1) in _texts:
-            if x0 + 1 < x < x1 - 1 and y0 + 1 < y < y1 - 1:
-                hit = (round(x, 1), round(y, 1)); break
-        if hit: break
-    if hit:
-        print(f"  !! 線 {nm} 穿過文字框 {hit}")
-        _fail = True
-# 徽章 × 文字框
-for bn, (bx, by) in B.items():
-    for (x0, x1, y0, y1) in _texts:
-        if x0 - 8 < bx < x1 + 8 and y0 - 8 < by < y1 + 8:
-            print(f"  !! 徽章 {bn} 壓文字框 ({bx},{by})")
-            _fail = True
-if _fail:
-    raise SystemExit("自檢未過")
+def screen(name, point):
+    s, tx, ty = affine(name)
+    x, y = C[point]
+    return s*x+tx, s*y+ty
+
+
+def route_path(a, b, bend):
+    x1, y1 = C[a]
+    x2, y2 = C[b]
+    cx, cy = (x1+x2)/2-(y2-y1)*bend, (y1+y2)/2+(x2-x1)*bend
+    return f'M{x1:.3f},{y1:.3f} Q{cx:.3f},{cy:.3f} {x2:.3f},{y2:.3f}'
+
+
+def svg(name, land):
+    s, tx, ty = affine(name)
+    titles = {'locator': '東京灣與首都圈定位', 'city': '上野・淺草・晴空塔放大圖', 'bay': '舞濱・豐洲・台場・品川放大圖'}
+    out = [f'<svg class="geo-map geo-{name}" viewBox="0 0 340 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="disney-{name}-title disney-{name}-desc">',
+           f'<title id="disney-{name}-title">{titles[name]}</title>',
+           f'<desc id="disney-{name}-desc">北方朝上。地形與站點共用等距投影，虛線為電車行程示意；細灰引線連接標籤與地理點位。</desc>',
+           f'<defs><clipPath id="disney-{name}-clip"><rect width="340" height="400" rx="12"/></clipPath></defs>',
+           f'<g clip-path="url(#disney-{name}-clip)"><rect width="340" height="400" fill="var(--gm-ocean)"/>',
+           f'<g class="geo-geography" transform="translate({tx:.6f} {ty:.6f}) scale({s:.9f})">',
+           '<g class="geo-land" fill="var(--gm-land)" stroke="var(--gm-coast)" fill-rule="evenodd">']
+    out += [f'<path d="{p}" stroke-width="{.65/s:.6f}"/>' for p in land]
+    out.append('</g>')
+    if name == 'locator':
+        for window in ('city', 'bay'):
+            w,e,so,n = WINDOWS[window]
+            x,y = XY(w,n)
+            xx,yy = XY(e,so)
+            out.append(f'<rect data-travel-window="{window}" x="{x:.3f}" y="{y:.3f}" width="{xx-x:.3f}" height="{yy-y:.3f}" fill="none" stroke="var(--gm-ink)" stroke-width="{1/s:.6f}" stroke-dasharray="{3/s:.6f} {3/s:.6f}"/>')
+    shown_days = {'locator': {1,7}, 'city': {5,6}, 'bay': {4,5}}[name]
+    for day,a,b,bend in ROUTES:
+        if day in shown_days:
+            out.append(f'<path class="geo-route geo-d{day}" data-route-segment="d{day}-{a}-{b}" d="{route_path(a,b,bend)}" fill="none" stroke="var(--gm-d{day})" stroke-width="{2.6/s:.6f}" stroke-dasharray="{6/s:.6f} {4/s:.6f}" stroke-linecap="round"><title>D{day} 電車行程示意</title></path>')
+    for key in STATIONS[name]:
+        x,y = C[key]
+        lon,lat = POINTS[key]
+        out.append(f'<circle data-station="{key}" data-lon="{lon}" data-lat="{lat}" cx="{x:.3f}" cy="{y:.3f}" r="{4/s:.6f}" fill="var(--gm-paper)" stroke="var(--gm-ink)" stroke-width="{2/s:.6f}"/>')
+    out += ['</g>', '</g>']
+    for key,(x,y,width,title,subtitle) in LABELS[name].items():
+        px,py = screen(name,key)
+        qx,qy = max(x+8,min(x+width-8,px)), max(y+8,min(y+52,py))
+        out += [f'<g class="geo-station-label" data-label="{key}">',
+                f'<path class="geo-leader" d="M{px:.3f},{py:.3f} L{qx:.3f},{qy:.3f}"/>',
+                f'<rect x="{x}" y="{y}" width="{width}" height="60" rx="9"/>',
+                f'<text x="{x+10}" y="{y+25}" font-size="18" font-weight="800">{escape(title)}</text>',
+                f'<text class="geo-subtitle" x="{x+10}" y="{y+46}" font-size="12">{escape(subtitle)}</text>', '</g>']
+    notes = {'locator': [(58,259,'東京灣'),(233,237,'千葉縣'),(30,310,'神奈川縣'),(190,98,'D7'),(253,159,'D1')],
+             'city': [(20,277,'D6 上野 ⇄ 淺草'),(190,287,'D5 品川 → 晴空塔')],
+             'bay': [(23,98,'D4 舞濱 → 豐洲 → 台場 → 上野'),(124,273,'東京灣'),(18,287,'D5 上野 → 品川 → 晴空塔')]}
+    for x,y,text in notes[name]:
+        out.append(f'<text class="geo-note" x="{x}" y="{y}" font-size="12">{escape(text)}</text>')
+    out += ['<text class="geo-note" x="14" y="389" font-size="12">↑ 北</text>', '</svg>']
+    return '\n'.join(out)
+
+
+def render():
+    land = coast()
+    panels = [
+        ('locator','01 / 首都圈定位','東京灣・成田','抵達與返程，連接兩個住宿區'),
+        ('city','02 / 市區放大','上野・淺草・晴空塔','D4–D6 以上野為住宿基地'),
+        ('bay','03 / 灣岸放大','舞濱・東京灣岸','D1–D3 迪士尼，D4 起探索東京'),
+    ]
+    out = ['  <!-- trip-map:generated:start -->','<div class="geo-panel">',
+           '<div class="geo-intro"><strong>七天，從夢幻園區到東京街角</strong><span>2025/8/3–8/9 · 北方朝上</span></div>',
+           '<div class="geo-atlas">']
+    for name,kicker,title,subtitle in panels:
+        out += [f'<figure class="geo-{name}-panel"><figcaption><span>{kicker}</span><b>{title}</b><span>{subtitle}</span></figcaption>',svg(name,land),'</figure>']
+    out += ['</div>','<div class="geo-legend" aria-label="交通與日次圖例">']
+    for day,text in [(1,'D1 電車'),(4,'D4 電車'),(5,'D5 電車'),(6,'D6 電車'),(7,'D7 Skyliner')]:
+        out.append(f'<span><i style="--route:var(--gm-d{day})"></i>{text}</span>')
+    out += ['<span>○ 景點／住宿區</span></div>',
+            '<p class="geo-map-note">虛線表示每日移動順序，並非實際鐵路線形；定位圖框線對應兩張放大圖。舞濱以度假區代表點標示雙園與飯店，台場沿用原圖區域代表點。點選下方日次卡查看完整行程。</p>','</div>',
+            '<div class="geo-days" aria-label="七日日次卡">']
+    for day,(date,title,subtitle,transit) in enumerate(DAYS,1):
+        out.append(f'<a class="geo-day-card" href="#day{day}"><span class="geo-day-num">D{day}</span><span class="geo-day-copy"><small>{date}</small><strong>{escape(title)}</strong><span>{escape(subtitle)}</span><small>{escape(transit)}</small></span></a>')
+    out += ['</div>','  <!-- trip-map:generated:end -->']
+    return '\n'.join(out)+'\n'
+
+
+def check(output):
+    ns = {'s':'http://www.w3.org/2000/svg'}
+    assert P == {'narita':(140.386,35.772),'maihama':(139.879,35.632),'odaiba':(139.782,35.638),'ueno':(139.777,35.712),'shinagawa':(139.736,35.628)}
+    geometries = []
+    for name,source in zip(WINDOWS,re.findall(r'<svg\b.*?</svg>',output,re.S)):
+        tree = ET.fromstring(source)
+        geometries.append([p.attrib['d'] for p in tree.find(".//s:g[@class='geo-land']",ns)])
+        for c in tree.findall('.//s:circle[@data-station]',ns):
+            key = c.attrib['data-station']
+            expected = XY(float(c.attrib['data-lon']),float(c.attrib['data-lat']))
+            assert all(abs(float(c.attrib[axis])-v)<.001 for axis,v in zip(('cx','cy'),expected))
+            x,y = screen(name,key)
+            assert 5<x<335 and 5<y<395, (name,key,x,y)
+            for lx,ly,w,_,_ in LABELS[name].values():
+                assert not lx-5<x<lx+w+5 or not ly-5<y<ly+65, (name,key,'node hidden by label')
+        boxes = list(LABELS[name].values())
+        for i,(x,y,w,title,subtitle) in enumerate(boxes):
+            assert 0<=x and x+w<=340 and 0<=y and y+60<=400
+            assert sum(18 if ord(c)>0x2e80 else 10 for c in title)<=w-20
+            for xx,yy,ww,_,_ in boxes[i+1:]:
+                assert x+w<=xx or xx+ww<=x or y+60<=yy or yy+60<=y
+        for p in tree.findall('.//s:path[@data-route-segment]',ns):
+            day,a,b=p.attrib['data-route-segment'].split('-')
+            route=next(r for r in ROUTES if r[:3]==(int(day[1:]),a,b))
+            assert p.attrib['d']==route_path(a,b,route[3])
+    assert len(geometries)==3 and geometries[0]==geometries[1]==geometries[2]
+    assert all(f'class="geo-day-card" href="#day{day}"' in output for day in range(1,8))
+    print('PASS 原五座標保留；三圖共用地形／投影／路線；標籤互不重疊且不遮站點；七日日次卡')
+    print('generated SHA256:',hashlib.sha256(output.encode()).hexdigest())
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--output',type=Path,help='只接受尚不存在的新檔案路徑')
+    args = parser.parse_args()
+    output = render()
+    check(output)
+    if args.output:
+        with args.output.open('x',encoding='utf-8',newline='\n') as file:
+            file.write(output)
+        print('新檔案:',args.output)
+
+
+if __name__ == '__main__':
+    main()

@@ -181,253 +181,258 @@ gx2, _, _ = q(C["kumamoto"], C["aso"], .15, -1)
 gx3, _, _ = q(C["aso"], C["takachiho"], .15, 1)
 gx4, _, _ = q(C["takachiho"], C["beppu"], .12, 1)
 
-# 徽章位置：以路徑中點為錨，自動避讓（節點淨空>=6、徽章互距>=26、留邊）
-_anchor = {
-    "D1": m1, "D2": m2, "D3": shift(m3, -6, -14),
-    "D4": shift(m4, 16, -4), "D5": m5, "D6": shift(m6, -16, -8),
-    "D7": shift(C["hakata"], -34, -26), "D8": shift(C["airport"], 104, 2),
+# ---- 響應式分區；所有地形、點位、路線都使用上述 XY 投影 ----
+from html import escape
+import argparse
+import hashlib
+import re
+
+# viewBox 統一為 320 × 340，320px 手機仍可讀主地名；不縮小字來塞景點。
+PANELS = {
+    "north": {
+        "title": "北九州・改線後全程", "sub": "福岡、豪斯登堡、小倉與別府",
+        "affine": (.85, -164, -83),
+        "nodes": ["hakata", "htb", "kokura", "beppu"],
+        "labels": [
+            ("hakata", 8, 10, 145, "福岡・博多", "D2–D3・D6–D8"),
+            ("kokura", 176, 10, 136, "小倉", "D3"),
+            ("htb", 8, 260, 136, "豪斯登堡", "D1–D2"),
+            ("beppu", 176, 260, 136, "別府溫泉", "D4–D6"),
+        ],
+        "routes": [("d1", d1), ("d2a", d2af), ("d2b", d2ab), ("d3", d3), ("d4", d4), ("d6", d6)],
+    },
+    "fukuoka": {
+        "title": "福岡・海之中道放大", "sub": "D2・D3・D6・D7・D8",
+        "affine": (7, -2130, -1580),
+        "nodes": ["uminaka", "hakata", "airport"],
+        "labels": [
+            ("uminaka", 8, 20, 230, "海之中道", "D2 海洋世界・D7 泳池"),
+            ("hakata", 8, 260, 140, "福岡・博多", "D3 KidZania"),
+            ("airport", 172, 260, 140, "福岡機場", "D1 抵達・D8 返台"),
+        ],
+        "routes": [
+            ("d2-d7", q(C["uminaka"], C["hakata"], .08, 1, r_start=1.2, r_end=1.5)[0]),
+            ("d8", q(C["hakata"], C["airport"], .12, -1, r_start=1.2, r_end=1.5)[0]),
+        ],
+    },
+    "beppu": {
+        "title": "別府・樂園與動物園放大", "sub": "D4–D6・別府連住兩晚",
+        "affine": (5, -2292, -1332),
+        "nodes": ["harmony", "safari", "beppu"],
+        "labels": [
+            ("harmony", 167, 38, 145, "三麗鷗樂園", "D4 Harmonyland"),
+            ("safari", 8, 85, 145, "野生動物園", "D5 African Safari"),
+            ("beppu", 144, 284, 168, "別府溫泉", "杉乃井・D4–D6"),
+        ],
+        "routes": [
+            ("d4-local", q(C["harmony"], C["beppu"], .10, -1, r_start=1.6, r_end=2)[0]),
+            ("d5-return", q(C["beppu"], C["safari"], .10, 1, r_start=1.6, r_end=2)[0]),
+        ],
+    },
+    "cancelled": {
+        "title": "已取消原案・不屬於實際行程", "sub": "7/28 地震後取消，僅保留原案對照",
+        "affine": (1.15, -265, -270),
+        "nodes": ["kumamoto", "aso", "takachiho", "epicenter"],
+        "labels": [
+            ("kumamoto", 8, 154, 120, "熊本", "已取消"),
+            ("aso", 176, 40, 136, "阿蘇", "已取消"),
+            ("takachiho", 176, 284, 136, "高千穗", "已取消"),
+            ("epicenter", 8, 284, 150, "7/28 震央", "M7.1・宇城市/氷川町"),
+        ],
+        "routes": [("cancelled-1", gx1), ("cancelled-2", gx2), ("cancelled-3", gx3), ("cancelled-4", gx4)],
+    },
 }
-_nodesR = {"airport":0,"hakata":9,"uminaka":7,"kokura":9,"htb":9,
-           "beppu":9,"kanryu":4,"kiyama":4,"imagawa":4}
-# 文字標籤 bbox 近似（與下方渲染公式同步；(x0,x1,y0,y1)）
-def _bb(cx, cy, anchor, w, size):
-    if anchor == "start":  x0, x1 = cx, cx + w
-    elif anchor == "end":  x0, x1 = cx - w, cx
-    else:                  x0, x1 = cx - w / 2, cx + w / 2
-    return (x0, x1, cy - size, cy + 3)
-_texts = [
-    _bb(C["airport"][0]+16, C["airport"][1]+5, "start", 74, 12),
-    _bb(C["htb"][0], C["htb"][1]+27, "middle", 52, 13),
-    _bb(C["uminaka"][0]-12, C["uminaka"][1]-16, "end", 50, 12.5),
-    _bb(C["uminaka"][0]-12, C["uminaka"][1]-3, "end", 112, 10.5),
-    _bb(C["hakata"][0]-15, C["hakata"][1]+8, "end", 65, 13),
-    _bb(C["hakata"][0]-15, C["hakata"][1]+22, "end", 78, 10.5),
-    _bb(C["kokura"][0]+16, C["kokura"][1]-2, "start", 26, 13),
-    _bb(C["beppu"][0]+15, C["beppu"][1]+16, "start", 52, 13),
-    _bb(C["beppu"][0]+15, C["beppu"][1]+30, "start", 150, 10.5),
-    _bb(C["kanryu"][0], C["kanryu"][1]+18, "middle", 52, 10.5),
-    _bb(C["kiyama"][0]+8, C["kiyama"][1]+14, "start", 52, 10.5),
-    _bb(C["imagawa"][0]+9, C["imagawa"][1]+4, "start", 52, 10.5),
+DAYS = [
+    ("8/1", "福岡機場 → 豪斯登堡", "抵達・豪斯登堡夜景"),
+    ("8/2", "豪斯登堡 → 海之中道 → 博多", "海洋世界"),
+    ("8/3", "福岡 → 小倉", "KidZania 職業體驗"),
+    ("8/4", "小倉 → 三麗鷗樂園 → 別府", "Harmonyland・杉乃井"),
+    ("8/5", "別府 ⇄ 野生動物園", "African Safari・杉乃井"),
+    ("8/6", "別府 → 福岡", "海地獄・筑紫野公園"),
+    ("8/7", "福岡・海之中道", "泳池・福岡市科學館"),
+    ("8/8", "福岡機場 → 返台", "還車・返台"),
 ]
-def _hits_text(x, y, pad=4):
-    for (x0, x1, y0, y1) in _texts:
-        if x0 - 11 - pad < x < x1 + 11 + pad and y0 - 11 - pad < y < y1 + 11 + pad:
-            return True
-    return False
-_arrow_tips = [e1, e2a, e3, e4, e6]  # 各段截斷後的實際箭頭尖（d5 無線）
-def _ok(pt, placed):
-    x, y = pt
-    if not (20 <= x <= 720 and 20 <= y <= 620):
-        return False
-    for tp in _arrow_tips:
-        if math.hypot(x - tp[0], y - tp[1]) < 24:
-            return False
-    for nn, rr in _nodesR.items():
-        if math.hypot(x - C[nn][0], y - C[nn][1]) - 11 - rr < 6:
-            return False
-    for q2 in placed.values():
-        if math.hypot(x - q2[0], y - q2[1]) < 26:
-            return False
-    if _hits_text(x, y):
-        return False
-    return True
-B = {}
-_pinned_pos = {"D1": shift(m1, -22, 15), "D2": shift(m2, -30, 0)}
-for name, anc in _anchor.items():
-    if name in _pinned_pos:
-        B[name] = _pinned_pos[name]
-        continue
-    if _ok(anc, B):
-        B[name] = anc
-        continue
-    best = None
-    for r in (10, 16, 22, 28, 36, 44, 54, 64):
-        for k in range(16):
-            a = k * math.pi / 8
-            cand = (round(anc[0] + r * math.cos(a), 1), round(anc[1] + r * math.sin(a), 1))
-            if _ok(cand, B):
-                best = cand
-                break
-        if best:
-            break
-    B[name] = best or anc
-    if not best:
-        print(f"  !! {name} 找不到避讓位，沿用錨點")
-
-# ---- 視窗緊貼內容 bbox（Austin 2026-07-31：周圍空白裁到只剩內容） ----
-_xs, _ys = [], []
-for k in ("airport","hakata","uminaka","kokura","htb","beppu","kanryu","kiyama","imagawa"):
-    _xs += [C[k][0] - _nodesR[k], C[k][0] + _nodesR[k]]
-    _ys += [C[k][1] - _nodesR[k], C[k][1] + _nodesR[k]]
-for (tx0, tx1, ty0, ty1) in _texts:
-    _xs += [tx0, tx1]; _ys += [ty0, ty1]
-for k in ("kumamoto","aso","takachiho"):
-    _xs += [C[k][0] - 40, C[k][0] + 40]; _ys += [C[k][1] - 22, C[k][1] + 22]
-_xs += [C["epicenter"][0] - 52, C["epicenter"][0] + 52]
-_ys += [C["epicenter"][1] - 32, C["epicenter"][1] + 34]
-for (bx, by) in B.values():
-    _xs += [bx - 12, bx + 12]; _ys += [by - 12, by + 12]
-_PAD = 12
-VX0, VY0 = round(min(_xs) - _PAD, 1), round(min(_ys) - _PAD, 1)
-VW, VH = round(max(_xs) + _PAD - VX0, 1), round(max(_ys) + _PAD - VY0, 1)
-print(f"content viewBox: {VX0} {VY0} {VW} {VH}")
+START = "<!-- trip-map:generated:start -->"
+END = "<!-- trip-map:generated:end -->"
 
 
-svg = f'''    <svg viewBox="{VX0} {VY0} {VW} {VH}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="九州真實比例行程地圖：八天路徑與日次標注、7/28 震央位置、取消的熊本阿蘇高千穗原路線">
-      <style>
-        .geo-lbl text{{paint-order:stroke; stroke:var(--bg); stroke-width:3.5px; stroke-linejoin:round}}
-        a.geo-day{{cursor:pointer}}
-        a.geo-day:hover path{{stroke-width:4.5px}}
-        a.geo-day:hover circle{{r:13px}}
-      </style>
-      <defs>
-        <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto-start-reverse">
-          <path d="M0,0 L10,5 L0,10 z" fill="var(--sea)"/>
-        </marker>
-      </defs>
+def screen(key, panel):
+    s, tx, ty = PANELS[panel]["affine"]
+    x, y = C[key]
+    return x*s+tx, y*s+ty
 
-      <!-- 九州真實輪廓（dataofjapan/land GeoJSON，等距投影） -->
-      <g fill="var(--leaf-wash)" opacity=".5" stroke="var(--line)" stroke-width="1">
-{land_paths}
-      </g>
 
-      <text x="{VX0+16}" y="{VY0+VH-10}" font-size="11" fill="var(--ink-faint)" opacity=".8">↓ 九州南部（本次不前往）</text>
+def bezier(dd):
+    values = list(map(float, re.findall(r"-?\d+(?:\.\d+)?", dd)))
+    x0,y0,cx,cy,x1,y1 = values
+    return [((1-t/120)**2*x0+2*(1-t/120)*(t/120)*cx+(t/120)**2*x1,
+             (1-t/120)**2*y0+2*(1-t/120)*(t/120)*cy+(t/120)**2*y1) for t in range(121)]
 
-      <!-- 震央（7/28 M7.1） -->
-      <g>
-        <circle cx="{C['epicenter'][0]}" cy="{C['epicenter'][1]}" r="30" fill="var(--alert)" opacity=".10"/>
-        <circle cx="{C['epicenter'][0]}" cy="{C['epicenter'][1]}" r="16" fill="var(--alert)" opacity=".16"/>
-        <text x="{C['epicenter'][0]}" y="{C['epicenter'][1]+5}" font-size="15" font-weight="800" fill="var(--alert)" text-anchor="middle">✕</text>
-        <text x="{C['epicenter'][0]}" y="{C['epicenter'][1]+26}" font-size="11" font-weight="750" fill="var(--alert)" text-anchor="middle" style="paint-order:stroke; stroke:var(--bg); stroke-width:3.5px; stroke-linejoin:round">7/28 震央 M7.1</text>
-      </g>
 
-      <!-- 取消原線（灰虛線） -->
-      <g stroke="var(--ink-faint)" stroke-width="2.5" fill="none" stroke-dasharray="7 6" opacity=".45">
-        <path d="{gx1}"/><path d="{gx2}"/><path d="{gx3}"/><path d="{gx4}"/>
-      </g>
-      <g opacity=".55" font-family="inherit" font-size="12" fill="var(--ink-faint)" text-anchor="middle" class="geo-lbl">
-        <circle cx="{C['kumamoto'][0]}" cy="{C['kumamoto'][1]}" r="5" fill="var(--ink-faint)"/>
-        <text x="{C['kumamoto'][0]-22}" y="{C['kumamoto'][1]+4}">熊本</text>
-        <circle cx="{C['aso'][0]}" cy="{C['aso'][1]}" r="5" fill="var(--ink-faint)"/>
-        <text x="{C['aso'][0]+2}" y="{C['aso'][1]-10}">阿蘇</text>
-        <circle cx="{C['takachiho'][0]}" cy="{C['takachiho'][1]}" r="5" fill="var(--ink-faint)"/>
-        <text x="{C['takachiho'][0]+8}" y="{C['takachiho'][1]+18}">高千穗</text>
-      </g>
-
-      <!-- 行程路徑（點擊跳至該日行程卡） -->
-      <g stroke="var(--sea)" stroke-width="3" fill="none" stroke-linecap="round">
-        <a href="#day1" class="geo-day"><title>D1 8/1 機場 → 豪斯登堡（點擊看當日行程）</title><path d="{d1}" marker-end="url(#arr)"/></a>
-        <a href="#day2" class="geo-day"><title>D2 8/2 豪斯登堡 → 海洋世界 → 博多（點擊看當日行程）</title><path d="{d2af}" marker-end="url(#arr)"/><path d="{d2ab}"/></a>
-        <a href="#day3" class="geo-day"><title>D3 8/3 KidZania → 小倉（點擊看當日行程）</title><path d="{d3}" marker-end="url(#arr)"/></a>
-        <a href="#day4" class="geo-day"><title>D4 8/4 Harmonyland → 別府（點擊看當日行程）</title><path d="{d4}" marker-end="url(#arr)"/></a>
-        <a href="#day6" class="geo-day"><title>D6 8/6 海地獄 → 筑紫野公園 → 福岡（點擊看當日行程）</title><path d="{d6}" marker-end="url(#arr)"/></a>
-      </g>
-
-      <!-- 休息站 -->
-      <g font-family="inherit" font-size="10.5" fill="var(--ink-faint)" class="geo-lbl">
-        <circle cx="{C['kanryu'][0]}" cy="{C['kanryu'][1]}" r="4" fill="var(--card)" stroke="var(--sea)" stroke-width="2"/>
-        <text x="{C['kanryu'][0]}" y="{C['kanryu'][1]+18}" text-anchor="middle">金立SA</text>
-        <circle cx="{C['kiyama'][0]}" cy="{C['kiyama'][1]}" r="4" fill="var(--card)" stroke="var(--sea)" stroke-width="2"/>
-        <text x="{C['kiyama'][0]+8}" y="{C['kiyama'][1]+14}">基山PA</text>
-        <circle cx="{C['imagawa'][0]}" cy="{C['imagawa'][1]}" r="4" fill="var(--card)" stroke="var(--sea)" stroke-width="2"/>
-        <text x="{C['imagawa'][0]+9}" y="{C['imagawa'][1]+4}">今川PA</text>
-      </g>
-
-      <!-- 主要節點 -->
-      <g font-family="inherit" class="geo-lbl">
-        <text x="{C['airport'][0]+16}" y="{C['airport'][1]+5}" font-size="12" font-weight="700" fill="var(--ink)">福岡機場 ✈</text>
-
-        <circle cx="{C['htb'][0]}" cy="{C['htb'][1]}" r="9" fill="var(--card)" stroke="var(--sea)" stroke-width="4"/>
-        <text x="{C['htb'][0]}" y="{C['htb'][1]+27}" font-size="13" font-weight="800" fill="var(--ink)" text-anchor="middle">豪斯登堡</text>
-
-        <circle cx="{C['uminaka'][0]}" cy="{C['uminaka'][1]}" r="7" fill="var(--card)" stroke="var(--sea)" stroke-width="3.5"/>
-        <text x="{C['uminaka'][0]-12}" y="{C['uminaka'][1]-16}" font-size="12.5" font-weight="700" fill="var(--ink)" text-anchor="end">海之中道</text>
-        <text x="{C['uminaka'][0]-12}" y="{C['uminaka'][1]-3}" font-size="10.5" fill="var(--ink-faint)" text-anchor="end">D2 海洋世界・D7 泳池</text>
-
-        <circle cx="{C['hakata'][0]}" cy="{C['hakata'][1]}" r="9" fill="var(--card)" stroke="var(--sea)" stroke-width="4"/>
-        <text x="{C['hakata'][0]-15}" y="{C['hakata'][1]+8}" font-size="13" font-weight="800" fill="var(--ink)" text-anchor="end">博多・福岡</text>
-        <text x="{C['hakata'][0]-15}" y="{C['hakata'][1]+22}" font-size="10.5" fill="var(--ink-faint)" text-anchor="end">D3 KidZania</text>
-
-        <circle cx="{C['kokura'][0]}" cy="{C['kokura'][1]}" r="9" fill="var(--card)" stroke="var(--sea)" stroke-width="4"/>
-        <text x="{C['kokura'][0]+16}" y="{C['kokura'][1]-2}" font-size="13" font-weight="800" fill="var(--ink)">小倉</text>
-
-        <circle cx="{C['beppu'][0]}" cy="{C['beppu'][1]}" r="9" fill="var(--card)" stroke="var(--sea)" stroke-width="4"/>
-        <text x="{C['beppu'][0]+15}" y="{C['beppu'][1]+16}" font-size="13" font-weight="800" fill="var(--ink)">別府溫泉</text>
-        <text x="{C['beppu'][0]+15}" y="{C['beppu'][1]+30}" font-size="10.5" fill="var(--ink-faint)">D4 Harmonyland・D5 Safari</text>
-      </g>
-
-      <!-- 日次徽章（擁擠處帶引線） -->
-      <g font-family="inherit" font-size="11" font-weight="800" text-anchor="middle">
-'''
-def _seg_enter_t(p, q, bb, pad=2.5):
-    """線段 p→q 進入 bbox（外擴 pad）的最小 t；不相交回 None（Liang-Barsky）。"""
-    x0, x1, y0, y1 = bb[0]-pad, bb[1]+pad, bb[2]-pad, bb[3]+pad
-    dx, dy = q[0]-p[0], q[1]-p[1]
-    t0, t1 = 0.0, 1.0
-    for pp, qq in ((-dx, p[0]-x0), (dx, x1-p[0]), (-dy, p[1]-y0), (dy, y1-p[1])):
-        if pp == 0:
-            if qq < 0: return None
-            continue
-        r = qq / pp
-        if pp < 0:
-            if r > t1: return None
-            t0 = max(t0, r)
+def frame_svg(name):
+    panel = PANELS[name]
+    s, tx, ty = panel["affine"]
+    cancelled = name == "cancelled"
+    ink = "muted" if cancelled else "route"
+    paths = "\n".join(f'<path d="{path_of(r)}"/>' for _,r in rings)
+    out = [f'''<svg class="tm-detail" viewBox="0 0 320 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="kyushu-{name}-title">
+<title id="kyushu-{name}-title">{panel["title"]}。{panel["sub"]}。同一地理投影，路線為示意。</title>
+<defs><marker id="kyushu-{name}-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10Z" fill="var(--tm-{ink})"/></marker></defs>
+<g class="tm-geography" transform="translate({tx} {ty}) scale({s})">
+<g class="tm-land" fill="var(--tm-land)" stroke="var(--tm-coast)" stroke-width="{.8/s}">{paths}</g>''']
+    for route, dd in panel["routes"]:
+        dash = ' stroke-dasharray="6 5"' if cancelled else ""
+        marker = "" if cancelled or route == "d2b" else f' marker-end="url(#kyushu-{name}-arrow)"'
+        # 短段仍以原座標連接；D5 來回不拿虛線冒充另一交通方式。
+        if route == "d5-return":
+            marker += f' marker-start="url(#kyushu-{name}-arrow)"'
+        out.append(f'<path data-route="{route}" d="{dd}" fill="none" stroke="var(--tm-{ink})" stroke-width="{2.5/s}" vector-effect="none"{dash}{marker}/>')
+    for key in panel["nodes"]:
+        x,y = C[key]
+        if key == "epicenter":
+            out.append(f'<path data-station="{key}" d="M{x-5/s},{y-5/s} l{10/s},{10/s} m0,{-10/s} l{-10/s},{10/s}" stroke="var(--tm-muted)" stroke-width="{2/s}" fill="none"/>')
         else:
-            if r < t0: return None
-            t1 = min(t1, r)
-    return t0 if t0 > 0 else 0.0
+            out.append(f'<circle data-station="{key}" cx="{x}" cy="{y}" r="{5/s}" fill="var(--tm-paper)" stroke="var(--tm-{ink})" stroke-width="{2/s}"/>')
+    # 建議休息站只在全程圖顯示空心小點；名稱保留在圖下說明。
+    if name == "north":
+        for key in ("kanryu","kiyama","imagawa"):
+            x,y = C[key]
+            out.append(f'<circle data-rest="{key}" cx="{x}" cy="{y}" r="{2.5/s}" fill="var(--tm-paper)" stroke="var(--tm-muted)" stroke-width="{1/s}"><title>{dict(kanryu="金立 SA",kiyama="基山 PA",imagawa="今川 PA")[key]}（建議休息站）</title></circle>')
+    out.append("</g>")
+    for key,x,y,w,title,sub in panel["labels"]:
+        px,py = screen(key,name)
+        ex = max(x+8,min(px,x+w-8))
+        ey = y if py < y else y+46 if py > y+46 else py
+        dist = math.hypot(ex-px,ey-py)
+        assert dist > 7, f"{name}/{key} label covers node"
+        sx,sy = px+(ex-px)*7/dist, py+(ey-py)*7/dist
+        out.append(f'''<path class="tm-leader" d="M{sx:.2f},{sy:.2f} L{ex:.2f},{ey:.2f}" stroke="var(--tm-muted)" stroke-width="1.2" fill="none"/>
+<g class="tm-label" data-label="{key}"><rect x="{x}" y="{y}" width="{w}" height="46" rx="8" fill="var(--tm-paper)" stroke="var(--tm-border)"/>
+<text x="{x+9}" y="{y+21}" fill="var(--tm-ink)" font-size="18" font-weight="800">{escape(title)}</text>
+<text x="{x+9}" y="{y+38}" fill="var(--tm-muted)" font-size="13">{escape(sub)}</text></g>''')
+    out.append("</svg>")
+    return "\n".join(out)
 
-for name, (bx, by) in B.items():
-    ax, ay = _anchor[name]
-    dist = math.hypot(bx - ax, by - ay)
-    if dist <= 22:
-        continue
-    # 起點＝徽章圓邊；終點預設錨點，撞文字框則截短
-    ux, uy = (ax - bx) / dist, (ay - by) / dist
-    sx, sy = bx + ux * 12, by + uy * 12
-    t_end = 1.0
-    for bb in _texts:
-        t = _seg_enter_t((sx, sy), (ax, ay), bb)
-        if t is not None and t < t_end:
-            t_end = t
-    ex, ey = sx + (ax - sx) * max(t_end - 0.03, 0), sy + (ay - sy) * max(t_end - 0.03, 0)
-    if math.hypot(ex - sx, ey - sy) < 8:
-        continue  # 線太短乾脆不畫
-    svg += f'        <line x1="{round(sx,1)}" y1="{round(sy,1)}" x2="{round(ex,1)}" y2="{round(ey,1)}" stroke="var(--ink-faint)" stroke-width="1" opacity=".55"/>\n'
-print("DEBUG m1,m2,B:", m1, m2, {k: v for k, v in B.items() if k in ("D1","D2")})
-_day_title = {"D1":"8/1 機場 → 豪斯登堡","D2":"8/2 豪斯登堡 → 海洋世界 → 博多","D3":"8/3 KidZania → 小倉","D4":"8/4 Harmonyland → 別府","D5":"8/5 African Safari","D6":"8/6 海地獄 → 筑紫野公園 → 福岡","D7":"8/7 海之中道泳池・科學館","D8":"8/8 還車返台"}
-for name, (bx, by) in B.items():
-    n = name[1]
-    svg += f'        <a href="#day{n}" class="geo-day"><title>{name} {_day_title[name]}（點擊看當日行程）</title><circle cx="{bx}" cy="{by}" r="11" fill="var(--sea)"/><text x="{bx}" y="{by+4}" fill="#fff">{name}</text></a>\n'
-svg += '''      </g>
-    </svg>'''
 
-(SC / "kyushu_map.svg.html").write_text(svg)
-print(f"viewBox 0 0 {W} {H}; rings={len(rings)}; pts={sum(len(r) for _,r in rings)}")
+def locator():
+    # 本島、天草及周邊近海島嶼；不把對馬或南方列島拉進空白。
+    visible = [(pid,r) for pid,r in rings if
+               max(p[1] for p in r) >= 30.95 and min(p[1] for p in r) <= 34.05
+               and max(p[0] for p in r) >= 129.35 and min(p[0] for p in r) <= 132.15]
+    pts = [XY(*p) for _,r in visible for p in r]
+    minx,maxx = min(x for x,y in pts),max(x for x,y in pts)
+    miny,maxy = min(y for x,y in pts),max(y for x,y in pts)
+    s = min(276/(maxx-minx),286/(maxy-miny))
+    tx,ty = (320-(maxx-minx)*s)/2-minx*s, 24-miny*s
+    out = [f'''<svg class="tm-locator" viewBox="0 0 320 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="九州完整本島輪廓，框內為北九州旅行區">
+<g class="tm-geography" transform="translate({tx} {ty}) scale({s})">
+<g class="tm-land" fill="var(--tm-land)" stroke="var(--tm-coast)" stroke-width="{.9/s}">''']
+    out.extend(f'<path d="{path_of(r)}"/>' for _,r in visible)
+    out.append("</g>")
+    # 用全程圖所用點位的包絡框顯示旅行區；不改動任何地理座標。
+    keys = ["htb","hakata","airport","uminaka","kokura","harmony","beppu","safari"]
+    xs,ys = [C[k][0] for k in keys],[C[k][1] for k in keys]
+    x0,y0,x1,y1 = min(xs)-18,min(ys)-18,max(xs)+18,max(ys)+18
+    out.append(f'<rect data-travel-window="true" x="{x0}" y="{y0}" width="{x1-x0}" height="{y1-y0}" fill="var(--tm-route)" fill-opacity=".12" stroke="var(--tm-route)" stroke-width="{2/s}"/>')
+    for _,dd in PANELS["north"]["routes"]:
+        out.append(f'<path d="{dd}" fill="none" stroke="var(--tm-route)" stroke-width="{1.4/s}"/>')
+    out.append(f'''</g>
+<text x="157" y="217" text-anchor="middle" fill="var(--tm-ink)" font-size="26" font-weight="800">九州</text>
+<rect x="10" y="10" width="181" height="32" rx="7" fill="var(--tm-paper)"/>
+<text x="20" y="32" fill="var(--tm-ink)" font-size="17" font-weight="750">框內：北九州旅行區</text>
+<text x="12" y="230" fill="var(--tm-muted)" font-size="14">東海</text>
+<text x="258" y="270" fill="var(--tm-muted)" font-size="14">太平洋</text>
+<path d="M296,67 V32 M290,41 L296,32 L302,41" fill="none" stroke="var(--tm-muted)" stroke-width="1.5"/>
+<text x="296" y="23" text-anchor="middle" fill="var(--tm-muted)" font-size="13">北 N</text>
+</svg>''')
+    for x,y in pts:
+        assert 15 <= x*s+tx <= 305 and 20 <= y*s+ty <= 313, "九州輪廓裁切"
+    return "\n".join(out)
 
-# ---- 自檢：徽章 vs 節點/文字粗查 ----
-nodes = {k: C[k] for k in ["airport","hakata","uminaka","kokura","htb","beppu","kanryu","kiyama","imagawa"]}
-R = {"airport":6,"hakata":9,"uminaka":7,"kokura":9,"htb":9,"beppu":9,"kanryu":4,"kiyama":4,"imagawa":4}
-for bn,(bx,by) in B.items():
-    for nn,(nx,ny) in nodes.items():
-        gap = math.hypot(bx-nx, by-ny) - 11 - R[nn]
-        if gap < 6:
-            print(f"  ! 徽章 {bn} 距節點 {nn} 淨空 {gap:.1f}px")
 
-# ---- 自檢：箭頭尖 vs 節點圓外緣（必須在圓外，淨空 >= 1）----
-_r_outer = {"airport":4,"hakata":11,"uminaka":8.8,"kokura":11,"htb":11,"beppu":11}
-_tip_names = ["d1→htb","d2 中段箭頭","d3→kokura","d4→beppu","d6→hakata"]
-_tip_targets = ["htb","uminaka","kokura","beppu","hakata"]
-_fail = False
-for nm, tgt, (tx, ty) in zip(_tip_names, _tip_targets, _arrow_tips):
-    gap = math.hypot(tx - C[tgt][0], ty - C[tgt][1]) - _r_outer[tgt]
-    flag = "" if gap >= 1 else "  !! 被節點蓋住"
-    if gap < 1: _fail = True
-    print(f"  tip {nm}: 距圓外緣 {gap:.1f}px{flag}")
-for nm, (tx, ty) in zip(_tip_names, _arrow_tips):
-    for (x0, x1, y0, y1) in _texts:
-        if x0 - 3 < tx < x1 + 3 and y0 - 3 < ty < y1 + 3:
-            print(f"  !! tip {nm} 落在文字框內 ({tx},{ty})")
-            _fail = True
-if _fail:
-    raise SystemExit("箭頭自檢未過")
+def render():
+    out = [START, '''<div class="tm-intro"><b>九州八日・北線旅行</b><span>真實點位與海岸輪廓 · 路線示意，非精確導航</span></div>
+<div class="tm-legend"><span><i></i>自駕・改線後行程</span><span><i class="tm-rest"></i>建議休息站</span><span>細灰線連接地名與站點</span></div>
+<div class="tm-atlas"><figure><figcaption><b>九州全島定位</b><span>從完整島形看本次旅行範圍</span></figcaption>''',
+           locator(), "</figure><figure><figcaption><b>北九州全程路線</b><span>D1–D8・福岡起訖，經豪斯登堡、小倉與別府</span></figcaption>",
+           frame_svg("north"), "</figure></div>",
+           '<p class="tm-note">空心小點為原行程建議休息站：金立 SA、基山 PA、今川 PA；停靠以當日需求為準。福岡周邊及別府密集景點，見下方放大圖。</p>',
+           '<div class="tm-local">']
+    for name in ("fukuoka","beppu"):
+        p=PANELS[name]
+        out.extend([f'<figure><figcaption><b>{p["title"]}</b><span>{p["sub"]}</span></figcaption>',frame_svg(name),"</figure>"])
+    out.append('</div><nav class="tm-days" aria-label="九州八日日次跳轉">')
+    for i,(date,destination,note) in enumerate(DAYS,1):
+        reduced = """if(!event.ctrlKey&&!event.metaKey&&!event.shiftKey&&!event.altKey&&matchMedia('(prefers-reduced-motion: reduce)').matches){event.preventDefault();const t=document.querySelector(this.hash);history.pushState(null,'',this.hash);t.setAttribute('tabindex','-1');t.focus({preventScroll:true});t.scrollIntoView({behavior:'instant',block:'start'});t.addEventListener('blur',()=>t.removeAttribute('tabindex'),{once:true});}"""
+        out.append(f'<a href="#day{i}" class="geo-day-card" onclick="{reduced}"><span class="tm-badge">D{i}</span><span><strong>{destination}</strong><small>{date} · {note}</small></span></a>')
+    out.extend(['''</nav>
+<details class="tm-cancelled"><summary>已取消原案：熊本・阿蘇・高千穗（7/28 地震後改線）</summary>
+<p>以下灰虛線與取消地點僅作原案對照，不屬於實際行程。✕ 為原手帖記錄的 7/28 震央（M7.1，宇城市/氷川町）。</p>
+<div class="tm-legend"><span><i class="tm-cancel-line"></i>已取消原路線</span></div>''',
+                frame_svg("cancelled"), '<a class="tm-history" href="#earthquake">查看地震改線記事與取消原案</a></details>',
+                '<p class="tm-note">全程圖、分區圖與定位圖共用同一地理投影；路線僅連接行程站點，實際導航請使用每日卡的「當日路線」。</p>',
+                END])
+    return "\n".join(out)+"\n"
+
+
+def check():
+    for name,panel in PANELS.items():
+        s,tx,ty=panel["affine"]
+        boxes=[]
+        for key,x,y,w,title,sub in panel["labels"]:
+            assert 0<=x<x+w<=320 and 0<=y<y+46<=340
+            assert len(title)*18 <= w-18, f"主標溢出 {name}/{key}"
+            px,py=screen(key,name)
+            assert 6<px<314 and 6<py<334, f"節點裁切 {name}/{key}"
+            boxes.append((x,x+w,y,y+46))
+        for i,a in enumerate(boxes):
+            for b in boxes[i+1:]:
+                assert not(a[0]<b[1] and b[0]<a[1] and a[2]<b[3] and b[2]<a[3]), f"標籤重疊 {name}"
+        for route,dd in panel["routes"]:
+            for px,py in bezier(dd):
+                x,y=px*s+tx,py*s+ty
+                assert all(not(a<x<b and c<y<d) for a,b,c,d in boxes), f"路線穿過標籤 {name}/{route}"
+        frame_svg(name)
+        print(f"PASS {name}: 原投影點位、字框邊界/避讓、路線/標籤淨空")
+    # 原箭頭端點與幾何維持檢查；新顯示節點半徑為 5px。
+    for key,tip in [("htb",e1),("uminaka",e2a),("kokura",e3),("beppu",e4),("hakata",e6)]:
+        assert math.dist(tip,C[key])*.85-6 >= 1, f"箭頭壓節點 {key}"
+    locator()
+    result=render()
+    assert all(f'href="#day{i}"' in result for i in range(1,9))
+    # 取消段只能存在於已取消 details 內。
+    actual=result.split('<details class="tm-cancelled">')[0]
+    assert all(f'data-station="{k}"' not in actual for k in ("kumamoto","aso","takachiho","epicenter"))
+    print("PASS 九州全島無裁切；取消原案隔離；八日原生鍵盤錨點；零外部依賴")
+
+
+def main():
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--output",type=Path,help="輸出至新檔；x 模式拒絕覆蓋，省略只自檢")
+    parser.add_argument("--check-page",type=Path,help="檢查 HTML 生成區與產物逐位元一致")
+    parser.add_argument("--baseline",type=Path,help="搭配 --check-page 檢查地圖/CSS 以外逐位元不變")
+    args=parser.parse_args()
+    check()
+    generated=render()
+    if args.check_page:
+        page=args.check_page.read_text()
+        embedded=page[page.index(START):page.index(END)+len(END)]+"\n"
+        assert embedded==generated,"生成區不同步"
+        if args.baseline:
+            old=args.baseline.read_text()
+            def outside(text):
+                text=re.sub(r"/\* trip-map:styles:start \*/.*?/\* trip-map:styles:end \*/\n?","",text,flags=re.S)
+                return re.sub(r'<section id="geomap".*?</section>',"",text,flags=re.S)
+            assert outside(page)==outside(old),"地圖外內容有變"
+            marker='<article class="day" id="day1">'
+            assert page[page.index(marker):]==old[old.index(marker):],"day1 後有變"
+            print("PASS 地圖外逐位元不變；day1-end SHA256",hashlib.sha256(page[page.index(marker):].encode()).hexdigest())
+        print("PASS HTML 生成區逐位元同步")
+    if args.output:
+        with args.output.open("x",encoding="utf-8") as stream:
+            stream.write(generated)
+        print("generated:",args.output)
+
+
+if __name__=="__main__":
+    main()
