@@ -1,6 +1,7 @@
-"""從 japan.geojson 生成東京—越後湯澤滑雪行程 SVG（2026-tokyo-ski #geomap 內容）。
-工具函數與 gen_kyushu_map.py 同源：等距投影、quadratic 路線、沿曲線絕對截斷、
-徽章自動避讓、箭頭自檢（淨空 >=1px 且不落文字框，未過拒絕生成）。"""
+"""東京滑雪地圖：關東至越後定位、往返路線與東京市區放大。
+既有四站經緯度、投影、四段路線與海岸幾何保留；各圖僅等比縮放及平移。
+預設只自檢，不寫檔；--output 以 x 模式寫新路徑，拒絕覆蓋。
+"""
 import json, math
 from pathlib import Path
 
@@ -111,231 +112,225 @@ d1b, m1b, e1b = q(C["ueno"], C["yuzawa"],   .10,  1, r_start=13, r_end=14)   # �
 d3,  m3,  e3  = q(C["yuzawa"], C["ueno"],   .10,  1, r_start=13, r_end=14)   # 回程（反向同 side＝彎另一側）
 d5,  m5,  e5  = q(C["ueno"], C["narita"],   .10,  1, r_start=13, r_end=11)   # Skyliner 回程（小彎陡升；上野文字在西側，東側線帶無字）
 
-_anchor = {
-    "D1": m1b, "D2": shift(C["yuzawa"], -34, -22), "D3": m3,
-    "D4": shift(C["odaiba"], 26, 14), "D5": m5,
+
+# 原投影座標是三幅地圖的共同座標系；排標座標不參與地理計算。
+ROUTES = [("d1a", d1a, "drive", 1), ("d1b", d1b, "rail", 1),
+          ("d3", d3, "rail", 3), ("d5", d5, "drive", 5)]
+LAYOUTS = {
+    "locator": (340, 350, .37, 25, 110),
+    "detail": (340, 420, .70, -60, 0),
+    "city": (340, 320, 5, -1615, -2078),
 }
-_pinned_pos = {"D2": shift(C["yuzawa"], -34, -22), "D4": shift(C["odaiba"], 26, 14)}  # D4 釘台場圓右側海面（左下是台場文字）
-_nodesR = {"narita": 7, "ueno": 9, "yuzawa": 9, "odaiba": 6}
-
-def _bb(cx, cy, anchor, w, size):
-    if anchor == "start":  x0, x1 = cx, cx + w
-    elif anchor == "end":  x0, x1 = cx - w, cx
-    else:                  x0, x1 = cx - w / 2, cx + w / 2
-    return (x0, x1, cy - size, cy + 3)
-
-_texts = [
-    _bb(C["narita"][0]+13, C["narita"][1]+5,  "start", 86, 12),
-    _bb(C["ueno"][0]-15,   C["ueno"][1]+4,    "end", 176, 13),  # 上野主副標一行 tspan 混排（樞紐站圓周全是線帶，僅正西水平帶乾淨）
-    _bb(C["yuzawa"][0]+16, C["yuzawa"][1]+2,  "start", 52, 13),
-    _bb(C["yuzawa"][0]+16, C["yuzawa"][1]+16, "start", 140, 10.5),
-    _bb(C["odaiba"][0]-11, C["odaiba"][1]+14, "end",   26, 13),
-    _bb(C["odaiba"][0]-11, C["odaiba"][1]+27, "end",   80, 10.5),
+# x, y, width, height, main title, subtitle lines, leader endpoint
+LABELS = {
+    "locator": {
+        "yuzawa": (93, 126, 176, 48, "越後湯澤", ["雪場所在・新潟縣"], (93, 150)),
+        "ueno": (12, 293, 160, 48, "東京・上野", ["台場見市區放大圖"], (153, 293)),
+        "narita": (211, 278, 117, 48, "成田機場", ["千葉縣"], (220, 278)),
+    },
+    "detail": {
+        "yuzawa": (64, 24, 260, 65, "越後湯澤", ["D1–D2 雪の花・D2 GALA 湯澤", "D3 湯澤高原"], (64, 67)),
+        "narita": (211, 229, 117, 48, "成田機場", ["D1 抵達・D5 回程"], (272, 277)),
+        "ueno": (12, 347, 165, 61, "東京・上野", ["D3–D4 Section L 住宿", "東京市區見下方放大圖"], (167, 347)),
+        "odaiba": (212, 354, 116, 48, "台場", ["D4 AquaCity"], (212, 370)),
+    },
+    "city": {
+        "ueno": (16, 20, 308, 64, "上野", ["D3–D4 泊 Section L Ueno-Hirokoji", "D5 Skyliner 前往成田機場"], (171, 84)),
+        "odaiba": (16, 246, 308, 57, "台場", ["D4 AquaCity Odaiba・玩具反斗城"], (169, 246)),
+    },
+}
+DAYS = [
+    ("1/24（六）", "成田 → 上野 → 越後湯澤", "Skyliner・上越新幹線", "Tanigawa 405，17:18–18:36"),
+    ("1/25（日）", "GALA 湯澤滑雪", "接駁巴士 BLUE/ORANGE LINE", "或 JR 一站直達・巨人滑雪學校"),
+    ("1/26（一）", "湯澤高原 → 上野", "上越新幹線回東京", "雪の花退房・入住 Section L"),
+    ("1/27（二）", "台場一日", "AquaCity・玩具反斗城", "Section L 上野連住"),
+    ("1/28（三）", "淺草寫真 → 成田", "Skyliner 回機場", "拉麵林田・花筏親子寫真"),
 ]
-def _hits_text(x, y, pad=4):
-    for (x0, x1, y0, y1) in _texts:
-        if x0 - 11 - pad < x < x1 + 11 + pad and y0 - 11 - pad < y < y1 + 11 + pad:
-            return True
-    return False
 
-_arrow_tips = [e1a, e1b, e3, e5]
 
-def _ok(pt, placed):
-    x, y = pt
-    if not (20 <= x <= W - 20 and 20 <= y <= H - 10):
-        return False
-    for tp in _arrow_tips:
-        if math.hypot(x - tp[0], y - tp[1]) < 24:
-            return False
-    for nn, rr in _nodesR.items():
-        if math.hypot(x - C[nn][0], y - C[nn][1]) - 11 - rr < 6:
-            return False
-    for q2_ in placed.values():
-        if math.hypot(x - q2_[0], y - q2_[1]) < 26:
-            return False
-    if _hits_text(x, y):
-        return False
-    return True
+def screen(layout, point):
+    _, _, scale, tx, ty = LAYOUTS[layout]
+    return (point[0] * scale + tx, point[1] * scale + ty)
 
-B = {}
-for name, anc in _anchor.items():
-    if name in _pinned_pos:
-        B[name] = _pinned_pos[name]
-        continue
-    if _ok(anc, B):
-        B[name] = anc
-        continue
-    best = None
-    for r in (10, 16, 22, 28, 36, 44, 54, 64):
-        for k in range(16):
-            a = k * math.pi / 8
-            cand = (round(anc[0] + r * math.cos(a), 1), round(anc[1] + r * math.sin(a), 1))
-            if _ok(cand, B):
-                best = cand
-                break
-        if best:
-            break
-    B[name] = best or anc
-    if not best:
-        print(f"  !! {name} 找不到避讓位，沿用錨點")
 
-# ---- 視窗緊貼內容 bbox ----
-_xs, _ys = [], []
-for k in _nodesR:
-    _xs += [C[k][0] - _nodesR[k], C[k][0] + _nodesR[k]]
-    _ys += [C[k][1] - _nodesR[k], C[k][1] + _nodesR[k]]
-for (tx0, tx1, ty0, ty1) in _texts:
-    _xs += [tx0, tx1]; _ys += [ty0, ty1]
-for (bx, by) in B.values():
-    _xs += [bx - 12, bx + 12]; _ys += [by - 12, by + 12]
-for (px, py) in (m1a, m1b, m3, m5):
-    _xs += [px - 8, px + 8]; _ys += [py - 8, py + 8]
-_PAD = 12
-VX0, VY0 = round(min(_xs) - _PAD, 1), round(min(_ys) - _PAD, 1)
-VW, VH = round(max(_xs) + _PAD - VX0, 1), round(max(_ys) + _PAD - VY0, 1)
-print(f"content viewBox: {VX0} {VY0} {VW} {VH}")
-
-svg = f'''    <svg viewBox="{VX0} {VY0} {VW} {VH}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="真實比例行程地圖：成田機場、上野、越後湯澤、台場，五天雙向路線與日次標注">
-      <style>
-        .geo-lbl text{{paint-order:stroke; stroke:var(--bg); stroke-width:3.5px; stroke-linejoin:round}}
-        a.geo-day{{cursor:pointer}}
-        a.geo-day:hover path{{stroke-width:4.5px}}
-        a.geo-day:hover circle{{r:13px}}
-      </style>
-      <defs>
-        <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto-start-reverse">
-          <path d="M0,0 L10,5 L0,10 z" fill="var(--sea)"/>
-        </marker>
-      </defs>
-
-      <!-- 本州中部真實輪廓（dataofjapan/land GeoJSON，等距投影） -->
-      <g fill="var(--leaf-wash)" opacity=".5" stroke="var(--line)" stroke-width="1">
-{land_paths}
-      </g>
-
-      <!-- 行程路徑（點擊跳至該日行程卡） -->
-      <g stroke="var(--sea)" stroke-width="3" fill="none" stroke-linecap="round">
-        <a href="#day1" class="geo-day"><title>D1 1/24 成田 → 上野 → 上越新幹線 → 越後湯澤（點擊看當日行程）</title><path d="{d1a}"/><path d="{d1b}" marker-end="url(#arr)"/></a>
-        <a href="#day3" class="geo-day"><title>D3 1/26 湯澤高原 → 新幹線回上野（點擊看當日行程）</title><path d="{d3}" marker-end="url(#arr)"/></a>
-        <a href="#day5" class="geo-day"><title>D5 1/28 淺草寫真 → Skyliner → 成田（點擊看當日行程）</title><path d="{d5}" marker-end="url(#arr)"/></a>
-      </g>
-
-      <!-- 主要節點 -->
-      <g font-family="inherit" class="geo-lbl">
-        <circle cx="{C['narita'][0]}" cy="{C['narita'][1]}" r="7" fill="var(--card)" stroke="var(--sea)" stroke-width="3.5"/>
-        <text x="{C['narita'][0]+13}" y="{C['narita'][1]+5}" font-size="12" font-weight="700" fill="var(--ink)">成田機場 ✈</text>
-
-        <circle cx="{C['ueno'][0]}" cy="{C['ueno'][1]}" r="9" fill="var(--card)" stroke="var(--sea)" stroke-width="4"/>
-        <text x="{C['ueno'][0]-15}" y="{C['ueno'][1]+4}" text-anchor="end"><tspan font-size="13" font-weight="800" fill="var(--ink)">上野</tspan><tspan font-size="10.5" fill="var(--ink-faint)">　D3–D4 泊 Section L・D5 淺草寫真</tspan></text>
-
-        <circle cx="{C['yuzawa'][0]}" cy="{C['yuzawa'][1]}" r="9" fill="var(--card)" stroke="var(--sea)" stroke-width="4"/>
-        <text x="{C['yuzawa'][0]+16}" y="{C['yuzawa'][1]+2}" font-size="13" font-weight="800" fill="var(--ink)">越後湯澤</text>
-        <text x="{C['yuzawa'][0]+16}" y="{C['yuzawa'][1]+16}" font-size="10.5" fill="var(--ink-faint)">D1–D2 泊雪の花・GALA・湯澤高原</text>
-
-        <circle cx="{C['odaiba'][0]}" cy="{C['odaiba'][1]}" r="6" fill="var(--card)" stroke="var(--sea)" stroke-width="3"/>
-        <text x="{C['odaiba'][0]-11}" y="{C['odaiba'][1]+14}" font-size="13" font-weight="800" fill="var(--ink)" text-anchor="end">台場</text>
-        <text x="{C['odaiba'][0]-11}" y="{C['odaiba'][1]+27}" font-size="10.5" fill="var(--ink-faint)" text-anchor="end">D4 AquaCity</text>
-      </g>
-
-      <!-- 日次徽章 -->
-      <g font-family="inherit" font-size="11" font-weight="800" text-anchor="middle">
-'''
-_day_title = {"D1": "1/24 台北 → 成田 → 越後湯澤", "D2": "1/25 GALA 湯澤滑雪",
-              "D3": "1/26 湯澤高原 → 回東京", "D4": "1/27 台場一日", "D5": "1/28 寫真 → 回程"}
-
-def _seg_enter_t(p, q_, bb, pad=2.5):
-    x0, x1, y0, y1 = bb[0]-pad, bb[1]+pad, bb[2]-pad, bb[3]+pad
-    dx, dy = q_[0]-p[0], q_[1]-p[1]
-    t0, t1 = 0.0, 1.0
-    for pp, qq in ((-dx, p[0]-x0), (dx, x1-p[0]), (-dy, p[1]-y0), (dy, y1-p[1])):
-        if pp == 0:
-            if qq < 0: return None
+def city_land():
+    """市區海岸沿用同一 GeoJSON，以較小容差保留東京灣填海地形。"""
+    result = []
+    for feature in prefs:
+        if feature["properties"]["id"] not in (12, 13, 14):
             continue
-        r = qq / pp
-        if pp < 0:
-            if r > t1: return None
-            t0 = max(t0, r)
-        else:
-            if r < t0: return None
-            t1 = min(t1, r)
-    return t0 if t0 > 0 else 0.0
+        geometry = feature["geometry"]
+        polys = geometry["coordinates"] if geometry["type"] == "MultiPolygon" else [geometry["coordinates"]]
+        for poly in polys:
+            outer = poly[0]
+            xs, ys = zip(*outer)
+            if max(xs) < 139.60 or min(xs) > 139.94 or max(ys) < 35.54 or min(ys) > 35.79:
+                continue
+            middle = len(outer)//2
+            simplified = rdp(outer[:middle+1], .0002)[:-1] + rdp(outer[middle:], .0002)
+            result.append(f'<path d="{path_of(simplified)}"/>')
+    return "\n".join(result)
 
-for name, (bx, by) in B.items():
-    ax, ay = _anchor[name]
-    dist = math.hypot(bx - ax, by - ay)
-    if dist <= 22:
-        continue
-    ux, uy = (ax - bx) / dist, (ay - by) / dist
-    sx, sy = bx + ux * 12, by + uy * 12
-    t_end = 1.0
-    for bb in _texts:
-        t = _seg_enter_t((sx, sy), (ax, ay), bb)
-        if t is not None and t < t_end:
-            t_end = t
-    ex, ey = sx + (ax - sx) * max(t_end - 0.03, 0), sy + (ay - sy) * max(t_end - 0.03, 0)
-    if math.hypot(ex - sx, ey - sy) < 8:
-        continue
-    svg += f'        <line x1="{round(sx,1)}" y1="{round(sy,1)}" x2="{round(ex,1)}" y2="{round(ey,1)}" stroke="var(--ink-faint)" stroke-width="1" opacity=".55"/>\n'
 
-for name, (bx, by) in B.items():
-    n = name[1]
-    svg += f'        <a href="#day{n}" class="geo-day"><title>{name} {_day_title[name]}（點擊看當日行程）</title><circle cx="{bx}" cy="{by}" r="11" fill="var(--sea)"/><text x="{bx}" y="{by+4}" fill="#fff">{name}</text></a>\n'
-svg += '''      </g>
-    </svg>'''
+def label(layout, key, spec):
+    x, y, width, height, title, subtitles, end = spec
+    px, py = screen(layout, C[key])
+    ex, ey = end
+    subtitle = "".join(f'<text x="{x+10}" y="{y+42+i*14}" font-size="11.5" fill="var(--gm-muted)">{line}</text>'
+                       for i, line in enumerate(subtitles))
+    return f'''<g class="geo-station-label" data-label-for="{key}">
+      <path d="M{px:.2f},{py:.2f} L{ex},{ey}" stroke="var(--gm-muted)" stroke-width="1.2" fill="none"/>
+      <rect x="{x}" y="{y}" width="{width}" height="{height}" rx="8" fill="var(--gm-paper)" stroke="var(--gm-border)"/>
+      <text x="{x+10}" y="{y+24}" font-size="19" font-weight="800" fill="var(--gm-ink)">{title}</text>
+      {subtitle}
+    </g>'''
 
-(SC / "ski_map.svg.html").write_text(svg)
-print(f"rings={len(rings)}; pts={sum(len(r) for _, r in rings)}")
 
-# ---- 自檢：箭頭尖 vs 節點外緣＋文字框；徽章 vs 節點 ----
-_r_outer = {"narita": 8.75, "ueno": 11, "yuzawa": 11, "odaiba": 7.5}
-_fail = False
-for nm, tgt, (tx, ty) in zip(
-        ["d1a→ueno", "d1b→yuzawa", "d3→ueno", "d5→narita"],
-        ["ueno", "yuzawa", "ueno", "narita"], _arrow_tips):
-    gap = math.hypot(tx - C[tgt][0], ty - C[tgt][1]) - _r_outer[tgt]
-    flag = "" if gap >= 1 else "  !! 被節點蓋住"
-    if gap < 1: _fail = True
-    print(f"  tip {nm}: 距圓外緣 {gap:.1f}px{flag}")
-for nm, (tx, ty) in zip(["d1a", "d1b", "d3", "d5"], _arrow_tips):
-    for (x0, x1, y0, y1) in _texts:
-        if x0 - 3 < tx < x1 + 3 and y0 - 3 < ty < y1 + 3:
-            print(f"  !! tip {nm} 落在文字框內 ({tx},{ty})")
-            _fail = True
-for bn, (bx, by) in B.items():
-    for nn, (nx, ny) in C.items():
-        gap = math.hypot(bx - nx, by - ny) - 11 - _nodesR[nn]
-        if gap < 4:
-            print(f"  ! 徽章 {bn} 距節點 {nn} 淨空 {gap:.1f}px")
-# 同走廊反向段（d1b vs d3）分離檢查：取樣最小距離
-def _bpts(dd):
-    ps = dd.replace("M", "").replace(" Q", " ").split()
-    p0 = tuple(map(float, ps[0].split(",")))
-    c_ = tuple(map(float, ps[1].split(",")))
-    p2 = tuple(map(float, ps[2].split(",")))
-    return [( (1-t/60)**2*p0[0] + 2*(1-t/60)*(t/60)*c_[0] + (t/60)**2*p2[0],
-              (1-t/60)**2*p0[1] + 2*(1-t/60)*(t/60)*c_[1] + (t/60)**2*p2[1]) for t in range(61)]
-_min = min(math.hypot(a[0]-b2[0], a[1]-b2[1]) for a in _bpts(d1b) for b2 in _bpts(d3))
-print(f"  d1b/d3 雙向線最小間距 {_min:.1f}px" + ("  !! 太近" if _min < 5 else ""))
-if _min < 5: _fail = True
-_min2 = min(math.hypot(a[0]-b2[0], a[1]-b2[1]) for a in _bpts(d1a) for b2 in _bpts(d5))
-print(f"  d1a/d5 雙向線最小間距 {_min2:.1f}px" + ("  !! 太近" if _min2 < 5 else ""))
-if _min2 < 5: _fail = True
-# 線身 × 文字框（取樣，框內縮 1px 嚴格內部才算穿）
-for nm, dd in [("d1a", d1a), ("d1b", d1b), ("d3", d3), ("d5", d5)]:
-    hit = None
-    for (x, y) in _bpts(dd):
-        for (x0, x1, y0, y1) in _texts:
-            if x0 + 1 < x < x1 - 1 and y0 + 1 < y < y1 - 1:
-                hit = (round(x, 1), round(y, 1)); break
-        if hit: break
-    if hit:
-        print(f"  !! 線 {nm} 穿過文字框 {hit}")
-        _fail = True
-# 徽章 × 文字框
-for bn, (bx, by) in B.items():
-    for (x0, x1, y0, y1) in _texts:
-        if x0 - 8 < bx < x1 + 8 and y0 - 8 < by < y1 + 8:
-            print(f"  !! 徽章 {bn} 壓文字框 ({bx},{by})")
-            _fail = True
-if _fail:
-    raise SystemExit("自檢未過")
+def north():
+    return '''<g fill="var(--gm-muted)" stroke="var(--gm-muted)">
+      <path d="M313,51 V28 M309,35 L313,27 L317,35" fill="none" stroke-width="1.3"/>
+      <text x="313" y="20" text-anchor="middle" font-size="11" stroke="none">北 N</text>
+    </g>'''
+
+
+def render_map(layout):
+    width, height, scale, tx, ty = LAYOUTS[layout]
+    names = {"locator": "關東至越後區域定位", "detail": "東京與越後湯澤往返路線",
+             "city": "東京市區放大：上野與台場"}
+    title = names[layout]
+    keys = ("ueno", "odaiba") if layout == "city" else tuple(P)
+    outlines = city_land() if layout == "city" else land_paths
+    out = [f'''<svg class="geo-map geo-{layout}" viewBox="0 0 {width} {height}" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="ski-{layout}-title ski-{layout}-desc">
+      <title id="ski-{layout}-title">{title}</title>
+      <desc id="ski-{layout}-desc">使用同一等距投影與真實經緯度，北方朝上。越後湯澤位在東京西北方，成田在上野東方，台場在上野南方。連線為行程示意，非實際軌道或導航。</desc>
+      <defs><clipPath id="ski-{layout}-clip"><rect width="{width}" height="{height}"/></clipPath></defs>
+      <g clip-path="url(#ski-{layout}-clip)">
+      <g class="geo-geography" data-projection="ski-equirectangular" transform="translate({tx} {ty}) scale({scale})">
+      <g class="geo-land" fill="var(--gm-land)" stroke="var(--gm-coast)" stroke-width="{.7/scale:.6f}" stroke-linejoin="round">
+{outlines}
+      </g>''']
+    if layout == "locator":
+        # 以詳細圖視窗的反變換取得定位框，非目測畫框。
+        dw, dh, ds, dx, dy = LAYOUTS["detail"]
+        out.append(f'<rect data-travel-window="detail" x="{-dx/ds}" y="{-dy/ds}" width="{dw/ds}" height="{dh/ds}" fill="var(--gm-drive)" fill-opacity=".05" stroke="var(--gm-drive)" stroke-width="{1.3/scale}"/>')
+    if layout != "city":
+        for name, path, mode, day in ROUTES:
+            dash = f' stroke-dasharray="{6/scale} {3/scale}"' if mode == "rail" else ""
+            out.append(f'<a href="#day{day}"><title>D{day} {"上越新幹線" if mode == "rail" else "Skyliner"}</title><path data-route-segment="{name}" d="{path}" fill="none" stroke="var(--gm-{mode})" stroke-width="{(2.8 if layout == "detail" else 1.6)/scale}"{dash}/></a>')
+    for key in keys:
+        x, y = C[key]
+        # 位置資料與投影座標在不同縮放圖完全相同。
+        out.append(f'<circle data-station="{key}" data-lon="{P[key][0]}" data-lat="{P[key][1]}" cx="{x}" cy="{y}" r="{(3.5 if layout == "locator" else 4.5)/scale}" fill="var(--gm-paper)" stroke="var(--gm-drive)" stroke-width="{2/scale}"/>')
+    if layout == "detail":
+        cw, ch, cs, cx, cy = LAYOUTS["city"]
+        out.append(f'<rect data-travel-window="city" x="{-cx/cs}" y="{-cy/cs}" width="{cw/cs}" height="{ch/cs}" fill="none" stroke="var(--gm-muted)" stroke-width="{1/scale}" stroke-dasharray="{3/scale} {3/scale}"/>')
+    out.append("</g></g>")
+    if layout == "locator":
+        out.extend([north(), '<text x="34" y="70" font-size="14" fill="var(--gm-muted)">日本海</text>',
+                    '<text x="266" y="223" font-size="14" fill="var(--gm-muted)">太平洋</text>',
+                    '<text x="107" y="210" font-size="17" fill="var(--gm-muted)" font-weight="750">本州</text>'])
+    if layout == "city":
+        out.extend(['<g transform="translate(0 92)">' + north() + '</g>', '<text x="246" y="205" font-size="14" fill="var(--gm-muted)">東京灣</text>'])
+    for key, spec in LABELS[layout].items():
+        out.append(label(layout, key, spec))
+    if layout == "detail":
+        # 日次標記與對應路線中點相連，不壓在地名或站點上。
+        for day, point, bx, by in [(1, m1b, 151, 175), (3, m3, 67, 215),
+                                    (5, m5, 261, 325)]:
+            px, py = screen(layout, point)
+            out.append(f'''<a class="geo-badge" href="#day{day}"><title>D{day} 查看當日行程</title>
+              <path d="M{px:.2f},{py:.2f} L{bx},{by}" fill="none" stroke="var(--gm-muted)" stroke-width="1"/>
+              <rect x="{bx-17}" y="{by-12}" width="34" height="24" rx="12" fill="var(--gm-badge)"/>
+              <text x="{bx}" y="{by+4}" text-anchor="middle" font-size="12" font-weight="800" fill="var(--gm-badge-ink)">D{day}</text></a>''')
+    out.append("</svg>")
+    return "\n".join(out)
+
+
+def render():
+    cards = []
+    for day, (date, title, transport, note) in enumerate(DAYS, 1):
+        cards.append(f'''    <a class="geo-day-card" href="#day{day}">
+      <span class="geo-day-num">D{day}</span><span class="geo-day-copy"><span>{date}</span><strong>{title}</strong><span>{transport}</span><small>{note}</small></span>
+    </a>''')
+    return '''  <!-- trip-map:generated:start -->
+  <div class="geo-panel">
+    <div class="geo-intro"><span>東京與越後湯澤・五日冬旅</span><span>2026.01.24–01.28</span></div>
+    <div class="geo-atlas">
+      <figure class="geo-overview">
+        <figcaption><b>關東至越後・區域定位</b><span>從東京往西北，前往越後湯澤雪場</span></figcaption>
+''' + render_map("locator") + '''
+        <p class="geo-map-note">保留本州中部地理輪廓；實線框對應往返詳細圖範圍，聚焦本次旅行區域。</p>
+      </figure>
+      <figure class="geo-detail">
+        <figcaption><b>滑雪往返・路線詳細圖</b><span>D1 前往湯澤，D3 回東京，D5 回成田</span></figcaption>
+        <div class="geo-legend" aria-label="交通圖例"><span><i class="geo-swatch" aria-hidden="true"></i>Skyliner</span><span><i class="geo-swatch geo-rail" aria-hidden="true"></i>上越新幹線</span></div>
+''' + render_map("detail") + '''
+      </figure>
+    </div>
+    <figure class="geo-city-panel">
+      <figcaption><b>東京市區・局部放大</b><span>東京住宿與台場一日行程</span></figcaption>
+      <div class="geo-city-content">
+''' + render_map("city") + '''
+        <div class="geo-city-copy"><strong>先雪場，再回東京</strong><p>上野是本次東京住宿與轉乘的主要節點；台場在南側，D4 安排 AquaCity 與玩具反斗城。</p><p>D5 淺草拉麵林田與花筏親子寫真，詳見當日行程卡。</p><p>D2 前往 GALA 湯澤：接駁巴士 BLUE/ORANGE LINE，或 JR 一站直達。</p></div>
+      </div>
+    </figure>
+    <p class="geo-map-note">各圖共用地理投影，僅改變縮放與視窗。細灰引線連接中文地名與原始點位；詳細圖虛線框對應東京市區。雪の花、GALA 湯澤、湯澤高原沿用越後湯澤區域標示。路線為行程示意，非精確軌道或導航。</p>
+  </div>
+  <nav class="geo-days" aria-label="地圖五日行程跳轉">
+''' + "\n".join(cards) + '''
+  </nav>
+  <!-- trip-map:generated:end -->'''
+
+
+def check_geometry():
+    """檢查同投影點位、縮放、定位框及排標；失敗即拒絕輸出。"""
+    from xml.etree import ElementTree as ET
+    ns = {"s": "http://www.w3.org/2000/svg"}
+    original_points = {"narita": (140.386, 35.772), "ueno": (139.777, 35.712),
+                       "yuzawa": (138.808, 36.936), "odaiba": (139.776, 35.627)}
+    assert P == original_points, "原始經緯度不得改動"
+    assert C == {"narita": (493.6, 419.1), "ueno": (357.1, 435.8),
+                 "yuzawa": (139.9, 95.5), "odaiba": (356.8, 459.5)}
+    for layout in LAYOUTS:
+        width, height, scale, tx, ty = LAYOUTS[layout]
+        svg = ET.fromstring(render_map(layout))
+        for circle in svg.findall(".//s:circle[@data-station]", ns):
+            key = circle.attrib["data-station"]
+            assert (float(circle.attrib["cx"]), float(circle.attrib["cy"])) == C[key]
+            x, y = screen(layout, C[key])
+            assert 6 <= x <= width-6 and 6 <= y <= height-6, (layout, key, "站點出框")
+        boxes = []
+        for key, (x, y, w, h, _, _, _) in LABELS[layout].items():
+            assert 0 <= x <= x+w <= width and 0 <= y <= y+h <= height
+            for a, b, c, e in boxes:
+                assert x+w <= a or a+c <= x or y+h <= b or b+e <= y, "標籤重疊"
+            boxes.append((x, y, w, h))
+            for station in (("ueno", "odaiba") if layout == "city" else P):
+                px, py = screen(layout, C[station])
+                assert not (x-6 < px < x+w+6 and y-6 < py < y+h+6), (layout, key, station, "標籤壓站點")
+        for frame in svg.findall(".//s:rect[@data-travel-window]", ns):
+            target = frame.attrib["data-travel-window"]
+            target_keys = ("ueno", "odaiba") if target == "city" else P
+            x, y, w, h = [float(frame.attrib[k]) for k in ("x", "y", "width", "height")]
+            for key in target_keys:
+                px, py = C[key]
+                assert x <= px <= x+w and y <= py <= y+h, "定位框漏站點"
+        print(f"PASS {layout}: 共用點位與投影、定位框、標籤邊界及站點淨空")
+    assert C["yuzawa"][0] < C["ueno"][0] and C["yuzawa"][1] < C["ueno"][1]
+    print(f"PASS 原四站、四條往返路線；{len(rings)} 個原地形環；五日日期與交通卡")
+
+
+def main():
+    import argparse
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--output", type=Path, help="只寫新路徑；省略時只自檢，不寫任何檔案")
+    args = parser.parse_args()
+    check_geometry()
+    if args.output:
+        with args.output.open("x", encoding="utf-8") as out:
+            out.write(render() + "\n")
+        print(f"generated: {args.output}")
+
+
+if __name__ == "__main__":
+    main()
