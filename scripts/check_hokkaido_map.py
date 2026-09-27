@@ -56,9 +56,36 @@ def main():
         return ([p.attrib["d"] for p in group.findall(".//s:path", ns)],
                 [c.attrib for c in group.findall(".//s:circle", ns)])
     assert geometry(svgs[0]) == geometry(svgs[1])
+    locator = ET.fromstring(re.search(r'<svg class="geo-locator".*?</svg>', embedded, re.S)[0])
+    locator_group = locator.find("s:g[@class='geo-locator-geography']", ns)
+    assert locator_group is not None
+    detail_nodes = {c.attrib["data-station"]: (c.attrib["cx"], c.attrib["cy"])
+                    for c in svgs[0].findall(".//s:circle[@data-station]", ns)}
+    for node in locator_group.findall("s:circle", ns):
+        assert (node.attrib["cx"], node.attrib["cy"]) == detail_nodes[node.attrib["data-station"]]
+    detail_routes = {p.attrib["data-route-segment"]: p.attrib["d"]
+                     for p in svgs[0].findall(".//s:path[@data-route-segment]", ns)}
+    for path in locator_group.findall("s:path[@data-route-segment]", ns):
+        assert path.attrib["d"] == detail_routes[path.attrib["data-route-segment"]]
+    # 不只比程式輸出：解析實際嵌入的全島投影邊界，檢查縮放後不裁切。
+    tx, ty, scale = map(float, re.findall(r'-?\d+(?:\.\d+)?', locator_group.attrib["transform"]))
+    outline = locator_group.find("s:path[@class='geo-island-outline']", ns)
+    coords = [tuple(map(float, p)) for p in re.findall(r'(-?\d+\.\d+),(-?\d+\.\d+)', outline.attrib["d"])]
+    assert len(coords) >= 200
+    assert all(15 <= x*scale+tx <= 325 and 20 <= y*scale+ty <= 298 for x,y in coords)
+    assert max(x for x,y in coords)*scale-min(x for x,y in coords)*scale > 260
+    frame = locator_group.find("s:rect[@data-travel-window]", ns)
+    fx, fy, fw, fh = (float(frame.attrib[k]) for k in ("x", "y", "width", "height"))
+    assert all(fx <= float(x) <= fx+fw and fy <= float(y) <= fy+fh for x,y in detail_nodes.values())
+    print("PASS 全島輪廓完整且寬逾260 viewBox單位；定位圖同投影點位／路線；道央框包覆全部站點")
     for svg in svgs:
         assert len(svg.findall("s:g[@class='geo-station-label']", ns)) == 4
         assert len(svg.findall("s:g[@class='geo-badge']", ns)) == 5
+        titles = [g.find("s:text", ns) for g in svg.findall("s:g[@class='geo-station-label']", ns)]
+        assert {t.text for t in titles} == {"新千歲機場", "洞爺湖溫泉", "留壽都度假村", "札幌"}
+        assert all(float(t.attrib["font-size"]) >= 18 for t in titles)
+    destinations = re.findall(r'<span class="geo-day-copy"><strong>(.*?)</strong>', embedded)
+    assert len(destinations) == 5 and not any(re.search(r'新千歳|ルスツ|滞在', t) for t in destinations)
     for day in range(1, 6):
         assert f'class="geo-day-card" href="#day{day}"' in embedded
         assert f'id="day{day}"' in html
@@ -71,7 +98,8 @@ def main():
     for palette in palettes:
         colors = dict(re.findall(r'--gm-([\w-]+):\s*(#[0-9A-Fa-f]{6})', palette))
         for fg, bg in [("ink", "paper"), ("muted", "paper"), ("ink", "ocean"),
-                       ("muted", "ocean"), ("badge-ink", "badge"), ("drive", "paper")]:
+                       ("muted", "ocean"), ("ink", "land"), ("muted", "land"),
+                       ("badge-ink", "badge"), ("drive", "paper")]:
             value = contrast(colors[fg], colors[bg])
             assert value >= 4.5, f"{fg}/{bg} 對比不足 {value:.2f}"
             ratios.append(value)

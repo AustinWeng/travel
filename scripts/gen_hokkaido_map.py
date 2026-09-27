@@ -189,39 +189,39 @@ def _bb(cx, cy, anchor, w, size):
 # 每組為 width, height, scale, tx, ty；不單獨壓縮海岸或搬移站點。
 LAYOUTS = {
     "mobile": (340, 340, .75, -81, -32),
-    "desktop": (680, 440, 1, 20, -30),
+    "desktop": (400, 400, .85, -68, -20),
 }
 # 標籤卡的位置在各 viewBox 內，字級不跟著地形縮小。
 LABELS = {
     "mobile": {
         "sapporo": (165, 26, 165, "札幌", "D4 泊 1 晚"),
-        "rusutsu": (10, 60, 145, "ルスツリゾート", "D2–D3 泊 2 晚・滑雪"),
-        "toya": (10, 280, 150, "洞爺湖温泉", "D1 泊 乃の風・1 晚"),
-        "chitose": (180, 280, 150, "新千歳空港", "D1 抵達・D5 返程"),
+        "rusutsu": (10, 60, 145, "留壽都度假村", "D2–D3 泊 2 晚・滑雪"),
+        "toya": (10, 280, 150, "洞爺湖溫泉", "D1 泊 乃の風・1 晚"),
+        "chitose": (180, 280, 150, "新千歲機場", "D1 抵達・D5 返程"),
     },
     "desktop": {
-        "sapporo": (416, 59, 235, "札幌", "D4 泊 1 晚・円山動物園"),
-        "rusutsu": (24, 183, 190, "ルスツリゾート", "D2–D3 泊 2 晚・滑雪"),
-        "toya": (72, 374, 195, "洞爺湖温泉", "D1 泊 乃の風・1 晚"),
-        "chitose": (474, 302, 190, "新千歳空港", "D1 抵達・D5 返程"),
+        "sapporo": (210, 30, 180, "札幌", "D4 泊 1 晚・円山動物園"),
+        "rusutsu": (10, 75, 175, "留壽都度假村", "D2–D3 泊 2 晚・滑雪"),
+        "toya": (10, 335, 175, "洞爺湖溫泉", "D1 泊 乃の風・1 晚"),
+        "chitose": (210, 335, 180, "新千歲機場", "D1 抵達・D5 返程"),
     },
 }
 BADGES = {
     "mobile": {"D1": (184, 250), "D2": (35, 223), "D3": (126, 201),
                "D4": (166, 140), "D5": (269, 125)},
-    "desktop": {"D1": (367, 330), "D2": (183, 310), "D3": (275, 280),
-                "D4": (342, 185), "D5": (461, 188)},
+    "desktop": {"D1": (223, 300), "D2": (55, 275), "D3": (165, 245),
+                "D4": (225, 176), "D5": (334, 163)},
 }
 ROUTES = [("d1", d1), ("d2", d2), ("d4a", d4a), ("d4b", d4b), ("d5", d5)]
 NODES_R = {"chitose": 9, "toya": 9, "rusutsu": 9, "sapporo": 9, "nakayama": 4}
 TITLES = {
-    "D1": "1/20 桃園 → 新千歳 → 洞爺湖",
-    "D2": "1/21 洞爺湖 → ルスツ",
-    "D3": "1/22 ルスツ滑雪",
-    "D4": "1/23 ルスツ → 中山峠 → 札幌",
-    "D5": "1/24 札幌 → JR → 新千歳 → 桃園",
+    "D1": "1/20 桃園 → 新千歲 → 洞爺湖",
+    "D2": "1/21 洞爺湖 → 留壽都",
+    "D3": "1/22 留壽都滑雪",
+    "D4": "1/23 留壽都 → 中山峠 → 札幌",
+    "D5": "1/24 札幌 → JR → 新千歲 → 桃園",
 }
-SEG = ["道央道 110 km／1.5 h", "30 km／40 分", "ルスツ滑雪",
+SEG = ["道央道 110 km／1.5 h", "30 km／40 分", "留壽都滑雪",
        "国道230 80 km／1.5 h", "JR 快速 37 分"]
 
 
@@ -299,14 +299,14 @@ def render_map(layout):
     w, h, scale, tx, ty = LAYOUTS[layout]
     prefix = f"hokkaido-{layout}"
     out = [f'''    <svg class="geo-map geo-{layout}" viewBox="0 0 {w} {h}" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="{prefix}-title {prefix}-desc">
-      <title id="{prefix}-title">道央五日行程：新千歳空港、洞爺湖温泉、ルスツリゾート、札幌</title>
+      <title id="{prefix}-title">道央五日行程：新千歲機場、洞爺湖溫泉、留壽都度假村、札幌</title>
       <desc id="{prefix}-desc">D1 新千歳至洞爺湖，D2 至ルスツ，D3 留在ルスツ滑雪，D4 經中山峠至札幌與円山動物園，D5 搭 JR 返回新千歳。實線自駕、虛線 JR。真實點位與海岸線，路線為示意；下方五日日次卡可跳至行程。</desc>
       <defs>
         <marker id="{prefix}-drive" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--gm-drive)"/></marker>
         <marker id="{prefix}-rail" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--gm-rail)"/></marker>
       </defs>
       <g class="geo-geography" transform="translate({tx} {ty}) scale({scale})">
-        <g class="geo-land" fill="var(--gm-land)" stroke="var(--gm-coast)" stroke-width="1.2">
+        <g class="geo-land" fill="var(--gm-land)" stroke="var(--gm-coast)" stroke-width="1.8">
 {land_paths}
         </g>
         <g fill="none" stroke-width="3" stroke-linecap="round">''']
@@ -328,10 +328,10 @@ def render_map(layout):
         dist = math.hypot(ex-px, ey-py)
         radius = 12*scale
         sx, sy = px+(ex-px)*radius/dist, py+(ey-py)*radius/dist
-        out.append(f'      <path class="geo-leader" d="M{sx:.2f},{sy:.2f} L{ex},{ey}" fill="none" stroke="var(--gm-coast)" stroke-width="1"/>')
+        out.append(f'      <path class="geo-leader" d="M{sx:.2f},{sy:.2f} L{ex},{ey}" fill="none" stroke="var(--gm-muted)" stroke-width="1.5"/>')
         out.append(f'''      <g class="geo-station-label" data-label="{key}">
         <rect x="{x}" y="{y}" width="{width}" height="48" rx="9" fill="var(--gm-paper)" stroke="var(--gm-border)"/>
-        <text x="{x+10}" y="{y+20}" font-size="15" font-weight="750" fill="var(--gm-ink)">{title}</text>
+        <text x="{x+10}" y="{y+21}" font-size="18" font-weight="800" fill="var(--gm-ink)">{title}</text>
         <text x="{x+10}" y="{y+38}" font-size="12" fill="var(--gm-muted)">{sub}</text>
       </g>''')
     for name, (x, y) in BADGES[layout].items():
@@ -340,11 +340,73 @@ def render_map(layout):
     return "\n".join(out)
 
 
+def locator_geometry():
+    """全島使用原 GeoJSON 的本島外環和同一 XY；只對整組套等比例仿射。"""
+    outers = []
+    for feature in prefs:
+        geom = feature["geometry"]
+        polys = geom["coordinates"] if geom["type"] == "MultiPolygon" else [geom["coordinates"]]
+        outers.extend(poly[0] for poly in polys)
+    mainland = max(outers, key=ring_area)
+    # 全島定位圖保留半島、海灣形狀；不沿用詳細圖窗外的粗簡化。
+    middle = len(mainland)//2
+    outline = rdp(mainland[:middle+1], .012)[:-1] + rdp(mainland[middle:], .012)
+    pts = [XY(*p) for p in outline]
+    x0, x1 = min(p[0] for p in pts), max(p[0] for p in pts)
+    y0, y1 = min(p[1] for p in pts), max(p[1] for p in pts)
+    scale = min(292/(x1-x0), 266/(y1-y0))
+    tx = (340-(x1-x0)*scale)/2 - x0*scale
+    ty = 26 + (266-(y1-y0)*scale)/2 - y0*scale
+    return outline, pts, scale, tx, ty
+
+
+def render_locator():
+    outline, pts, scale, tx, ty = locator_geometry()
+    # 旅行框涵蓋兩種詳細 viewBox 的共同地理範圍與所有真實站點。
+    windows = [(-dx/s, (w-dx)/s, -dy/s, (h-dy)/s) for w,h,s,dx,dy in LAYOUTS.values()]
+    x0, x1 = min(v[0] for v in windows), max(v[1] for v in windows)
+    y0, y1 = min(v[2] for v in windows), max(v[3] for v in windows)
+    for x, y in pts:
+        assert 15 <= x*scale+tx <= 325 and 20 <= y*scale+ty <= 298, "全島不可裁切"
+    for key in NODES_R:
+        assert x0 <= C[key][0] <= x1 and y0 <= C[key][1] <= y1, "旅行框漏站點"
+    print(f"  locator 全島 {len(pts)} 點；同投影、完整輪廓與道央框自檢通過")
+    fx, fy = x0*scale+tx, y0*scale+ty
+    fw, fh = (x1-x0)*scale, (y1-y0)*scale
+    out = [f'''    <svg class="geo-locator" viewBox="0 0 340 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="hokkaido-locator-title hokkaido-locator-desc">
+      <title id="hokkaido-locator-title">北海道全島與道央旅行區</title>
+      <desc id="hokkaido-locator-desc">完整北海道本島海岸輪廓；西南側實線方框為本次四站五日的道央旅行區，與旁邊詳細圖使用同一地理投影。</desc>
+      <g class="geo-locator-geography" transform="translate({tx:.8f} {ty:.8f}) scale({scale:.10f})">
+        <path class="geo-island-outline" d="{path_of(outline)}" fill="var(--gm-land)" stroke="var(--gm-coast)" stroke-width="{1.6/scale:.6f}"/>
+        <rect data-travel-window="true" x="{x0}" y="{y0}" width="{x1-x0}" height="{y1-y0}" fill="var(--gm-drive)" fill-opacity=".13" stroke="var(--gm-drive)" stroke-width="{2.5/scale:.6f}"/>
+''']
+    for name, dd in ROUTES:
+        mode = "rail" if name == "d5" else "drive"
+        dash = f' stroke-dasharray="{3/scale} {2/scale}"' if mode == "rail" else ""
+        out.append(f'        <path data-route-segment="{name}" d="{dd}" fill="none" stroke="var(--gm-{mode})" stroke-width="{1.6/scale}"{dash}/>')
+    for key in ("chitose", "toya", "rusutsu", "sapporo"):
+        x,y = C[key]
+        out.append(f'        <circle data-station="{key}" cx="{x}" cy="{y}" r="{2.5/scale}" fill="var(--gm-drive)"/>')
+    out.append(f'''      </g>
+      <text x="194" y="156" text-anchor="middle" font-size="23" font-weight="800" fill="var(--gm-ink)">北海道</text>
+      <text x="36" y="135" font-size="13" fill="var(--gm-muted)">日本海</text>
+      <text x="240" y="252" font-size="13" fill="var(--gm-muted)">太平洋</text>
+      <path d="M{fx+fw:.2f},{fy+fh/2:.2f} L178,{fy+fh/2:.2f} L178,285" fill="none" stroke="var(--gm-drive)" stroke-width="1.5"/>
+      <rect x="140" y="283" width="177" height="43" rx="9" fill="var(--gm-paper)" stroke="var(--gm-drive)"/>
+      <text x="152" y="302" font-size="17" font-weight="800" fill="var(--gm-ink)">道央・本次旅行區</text>
+      <text x="152" y="318" font-size="12" fill="var(--gm-muted)">框內四站，見道央詳細圖</text>
+      <path d="M310,65 V31 M305,39 L310,30 L315,39" fill="none" stroke="var(--gm-muted)" stroke-width="1.5"/>
+      <text x="310" y="23" text-anchor="middle" font-size="12" fill="var(--gm-muted)">北 N</text>
+    </svg>''')
+    return "\n".join(out)
+
+
 def render():
     maps = "\n".join(render_map(layout) for layout in LAYOUTS)
+    locator = render_locator()
     cards = []
-    destinations = ["新千歳 → 洞爺湖", "洞爺湖 → ルスツ", "ルスツ滞在",
-                    "ルスツ → 札幌", "札幌 → 新千歳"]
+    destinations = ["新千歲 → 洞爺湖", "洞爺湖 → 留壽都", "留壽都停留",
+                    "留壽都 → 札幌", "札幌 → 新千歲"]
     notes = ["自駕", "自駕", "D3 當日不移動", "自駕・中山峠・円山動物園", "JR 快速エアポート"]
     for i, (destination, segment, note) in enumerate(zip(destinations, SEG, notes), 1):
         cards.append(f'''    <a class="geo-day-card" href="#day{i}" aria-label="D{i} {TITLES[f'D{i}']}，查看當日行程">
@@ -353,6 +415,13 @@ def render():
     return '''  <!-- hokkaido-map:generated:start -->
   <div class="geo-panel">
     <div class="geo-intro"><span>四站・五天冬旅</span><span>道央路線示意 · 非精確導航</span></div>
+    <div class="geo-atlas">
+    <figure class="geo-overview">
+      <figcaption><b>北海道全島定位</b><span>先看旅行區在島上的位置</span></figcaption>
+''' + locator + '''
+    </figure>
+    <figure class="geo-detail">
+      <figcaption><b>道央四站詳細圖</b><span>沿著 D1–D5 看完整路線</span></figcaption>
     <div class="geo-legend" aria-label="交通圖例">
       <span><i class="geo-swatch" aria-hidden="true"></i>自駕（租車）</span>
       <span><i class="geo-swatch geo-rail" aria-hidden="true"></i>JR 快速エアポート</span>
@@ -360,7 +429,9 @@ def render():
     <div class="mapbox">
 ''' + maps + '''
     </div>
-    <p class="geo-map-note">D3 留在ルスツ滑雪；地圖下方可依日次查看完整行程。</p>
+    </figure>
+    </div>
+    <p class="geo-map-note">留壽都度假村（Rusutsu）為 D2–D3 住宿地；D3 留在當地滑雪。全島框線對應道央詳細圖，細灰線連接地名與真實站點。</p>
   </div>
   <nav class="geo-days" aria-label="地圖五日行程跳轉">
 ''' + "\n".join(cards) + '''
@@ -375,6 +446,7 @@ def main():
     args = parser.parse_args()
     for layout in LAYOUTS:
         check_geometry(layout)
+    render_locator()  # 預設只自檢時也驗完整島形與旅行框。
     print(f"rings={len(rings)}; pts={sum(len(r) for _, r in rings)}; geometry 自檢通過")
     if args.output:
         # x 模式拒絕覆蓋：尤其不可覆蓋 repo 內既有的 untracked snippet。
