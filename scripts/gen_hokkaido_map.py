@@ -200,7 +200,7 @@ LABELS = {
         "chitose": (180, 280, 150, "新千歲機場", "D1 抵達・D5 返程"),
     },
     "desktop": {
-        "sapporo": (210, 30, 180, "札幌", "D4 泊 1 晚・円山動物園"),
+        "sapporo": (210, 30, 180, "札幌", "D4 泊 1 晚・小樽或札幌"),
         "rusutsu": (10, 75, 175, "留壽都度假村", "D2–D3 泊 2 晚・滑雪"),
         "toya": (10, 335, 175, "洞爺湖溫泉", "D1 泊 乃の風・1 晚"),
         "chitose": (210, 335, 180, "新千歲機場", "D1 抵達・D5 返程"),
@@ -218,11 +218,11 @@ TITLES = {
     "D1": "1/20 桃園 → 新千歲 → 洞爺湖",
     "D2": "1/21 洞爺湖 → 留壽都",
     "D3": "1/22 留壽都滑雪",
-    "D4": "1/23 留壽都 → 中山峠 → 札幌",
+    "D4": "1/23 留壽都 → 小樽或中山峠 → 札幌",
     "D5": "1/24 札幌 → JR → 新千歲 → 桃園",
 }
 SEG = ["道央道 110 km／1.5 h", "30 km／40 分", "留壽都滑雪",
-       "国道230 80 km／1.5 h", "JR 快速 37 分"]
+       "中山峠 80 km／1.5 h・小樽案 130 km", "JR 快速 37 分"]
 
 
 def _bpts(dd, n=60):
@@ -300,7 +300,7 @@ def render_map(layout):
     prefix = f"hokkaido-{layout}"
     out = [f'''    <svg class="geo-map geo-{layout}" viewBox="0 0 {w} {h}" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="{prefix}-title {prefix}-desc">
       <title id="{prefix}-title">道央五日行程：新千歲機場、洞爺湖溫泉、留壽都度假村、札幌</title>
-      <desc id="{prefix}-desc">D1 新千歳至洞爺湖，D2 至ルスツ，D3 留在ルスツ滑雪，D4 經中山峠至札幌與円山動物園，D5 搭 JR 返回新千歳。實線自駕、虛線 JR。真實點位與海岸線，路線為示意；下方五日日次卡可跳至行程。</desc>
+      <desc id="{prefix}-desc">D1 新千歳至洞爺湖，D2 至ルスツ，D3 留在ルスツ滑雪，D4 看天氣：走国道393經小樽再進札幌，或直接經中山峠至札幌（圖上畫的是中山峠線），D5 搭 JR 返回新千歳。實線自駕、虛線 JR。真實點位與海岸線，路線為示意；下方五日日次卡可跳至行程。</desc>
       <defs>
         <marker id="{prefix}-drive" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--gm-drive)"/></marker>
         <marker id="{prefix}-rail" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--gm-rail)"/></marker>
@@ -407,7 +407,7 @@ def render():
     cards = []
     destinations = ["新千歲 → 洞爺湖", "洞爺湖 → 留壽都", "留壽都停留",
                     "留壽都 → 札幌", "札幌 → 新千歲"]
-    notes = ["自駕", "自駕", "D3 當日不移動", "自駕・中山峠・円山動物園", "JR 快速エアポート"]
+    notes = ["自駕", "自駕", "D3 當日不移動", "自駕・看天氣走小樽或直達", "JR 快速エアポート"]
     for i, (destination, segment, note) in enumerate(zip(destinations, SEG, notes), 1):
         cards.append(f'''    <a class="geo-day-card" href="#day{i}" aria-label="D{i} {TITLES[f'D{i}']}，查看當日行程">
       <span class="geo-day-num">D{i}</span><span class="geo-day-copy"><strong>{destination}</strong><span>{segment}</span><small>{note}</small></span><span class="geo-day-arrow" aria-hidden="true">↗</span>
