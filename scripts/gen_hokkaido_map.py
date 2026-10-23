@@ -160,7 +160,7 @@ d2, m2, e2 = q(C["toya"], C["rusutsu"], 0.14, 1, r_start=13, r_end=14)
 # D4 ルスツ → 中山峠 → 札幌（国道230）；箭頭掛在後半段
 d4a, m4a, e4a = q(C["rusutsu"], C["nakayama"], 0.10, -1, r_start=13, r_end=8)
 d4b, m4b, e4b = q(C["nakayama"], C["sapporo"], 0.10, -1, r_start=8, r_end=14)
-# D5 札幌 → 新千歳（JR 快速エアポート，虛線）
+# D5 札幌 → 新千歳（自駕回機場還車）
 d5, m5, e5 = q(C["sapporo"], C["chitose"], 0.08, -1, r_start=13, r_end=14)
 
 # ---- 文字寬度估算（全形 1em、半形 0.56em） ----
@@ -219,10 +219,10 @@ TITLES = {
     "D2": "1/21 洞爺湖 → 留壽都",
     "D3": "1/22 留壽都滑雪",
     "D4": "1/23 留壽都 → 小樽或中山峠 → 札幌",
-    "D5": "1/24 札幌 → JR → 新千歲 → 桃園",
+    "D5": "1/24 札幌 → 自駕還車 → 新千歲 → 桃園",
 }
 SEG = ["道央道 110 km／1.5 h", "30 km／40 分", "留壽都滑雪",
-       "中山峠 80 km／1.5 h・小樽案 130 km", "JR 快速 37 分"]
+       "中山峠 80 km／1.5 h・小樽案 130 km", "道央道 50 km／1 h"]
 
 
 def _bpts(dd, n=60):
@@ -300,7 +300,7 @@ def render_map(layout):
     prefix = f"hokkaido-{layout}"
     out = [f'''    <svg class="geo-map geo-{layout}" viewBox="0 0 {w} {h}" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="{prefix}-title {prefix}-desc">
       <title id="{prefix}-title">道央五日行程：新千歲機場、洞爺湖溫泉、留壽都度假村、札幌</title>
-      <desc id="{prefix}-desc">D1 新千歳至洞爺湖，D2 至ルスツ，D3 留在ルスツ滑雪，D4 看天氣：走国道393經小樽再進札幌，或直接經中山峠至札幌（圖上畫的是中山峠線），D5 搭 JR 返回新千歳。實線自駕、虛線 JR。真實點位與海岸線，路線為示意；下方五日日次卡可跳至行程。</desc>
+      <desc id="{prefix}-desc">D1 新千歳至洞爺湖，D2 至ルスツ，D3 留在ルスツ滑雪，D4 看天氣：走国道393經小樽再進札幌，或直接經中山峠至札幌（圖上畫的是中山峠線），D5 自駕回新千歳還車。全程自駕。真實點位與海岸線，路線為示意；下方五日日次卡可跳至行程。</desc>
       <defs>
         <marker id="{prefix}-drive" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--gm-drive)"/></marker>
         <marker id="{prefix}-rail" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--gm-rail)"/></marker>
@@ -311,7 +311,7 @@ def render_map(layout):
         </g>
         <g fill="none" stroke-width="3" stroke-linecap="round">''']
     for name, dd in ROUTES:
-        mode = "rail" if name == "d5" else "drive"
+        mode = "drive"
         dash = ' stroke-dasharray="7 6"' if mode == "rail" else ""
         marker = "" if name == "d4a" else f' marker-end="url(#{prefix}-{mode})"'
         out.append(f'          <path data-route-segment="{name}" d="{dd}" stroke="var(--gm-{mode})"{dash}{marker}/>')
@@ -381,7 +381,7 @@ def render_locator():
         <rect data-travel-window="true" x="{x0}" y="{y0}" width="{x1-x0}" height="{y1-y0}" fill="var(--gm-drive)" fill-opacity=".13" stroke="var(--gm-drive)" stroke-width="{2.5/scale:.6f}"/>
 ''']
     for name, dd in ROUTES:
-        mode = "rail" if name == "d5" else "drive"
+        mode = "drive"
         dash = f' stroke-dasharray="{3/scale} {2/scale}"' if mode == "rail" else ""
         out.append(f'        <path data-route-segment="{name}" d="{dd}" fill="none" stroke="var(--gm-{mode})" stroke-width="{1.6/scale}"{dash}/>')
     for key in ("chitose", "toya", "rusutsu", "sapporo"):
@@ -407,7 +407,7 @@ def render():
     cards = []
     destinations = ["新千歲 → 洞爺湖", "洞爺湖 → 留壽都", "留壽都停留",
                     "留壽都 → 札幌", "札幌 → 新千歲"]
-    notes = ["自駕", "自駕", "D3 當日不移動", "自駕・看天氣走小樽或直達", "JR 快速エアポート"]
+    notes = ["自駕", "自駕", "D3 當日不移動", "自駕・看天氣走小樽或直達", "自駕・機場旁 Toyota 還車"]
     for i, (destination, segment, note) in enumerate(zip(destinations, SEG, notes), 1):
         cards.append(f'''    <a class="geo-day-card" href="#day{i}" aria-label="D{i} {TITLES[f'D{i}']}，查看當日行程">
       <span class="geo-day-num">D{i}</span><span class="geo-day-copy"><strong>{destination}</strong><span>{segment}</span><small>{note}</small></span><span class="geo-day-arrow" aria-hidden="true">↗</span>
@@ -424,7 +424,6 @@ def render():
       <figcaption><b>道央四站詳細圖</b><span>沿著 D1–D5 看完整路線</span></figcaption>
     <div class="geo-legend" aria-label="交通圖例">
       <span><i class="geo-swatch" aria-hidden="true"></i>自駕（租車）</span>
-      <span><i class="geo-swatch geo-rail" aria-hidden="true"></i>JR 快速エアポート</span>
     </div>
     <div class="mapbox">
 ''' + maps + '''
