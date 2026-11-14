@@ -10,12 +10,13 @@
 <body>
 <style>
 :root{
-  --bg:#F7FAFB; --card:#FFFFFF; --ink:#1B2A32; --ink-soft:#4E6470; --ink-faint:#7E939E;
+  --bg:#F7FAFB; --card:#FFFFFF; --ink:#1B2A32; --ink-soft:#445A66; --ink-faint:#5F7582;
   --line:#DCE7EB; --line-soft:#E9F1F4;
   --sea:#0E7490; --sea-deep:#0B5C73; --sea-wash:#E3F1F5;
   --sun:#D97706; --sun-wash:#FBF0DE;
   --leaf:#2E8B62; --leaf-wash:#E2F2EA;
   --alert:#C2410C; --alert-wash:#FBE9DF;
+  --sun-deep:#B45309; --sun-ink:#A0470A; --leaf-ink:#1F6E4C; --alert-ink:#A93A0B; --on-accent:#FFFFFF;
   --shadow:0 1px 2px rgba(27,42,50,.05),0 4px 14px rgba(27,42,50,.06);
 }
 @media (prefers-color-scheme: dark){
@@ -26,16 +27,18 @@
     --sun:#E8A33D; --sun-wash:#2C2214;
     --leaf:#5CBD93; --leaf-wash:#14291F;
     --alert:#E8794A; --alert-wash:#301A10;
+    --sun-deep:#F0B35A; --sun-ink:#F0B35A; --leaf-ink:#5CBD93; --alert-ink:#E8794A; --on-accent:#172227;
     --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 14px rgba(0,0,0,.25);
   }
 }
 :root[data-theme="light"]{
-  --bg:#F7FAFB; --card:#FFFFFF; --ink:#1B2A32; --ink-soft:#4E6470; --ink-faint:#7E939E;
+  --bg:#F7FAFB; --card:#FFFFFF; --ink:#1B2A32; --ink-soft:#445A66; --ink-faint:#5F7582;
   --line:#DCE7EB; --line-soft:#E9F1F4;
   --sea:#0E7490; --sea-deep:#0B5C73; --sea-wash:#E3F1F5;
   --sun:#D97706; --sun-wash:#FBF0DE;
   --leaf:#2E8B62; --leaf-wash:#E2F2EA;
   --alert:#C2410C; --alert-wash:#FBE9DF;
+  --sun-deep:#B45309; --sun-ink:#A0470A; --leaf-ink:#1F6E4C; --alert-ink:#A93A0B; --on-accent:#FFFFFF;
   --shadow:0 1px 2px rgba(27,42,50,.05),0 4px 14px rgba(27,42,50,.06);
 }
 :root[data-theme="dark"]{
@@ -45,6 +48,7 @@
   --sun:#E8A33D; --sun-wash:#2C2214;
   --leaf:#5CBD93; --leaf-wash:#14291F;
   --alert:#E8794A; --alert-wash:#301A10;
+  --sun-deep:#F0B35A; --sun-ink:#F0B35A; --leaf-ink:#5CBD93; --alert-ink:#E8794A; --on-accent:#172227;
   --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 14px rgba(0,0,0,.25);
 }
 *{box-sizing:border-box}
@@ -84,7 +88,7 @@ h1{font-size:clamp(26px,6vw,38px); font-weight:800; letter-spacing:.01em; margin
 /* ---------- section ---------- */
 section{margin-top:52px}
 .sec-head{display:flex; align-items:baseline; gap:12px; margin-bottom:18px}
-.sec-head .no{font-size:26px; font-weight:800; color:var(--sea-wash); -webkit-text-stroke:1.2px var(--sea); font-variant-numeric:tabular-nums; letter-spacing:.02em}
+.sec-head .no{font-size:26px; font-weight:800; color:var(--sea); font-variant-numeric:tabular-nums; letter-spacing:.02em}
 .sec-head h2{font-size:21px; font-weight:800; margin:0; letter-spacing:.02em}
 .sec-head .en{font-size:11px; letter-spacing:.16em; color:var(--ink-faint); text-transform:uppercase; font-weight:700}
 
@@ -133,7 +137,7 @@ section{margin-top:52px}
   --gm-badge:#86D6E0; --gm-badge-ink:#102A32;
 }
 #geomap .sec-head{flex-wrap:wrap;gap:8px 12px}
-#geomap .sec-head .no{color:var(--gm-drive);-webkit-text-stroke:0}
+#geomap .sec-head .no{color:var(--sea);-webkit-text-stroke:0}
 #geomap .sec-head .en{color:var(--gm-muted)}
 #geomap .geo-panel{border:1px solid var(--gm-border);border-radius:16px;background:var(--gm-ocean);overflow:hidden;box-shadow:var(--shadow)}
 #geomap .geo-intro{display:flex;justify-content:space-between;flex-wrap:wrap;gap:2px 12px;padding:14px 16px 8px;color:var(--gm-muted);font-size:12px}
@@ -195,10 +199,11 @@ section{margin-top:52px}
 .tl li::before{content:""; position:absolute; left:0; top:13px; width:12px; height:12px; border-radius:50%; background:var(--card); border:2.5px solid var(--sea)}
 .tl li:last-child{border-bottom:none}
 .tl .tt{font-variant-numeric:tabular-nums; font-weight:750; font-size:13.5px; color:var(--sea); flex:none; width:88px; letter-spacing:.02em}
-.tl .tx{font-size:14.5px}
-.tl .tx small{display:block; color:var(--ink-faint); font-size:12.5px}
-.warnline{display:flex; gap:8px; background:var(--alert-wash); color:var(--alert); border-radius:9px; padding:9px 12px; font-size:13.5px; margin-top:12px; align-items:flex-start}
+.tl .tx{flex:1 1 auto; font-size:14.5px; font-weight:500; min-width:0}
+.tl .tx small{display:block; color:var(--ink-soft); font-size:13px; line-height:1.6; font-weight:400}
+.warnline{display:flex; gap:8px; background:var(--alert-wash); color:var(--alert-ink); border-radius:9px; padding:9px 12px; font-size:13.5px; margin-top:12px; align-items:flex-start}
 .warnline b{font-weight:750; flex:none; white-space:nowrap}
+.warnline a{color:inherit; text-decoration:underline; text-underline-offset:2px}
 .hintline{display:flex; gap:8px; background:var(--sun-wash); border-radius:9px; padding:9px 12px; font-size:13.5px; margin-top:12px; color:var(--ink-soft); align-items:flex-start}
 .hintline b{color:var(--ink)}
 .hintline > span:first-child{flex:none}
@@ -213,15 +218,15 @@ section{margin-top:52px}
 .s-info{display:grid; grid-template-columns:1fr 1fr; gap:8px 16px; margin-top:11px; padding-top:11px; border-top:1px solid var(--line)}
 @media (max-width:560px){.s-info{grid-template-columns:1fr}}
 .s-info .kv2{font-size:13px; color:var(--ink-soft); line-height:1.5}
-.s-info .kv2 .k{display:block; font-size:10.5px; letter-spacing:.14em; color:var(--ink-faint); font-weight:750; text-transform:uppercase; margin-bottom:1px}
+.s-info .kv2 .k{display:block; font-size:11.5px; letter-spacing:.14em; color:var(--ink-soft); font-weight:750; text-transform:uppercase; margin-bottom:1px}
 .s-info .kv2 b{color:var(--ink); font-weight:650; font-variant-numeric:tabular-nums}
 .s-info .kv2.wide{grid-column:1 / -1}
-.s-note{font-size:12.5px; color:var(--ink-faint); margin-top:10px; padding-top:9px; border-top:1px dashed var(--line); line-height:1.6}
-.s-note b{color:var(--ink-soft)}
+.s-note{font-size:13px; color:var(--ink-soft); margin-top:10px; padding-top:9px; border-top:1px dashed var(--line); line-height:1.6}
+.s-note b{color:var(--ink)}
 .badge{display:inline-block; border-radius:999px; padding:2px 11px; font-size:12px; font-weight:750; letter-spacing:.04em; white-space:nowrap}
-.badge.paid{background:var(--leaf-wash); color:var(--leaf)}
-.badge.onsite{background:var(--sun-wash); color:var(--sun)}
-.badge.nonref{background:var(--alert-wash); color:var(--alert)}
+.badge.paid{background:var(--leaf-wash); color:var(--leaf-ink)}
+.badge.onsite{background:var(--sun-wash); color:var(--sun-ink)}
+.badge.nonref{background:var(--alert-wash); color:var(--alert-ink)}
 
 /* drive + map link */
 .drive{display:flex; flex-wrap:wrap; gap:10px; margin-top:14px; align-items:center; justify-content:space-between}
@@ -240,7 +245,7 @@ section{margin-top:52px}
 /* ---------- bookings table ---------- */
 .tablebox{background:var(--card); border:1px solid var(--line); border-radius:12px; box-shadow:var(--shadow); overflow-x:auto}
 table{border-collapse:collapse; width:100%; min-width:660px; font-size:13.5px}
-th{font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-faint); text-align:left; padding:12px 14px 8px; border-bottom:2px solid var(--line); white-space:nowrap}
+th{font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); text-align:left; padding:12px 14px 8px; border-bottom:2px solid var(--line); white-space:nowrap}
 td{padding:11px 14px; border-bottom:1px solid var(--line-soft); vertical-align:top}
 tr:last-child td{border-bottom:none}
 td.num{font-variant-numeric:tabular-nums; white-space:nowrap}
@@ -253,8 +258,13 @@ td .sub{display:block; font-size:12px; color:var(--ink-faint)}
 .costband .cb-total span{font-size:11.5px; letter-spacing:.14em; font-weight:750; color:var(--ink-faint); text-transform:uppercase}
 .costband .cb-total b{font-size:22px; letter-spacing:-.01em}
 .costband .cb-total span.cb-sub{font-size:12.5px; letter-spacing:0; font-weight:500; color:var(--ink-faint); text-transform:none}
-.costband .cb-items{display:flex; flex-wrap:wrap; gap:5px 20px; font-size:13.5px; color:var(--ink-soft); flex-basis:100%; border-top:1px solid var(--line-soft); padding-top:9px}
-.costband .cb-i b{color:var(--ink)}
+.costband .cb-items{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:10px 28px; flex-basis:100%; border-top:1px solid var(--line-soft); padding-top:10px}
+.costband .cb-gh{font-size:11.5px; letter-spacing:.16em; font-weight:750; color:var(--ink-soft); padding-bottom:3px}
+.costband .cb-i{display:flex; justify-content:space-between; align-items:baseline; gap:12px; padding:6px 0}
+.costband .cb-i + .cb-i{border-top:1px solid var(--line-soft)}
+.costband .cb-k{font-size:13.5px; color:var(--ink-soft); min-width:0}
+.costband .cb-i b{font-size:14px; font-weight:650; color:var(--ink); font-variant-numeric:tabular-nums; text-align:right; white-space:nowrap}
+@media (max-width:560px){.costband .cb-items{grid-template-columns:minmax(0,1fr); gap:12px}}
 .costband .cb-note{flex-basis:100%; font-size:11.5px; color:var(--ink-faint)}
 /* 地震改線：原行程反灰留存 */
 .day.cancelled{opacity:.55; filter:grayscale(.75)}
@@ -262,7 +272,7 @@ td .sub{display:block; font-size:12px; color:var(--ink-faint)}
 .day.cancelled .dnum{color:var(--ink-faint)}
 .day.cancelled .dtheme::after{color:var(--alert)}
 .day.cancelled .dtheme::after{content:"（7/28 地震取消）"; font-weight:750}
-.badge.cxl{background:var(--alert-wash); color:var(--alert); font-weight:700}
+.badge.cxl{background:var(--alert-wash); color:var(--alert-ink); font-weight:700}
 .quake{background:var(--card); border:1px solid var(--alert); border-left:6px solid var(--alert); border-radius:12px; padding:16px 18px; box-shadow:var(--shadow)}
 .quake .q-date{font-size:12px; letter-spacing:.14em; font-weight:750; color:var(--alert); text-transform:uppercase}
 .quake .q-title{font-weight:800; font-size:18px; margin:4px 0 8px}
@@ -306,8 +316,140 @@ td .sub{display:block; font-size:12px; color:var(--ink-faint)}
 .costband .cb-total{flex-wrap:wrap}
 .costband .cb-total>span:first-child{white-space:nowrap}
 @media (max-width:560px){.costband .cb-total .cb-sub{flex-basis:100%}}
-.plan-h{font-size:11.5px; letter-spacing:.14em; font-weight:800; color:var(--sea-deep); text-transform:uppercase; margin:16px 0 4px; padding-left:2px}
-.plan-h small{font-size:12px; letter-spacing:0; font-weight:600; color:var(--ink-faint); text-transform:none; margin-left:8px}
+
+/* ---------- 2026-11 設計改版：共用小工具 ---------- */
+.vh{position:absolute!important; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0 0 0 0); clip-path:inset(50%); white-space:nowrap; border:0}
+.em{margin-right:.4em}
+.fact .em{margin-right:calc(.4em - 6px)}
+
+/* S10 下一件要辦 */
+.nextup{display:grid; grid-template-columns:auto minmax(0,1fr) auto; grid-template-areas:"lab title more"; align-items:center; gap:4px 14px; min-height:44px; margin-top:14px; padding:9px 14px 9px 13px; background:var(--sun-wash); border:1px solid var(--line); border-left:3px solid var(--sun); border-radius:12px; color:var(--ink); text-decoration:none}
+.nextup[hidden]{display:none}
+.nextup:hover{text-decoration:none; border-color:var(--sun)}
+.nextup .nu-label{grid-area:lab; font-size:11.5px; font-weight:800; letter-spacing:.14em; color:var(--sun-ink); white-space:nowrap}
+.nextup .nu-title{grid-area:title; font-size:15px; font-weight:700; color:var(--ink); line-height:1.45; min-width:0}
+.nextup .nu-more{grid-area:more; font-size:12.5px; color:var(--ink-soft); white-space:nowrap}
+.nextup.all-done{grid-template-columns:minmax(0,1fr); grid-template-areas:"title"; background:var(--leaf-wash); border-left-color:var(--leaf)}
+.nextup.all-done:hover{border-color:var(--leaf)}
+.nextup.all-done .nu-title{color:var(--leaf-ink)}
+.badge.now{background:var(--sun-wash); color:var(--sun-ink); font-size:11.5px; padding:1px 9px; margin-left:8px; vertical-align:1px; text-decoration:none}
+.nextup .badge.now{background:var(--card)}
+@media (max-width:560px){ .nextup{grid-template-columns:minmax(0,1fr) auto; grid-template-areas:"lab more" "title title"} }
+
+/* S3 手機時間軸、S4 警示框、S9 區段標題 */
+@media (max-width:560px){
+  .tl li{gap:10px; padding-left:20px}
+  .tl .tt{width:46px}
+  .warnline{display:block}
+  .warnline b{display:block; white-space:normal; margin-bottom:2px}
+  .sec-head .en{display:none}
+  .sec-head h2{white-space:nowrap}
+}
+
+/* S5 Day 4 兩案 */
+.plans{display:grid; grid-template-columns:minmax(0,1fr); gap:20px; margin-top:16px}
+section.plan{margin-top:0; min-width:0; border-left:3px solid var(--sea); padding-left:12px}
+section.plan-b{border-left-color:var(--sun-deep)}
+.plan-h{display:flex; flex-wrap:wrap; align-items:baseline; gap:2px 10px; margin:0 0 4px}
+.plan-tag{align-self:center; display:inline-block; background:var(--sea); color:var(--on-accent); font-size:12px; font-weight:800; line-height:1.5; letter-spacing:.04em; padding:1px 10px; border-radius:999px; white-space:nowrap}
+.plan-b .plan-tag{background:var(--sun-deep)}
+.plan-name{font-size:15px; font-weight:700; color:var(--ink)}
+.plan-h small{font-size:12.5px; color:var(--ink-soft)}
+.plan-b .tl li::before{border-color:var(--sun-deep)}
+.plan-b .tl .tt{color:var(--sun-deep)}
+@media (min-width:740px){
+  .plans{grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:22px}
+  .plan .tl li{gap:10px}
+  .plan .tl .tt{width:46px}
+}
+.maplink[data-route="d4b"]{background:var(--sun-deep)}
+.maplink[data-route="d4b"]:hover{background:#92400E}
+:root[data-theme="dark"] .maplink[data-route="d4b"]{background:var(--sun-wash); color:var(--sun-deep)}
+:root[data-theme="dark"] .maplink[data-route="d4b"]:hover{background:var(--line-soft)}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .maplink[data-route="d4b"]{background:var(--sun-wash); color:var(--sun-deep)}
+  :root:not([data-theme="light"]) .maplink[data-route="d4b"]:hover{background:var(--line-soft)}
+}
+
+/* S6 地圖區：標題與說明回到 760px 欄 */
+@media (min-width:1000px){
+  #geomap > .sec-head, #geomap > .map-cap{max-width:760px; margin-left:calc((min(1100px,calc(100vw - 64px)) - 760px)/2)}
+}
+
+/* S7 桌機表格 */
+.t-book td:nth-child(3){-webkit-user-select:all; user-select:all}
+@media (min-width:561px){
+  .tablebox table{table-layout:fixed}
+  .t-tix th:nth-child(1){width:24%} .t-tix th:nth-child(2){width:14%} .t-tix th:nth-child(3){width:15%} .t-tix th:nth-child(4){width:15%} .t-tix th:nth-child(5){width:32%}
+  .t-book th:nth-child(1){width:30%} .t-book th:nth-child(2){width:19%} .t-book th:nth-child(3){width:18%} .t-book th:nth-child(4){width:21%} .t-book th:nth-child(5){width:12%}
+  .t-dist th:nth-child(1){width:34%} .t-dist th:nth-child(2){width:12%} .t-dist th:nth-child(3){width:16%} .t-dist th:nth-child(4){width:38%}
+  .t-tix th:nth-child(n+2):nth-child(-n+4), .t-tix td:nth-child(n+2):nth-child(-n+4),
+  .t-book th:nth-child(4), .t-book td:nth-child(4){text-align:right; font-variant-numeric:tabular-nums; padding-right:22px}
+  .t-book th:nth-child(4), .t-book td:nth-child(4){padding-left:6px; padding-right:18px}
+  .t-book td:nth-child(4){white-space:nowrap}
+  .t-book td:nth-child(5), .t-book th:nth-child(5){padding-left:6px}
+  .t-tix td.num{white-space:normal}
+  .t-tix .th-age{display:block}
+  .tablebox td:first-child{text-wrap:balance}
+  .tablebox td:first-child .sub{text-wrap:wrap}
+  .t-book td .nw{white-space:nowrap}
+  td.num small{display:block; font-size:11.5px; line-height:1.45; color:var(--ink-faint); white-space:normal}
+}
+
+/* S2 手機表格改卡片 */
+@media (max-width:560px){
+  .tablebox{overflow:visible}
+  .tablebox table, .tablebox tbody{display:block; min-width:0}
+  .tablebox thead{position:absolute; width:1px; height:1px; margin:-1px; overflow:hidden; clip:rect(0 0 0 0); clip-path:inset(50%); white-space:nowrap}
+  .tablebox tr{display:block; position:relative; padding:13px 16px 14px; border-bottom:1px solid var(--line-soft)}
+  .tablebox tr:last-child{border-bottom:none}
+  .tablebox td{display:block; padding:0; border:0; white-space:normal}
+  .tablebox td:first-child{font-size:15px; font-weight:600; line-height:1.45}
+  .tablebox td[data-label]::before{color:var(--ink-faint); font-size:12px; font-weight:400; letter-spacing:.02em}
+  .tablebox td small{display:block; font-size:11.5px; line-height:1.45; color:var(--ink-faint); font-weight:400}
+
+  .t-book td:first-child{padding-right:74px}
+  .t-book td:first-child .sub{font-size:13px; color:var(--ink-soft); font-weight:400; line-height:1.55; margin-top:3px}
+  .t-book td:nth-child(2), .t-book td:nth-child(3), .t-book td:nth-child(4){display:grid; grid-template-columns:4.5em minmax(0,1fr); align-items:baseline; gap:8px; font-size:14px; margin-top:5px; overflow-wrap:anywhere}
+  .t-book td:nth-child(2){margin-top:10px}
+  .t-book td:nth-child(2)::before, .t-book td:nth-child(3)::before, .t-book td:nth-child(4)::before{content:attr(data-label)}
+  .t-book td:nth-child(4){font-weight:650; font-variant-numeric:tabular-nums}
+  .t-book td:nth-child(5){position:absolute; top:13px; right:16px}
+  .t-book td .nw{display:contents}
+
+  .t-tix tr{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); row-gap:8px}
+  .t-tix td:first-child, .t-tix td:last-child{grid-column:1 / -1}
+  .t-tix td:nth-child(n+2):nth-child(-n+4){font-size:14px; font-variant-numeric:tabular-nums; padding:7px 8px 0; border-top:1px solid var(--line-soft); min-width:0}
+  .t-tix td:nth-child(2):not(:first-child){padding-left:0}
+  .t-tix td:nth-child(3), .t-tix td:nth-child(4){border-left:1px solid var(--line-soft)}
+  .t-tix td:nth-child(n+2):nth-child(-n+4)::before{content:attr(data-label); display:block; line-height:1.5}
+  .t-tix td:last-child{font-size:13px; color:var(--ink-soft)}
+
+  .t-dist tr{display:flex; flex-wrap:wrap; align-items:baseline; column-gap:12px; row-gap:3px}
+  .t-dist td:first-child{flex-basis:100%}
+  .t-dist td:nth-child(2), .t-dist td:nth-child(3){font-size:14px; font-variant-numeric:tabular-nums}
+  .t-dist td:nth-child(3){padding-left:12px; border-left:1px solid var(--line)}
+  .t-dist td:last-child{flex-basis:100%; font-size:13px; color:var(--ink-soft)}
+}
+
+/* S11 導覽列 */
+.daynav::before, .daynav::after{content:""; position:absolute; top:1px; bottom:1px; width:28px; pointer-events:none; opacity:0; transition:opacity .15s; z-index:1}
+.daynav::before{left:1px; border-radius:999px 0 0 999px; background:linear-gradient(to right,var(--card),rgba(255,255,255,0))}
+.daynav::after{right:1px; border-radius:0 999px 999px 0; background:linear-gradient(to left,var(--card),rgba(255,255,255,0))}
+.daynav.fade-l::before, .daynav.fade-r::after{opacity:1}
+@media (max-width:560px){
+  html{scroll-padding-top:78px}
+  .daynav a{min-height:40px; display:flex; align-items:center; justify-content:center}
+}
+
+/* S12 住宿卡 */
+.s-info{grid-auto-flow:row dense}
+.s-more{margin-top:10px; border-top:1px dashed var(--line)}
+.s-more summary{cursor:pointer; list-style:none; display:flex; align-items:center; gap:7px; min-height:40px; font-size:13px; font-weight:650; color:var(--sea-deep)}
+.s-more summary::-webkit-details-marker{display:none}
+.s-more summary::before{content:"▸"; font-size:12px; transition:transform .15s}
+.s-more[open] summary::before{transform:rotate(90deg)}
+.s-more .s-note{margin-top:0; padding:0 0 2px; border-top:0}
 </style>
 <div class="wrap">
 
@@ -316,21 +458,28 @@ td .sub{display:block; font-size:12px; color:var(--ink-faint)}
   <h1>北海道冬旅行前手帖</h1>
   <p class="subtitle">2027/1/20（三）– 1/24（日）・5 天 4 夜・一家四口（2 大 2 小）</p>
   <div class="facts">
-    <span class="fact">🚗 自駕 3 天 <b>約 240 km</b>（小樽案約 275 km）</span>
-    <span class="fact">❄️ 玩雪滑雪 <b>Rusutsu 2 晚</b></span>
-    <span class="fact">♨️ 泡湯 <b>洞爺湖＋雪場＋札幌露天大浴場</b></span>
-    <span class="fact">🦀 雪場蟹吃到飽 <b>2 餐</b></span>
+    <span class="fact"><span class="em" aria-hidden="true">🚗</span>自駕 3 天 <b>約 240 km</b>（小樽案約 275 km）</span>
+    <span class="fact"><span class="em" aria-hidden="true">❄️</span>玩雪滑雪 <b>Rusutsu 2 晚</b></span>
+    <span class="fact"><span class="em" aria-hidden="true">♨️</span>泡湯 <b>洞爺湖＋雪場＋札幌露天大浴場</b></span>
+    <span class="fact"><span class="em" aria-hidden="true">🦀</span>雪場蟹吃到飽 <b>2 餐</b></span>
   </div>
+  <a class="nextup" id="nextup" href="#todo" hidden></a>
   <div class="costband">
     <div class="cb-total"><span>旅程花費・行前估算</span><b>約 NT$246,000</b><span class="cb-sub">＝已確定 NT$229,799＋預估待付約 ¥69,000–93,000（NT$14,000–19,000）；不含餐飲、購物與現場付的宿泊稅</span></div>
     <div class="cb-items">
-      <span class="cb-i">✈️ 機票 <b>NT$116,904</b></span>
-      <span class="cb-i">🏨 住宿 4 晚 <b>NT$34,020＋¥319,860</b></span>
-      <span class="cb-i">🚗 租車 <b>¥70,867</b></span>
-      <span class="cb-i">⛷️ 滑雪課 <b>¥26,000–37,000</b></span>
-      <span class="cb-i">🦀 雪場蟹 <b>¥20,000–33,000</b></span>
-      <span class="cb-i">🎟️ 門票 <b>約 ¥12,000</b></span>
-      <span class="cb-i">⛽ 油錢・過路費・停車 <b>約 ¥11,000</b></span>
+      <div class="cb-grp">
+        <div class="cb-gh">已確定</div>
+        <div class="cb-i"><span class="cb-k"><span class="em" aria-hidden="true">✈️</span>機票</span> <b>NT$116,904</b></div>
+        <div class="cb-i"><span class="cb-k"><span class="em" aria-hidden="true">🏨</span>住宿 4 晚</span> <b>NT$34,020＋¥319,860</b></div>
+        <div class="cb-i"><span class="cb-k"><span class="em" aria-hidden="true">🚗</span>租車</span> <b>¥70,867</b></div>
+      </div>
+      <div class="cb-grp">
+        <div class="cb-gh">預估待付</div>
+        <div class="cb-i"><span class="cb-k"><span class="em" aria-hidden="true">⛷️</span>滑雪課</span> <b>¥26,000–37,000</b></div>
+        <div class="cb-i"><span class="cb-k"><span class="em" aria-hidden="true">🦀</span>雪場蟹</span> <b>¥20,000–33,000</b></div>
+        <div class="cb-i"><span class="cb-k"><span class="em" aria-hidden="true">🎟️</span>門票</span> <b>約 ¥12,000</b></div>
+        <div class="cb-i"><span class="cb-k"><span class="em" aria-hidden="true">⛽</span>油錢・過路費・停車</span> <b>約 ¥11,000</b></div>
+      </div>
     </div>
     <div class="cb-note">已確定＝機票、三家住宿與租車的實付金額（乃の風以台幣計價，留壽都 ¥264,960、クロスホテル ¥54,900、Toyota 租車 ¥70,867）。日圓換算用 2026/10/12 匯率 1 JPY ≈ NT$0.202。待付為滑雪課、雪場蟹、門票（小樽水族館或白色戀人公園、熊牧場、汽船）與油錢、過路費、札幌停車的估算。</div>
   </div>
@@ -567,11 +716,11 @@ td .sub{display:block; font-size:12px; color:var(--ink-faint)}
           <div class="kv2"><span class="k">地址</span><a href="https://www.google.com/maps/search/?api=1&amp;query=%E4%B9%83%E3%81%AE%E9%A2%A8%E3%83%AA%E3%82%BE%E3%83%BC%E3%83%88" target="_blank" rel="noopener">北海道虻田郡洞爺湖町洞爺湖温泉 29-1</a></div>
           <div class="kv2"><span class="k">電話</span><a href="tel:+81570026571">0570-026571</a>（10:00–17:00）</div>
           <div class="kv2"><span class="k">Check-in / out</span><b>15:00</b>／<b>11:00</b></div>
-          <div class="kv2"><span class="k">餐食</span>晚 <b>17:00–21:00</b>・早 <b>7:00–10:00</b>，皆 Le Vent 自助</div>
-          <div class="kv2 wide"><span class="k">停車</span><b>免費</b></div>
+          <div class="kv2 wide"><span class="k">餐食</span>晚 <b>17:00–21:00</b>・早 <b>7:00–10:00</b>，皆 Le Vent 自助</div>
+          <div class="kv2"><span class="k">停車</span><b>免費</b></div>
           <div class="kv2 wide"><span class="k">溫泉</span>屋頂天空露天 TENQOO・9F 展望大浴場 <b>15:00–翌 11:00</b>｜2F 昭和乃湯</div>
         </div>
-        <div class="s-note"><b>取消：</b>1/13 前免費；之後 6–4 日前 20%、3–2 日前 50%、前日 80%、當日 100%。<b>現場另付：</b>入湯稅 13 歲以上每人每晚 ¥100、宿泊稅每人每晚 ¥1,500 級距（12 歲以下免町稅）。</div>
+        <details class="s-more"><summary>取消規定與現場另付</summary><div class="s-note"><b>取消：</b>1/13 前免費；之後 6–4 日前 20%、3–2 日前 50%、前日 80%、當日 100%。<b>現場另付：</b>入湯稅 13 歲以上每人每晚 ¥100、宿泊稅每人每晚 ¥1,500 級距（12 歲以下免町稅）。</div></details>
       </div>
 
       <div class="drive">
@@ -613,11 +762,11 @@ td .sub{display:block; font-size:12px; color:var(--ink-faint)}
           <div class="kv2"><span class="k">地址</span><a href="https://www.google.com/maps/search/?api=1&amp;query=%E3%83%AB%E3%82%B9%E3%83%84%E3%83%AA%E3%82%BE%E3%83%BC%E3%83%88%E3%83%9B%E3%83%86%E3%83%AB%EF%BC%86%E3%82%B3%E3%83%B3%E3%83%99%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%B3" target="_blank" rel="noopener">北海道虻田郡留寿都村字泉川 13 番地</a></div>
           <div class="kv2"><span class="k">電話</span><a href="tel:+81136463111">0136-46-3111</a></div>
           <div class="kv2"><span class="k">Check-in / out</span><b>15:00</b>／<b>10:00</b></div>
-          <div class="kv2"><span class="k">餐食</span>晚 <b>17:30–20:30</b>・早 <b>6:30–9:30</b>，Oktoberfest 或 Crescent Hall</div>
-          <div class="kv2 wide"><span class="k">停車</span><b>免費</b>，入住前與退房後都免費</div>
+          <div class="kv2 wide"><span class="k">餐食</span>晚 <b>17:30–20:30</b>・早 <b>6:30–9:30</b>，Oktoberfest 或 Crescent Hall</div>
+          <div class="kv2"><span class="k">停車</span><b>免費</b>，入住前與退房後都免費</div>
           <div class="kv2 wide"><span class="k">泳池・溫泉</span>造浪池（サウス 1F）<b>14:00–21:00</b>｜ことぶきの湯（ノース 6F）<b>6:00–9:00／14:00–25:00</b>，7 歲以上不可進異性浴場</div>
         </div>
-        <div class="s-note"><b>已登錄的備註：</b>兩名兒童中一名 5 歲（未就學）以小學生費率預約；希望サウスウイング泳池側房間（飯店不保證）。<b>取消：</b>11/22 前免費；之後 60–8 日前 10%、7–4 日前 20%、3–2 日前 50%、前日 80%、當日 100%。<b>現場另付：</b>入湯稅大人每晚 ¥150、宿泊稅每人每晚 ¥200–1,000。管理與收據：JTB Book&amp;Pay，取引番號 0016677113。</div>
+        <details class="s-more"><summary>取消規定與現場另付</summary><div class="s-note"><b>已登錄的備註：</b>兩名兒童中一名 5 歲（未就學）以小學生費率預約；希望サウスウイング泳池側房間（飯店不保證）。<b>取消：</b>11/22 前免費；之後 60–8 日前 10%、7–4 日前 20%、3–2 日前 50%、前日 80%、當日 100%。<b>現場另付：</b>入湯稅大人每晚 ¥150、宿泊稅每人每晚 ¥200–1,000。管理與收據：JTB Book&amp;Pay，取引番號 0016677113。</div></details>
       </div>
 
       <div class="drive">
@@ -648,29 +797,34 @@ td .sub{display:block; font-size:12px; color:var(--ink-faint)}
     <div class="day-inner">
       <div class="warnline"><b>7:30 先決定走哪案</b><span>查三件事：① <a href="https://info-road.hdb.hkd.mlit.go.jp/" target="_blank" rel="noopener">北海道道路情報</a>（国道 393 毛無峠是預防性通行規制路段，大雪會提前封；台灣 IP 可能被擋，備援看 <a href="https://www.northern-road.jp/" target="_blank" rel="noopener">北の道ナビ</a>）② <a href="https://tenki.jp/forecast/1/2/1600/1203/" target="_blank" rel="noopener">tenki.jp 小樽</a> 當天降雪、風速與警報 ③ <a href="https://www.drivetraffic.jp/" target="_blank" rel="noopener">ドラとら</a> 札樽道與道央道。毛無峠有規制、小樽有大雪或暴風雪警報、或開車的人覺得不安，就走 B 案直接進札幌。兩案都 10:00 退房。</span></div>
 
-      <div class="plan-h">A 案・天氣好走小樽<small>約 130 km・国道 393 毛無峠＋札樽道</small></div>
-      <ul class="tl">
-        <li><span class="tt">07:30</span><span class="tx">早餐後收行李</span></li>
-        <li><span class="tt">10:00</span><span class="tx">退房出發<small>國道 230、276 到倶知安，轉國道 393 經赤井川翻毛無峠下小樽，約 85 km、冬天抓 1 小時 50 分。</small></span></li>
-        <li><span class="tt">11:50</span><span class="tx">小樽午餐<small>小樽駅旁三角市場海鮮丼，或壽司屋通的壽司店；停車用市場或堺町通周邊的投幣停車場。</small></span></li>
-        <li><span class="tt">13:15</span><span class="tx">おたる水族館<small>祝津，從運河開車約 15 分。冬季 2026/12/12–2027/2/23 開館 10:00–16:00、最後入館 15:30；企鵝雪中散步上一季每天 11:30／12:40／13:30／14:40 四場，2026-27 場次 11 月公布。大人 ¥1,800、小學生 ¥700、3–5 歲 ¥350（通常期票價）。<a href="https://otaru-aq.jp/" target="_blank" rel="noopener">官網</a></small></span></li>
-        <li><span class="tt">15:00</span><span class="tx">堺町通與運河<small>LeTAO、六花亭、北菓楼試吃，音樂盒堂整點蒸氣鐘；16:30 前後天黑，運河瓦斯燈點亮最好拍。</small></span></li>
-        <li><span class="tt">16:45</span><span class="tx">出發回札幌<small>札樽道 小樽 IC → 札幌北 IC，到 クロスホテル札幌 約 55 分。</small></span></li>
-        <li><span class="tt">17:40</span><span class="tx">入住 クロスホテル札幌，車停館內<small>北 2 条西 2 丁目 23。館內立體停車場住客一次 ¥1,500，先到先停；車停到隔天開去機場還，這晚不用還車。</small></span></li>
-        <li><span class="tt">19:00</span><span class="tx">薄野雪場蟹吃到飽<small>從大通駅搭東豐線 1 站到豊水すすきの（難陀在南 5 条西 2 丁目サイバーシティビル B2F，只收現金，最後入店 19:30）；時間來不及就改えびかに合戦（南 4 条西 5 丁目，營業到 23:00）。</small></span></li>
-      </ul>
-
-      <div class="plan-h">B 案・下大雪直接進札幌<small>約 95 km・中山峠</small></div>
-      <ul class="tl">
-        <li><span class="tt">07:30</span><span class="tx">早餐後收行李</span></li>
-        <li><span class="tt">10:00</span><span class="tx">退房，行李寄住客專用投幣櫃<small>向櫃台拿代幣免費。旋轉木馬與遊戲區再玩一下。</small></span></li>
-        <li><span class="tt">11:00</span><span class="tx">出發往札幌<small>國道 230 中山峠，約 80 km、90 分。</small></span></li>
-        <li><span class="tt">12:30</span><span class="tx">札幌午餐</span></li>
-        <li><span class="tt">13:30</span><span class="tx">白い恋人パーク（宮の沢）<small>10:00–17:30、最後入館 16:30。有料區大人 ¥1,200、4 歲到國中生 ¥600、3 歲以下免費；巧克力筆畫心形白色戀人、餅乾裝飾等體驗要先在官網 webket 預約；小人國 Gulliver Town 小學生以下須家長陪同。雪太大想全室內就改新札幌的青少年科学館（9:30–16:30，隔壁有 Sunpiazza 水族館）。<a href="https://www.shiroikoibitopark.jp/" target="_blank" rel="noopener">官網</a></small></span></li>
-        <li><span class="tt">16:00</span><span class="tx">入住 クロスホテル札幌，車停館內<small>北 2 条西 2 丁目 23。館內立體停車場住客一次 ¥1,500，先到先停；車停到隔天，晚上靠地鐵。</small></span></li>
-        <li><span class="tt">18:00</span><span class="tx">薄野雪場蟹吃到飽<small>從大通駅搭東豐線 1 站到豊水すすきの（難陀），或南北線 1 站到すすきの。難陀 90 分 ¥9,980、5–11 歲 ¥6,500，最後入店 19:30；えびかに合戦 ¥10,000、小學生半價，營業到 23:00；HARBOR SAPPORO 60 分 ¥6,600 起最省。三家都要 11 月下旬才開放 1/23 訂位。</small></span></li>
-        <li><span class="tt">20:00</span><span class="tx">站前通白色燈節<small>點燈到 2/11。</small></span></li>
-      </ul>
+      <div class="plans">
+      <section class="plan plan-a" aria-labelledby="d4-plan-a">
+        <div class="plan-h" id="d4-plan-a"><span class="plan-tag">A 案</span><span class="vh">・</span><span class="plan-name">天氣好走小樽</span><small>約 130 km・国道 393 毛無峠＋札樽道</small></div>
+        <ul class="tl">
+          <li><span class="tt">07:30</span><span class="tx">早餐後收行李</span></li>
+          <li><span class="tt">10:00</span><span class="tx">退房出發<small>國道 230、276 到倶知安，轉國道 393 經赤井川翻毛無峠下小樽，約 85 km、冬天抓 1 小時 50 分。</small></span></li>
+          <li><span class="tt">11:50</span><span class="tx">小樽午餐<small>小樽駅旁三角市場海鮮丼，或壽司屋通的壽司店；停車用市場或堺町通周邊的投幣停車場。</small></span></li>
+          <li><span class="tt">13:15</span><span class="tx">おたる水族館<small>祝津，從運河開車約 15 分。冬季 2026/12/12–2027/2/23 開館 10:00–16:00、最後入館 15:30；企鵝雪中散步上一季每天 11:30／12:40／13:30／14:40 四場，2026-27 場次 11 月公布。大人 ¥1,800、小學生 ¥700、3–5 歲 ¥350（通常期票價）。<a href="https://otaru-aq.jp/" target="_blank" rel="noopener">官網</a></small></span></li>
+          <li><span class="tt">15:00</span><span class="tx">堺町通與運河<small>LeTAO、六花亭、北菓楼試吃，音樂盒堂整點蒸氣鐘；16:30 前後天黑，運河瓦斯燈點亮最好拍。</small></span></li>
+          <li><span class="tt">16:45</span><span class="tx">出發回札幌<small>札樽道 小樽 IC → 札幌北 IC，到 クロスホテル札幌 約 55 分。</small></span></li>
+          <li><span class="tt">17:40</span><span class="tx">入住 クロスホテル札幌，車停館內<small>北 2 条西 2 丁目 23。館內立體停車場住客一次 ¥1,500，先到先停；車停到隔天開去機場還，這晚不用還車。</small></span></li>
+          <li><span class="tt">19:00</span><span class="tx">薄野雪場蟹吃到飽<small>從大通駅搭東豐線 1 站到豊水すすきの（難陀在南 5 条西 2 丁目サイバーシティビル B2F，只收現金，最後入店 19:30）；時間來不及就改えびかに合戦（南 4 条西 5 丁目，營業到 23:00）。</small></span></li>
+        </ul>
+      </section>
+      <section class="plan plan-b" aria-labelledby="d4-plan-b">
+        <div class="plan-h" id="d4-plan-b"><span class="plan-tag">B 案</span><span class="vh">・</span><span class="plan-name">下大雪直接進札幌</span><small>約 95 km・中山峠</small></div>
+        <ul class="tl">
+          <li><span class="tt">07:30</span><span class="tx">早餐後收行李</span></li>
+          <li><span class="tt">10:00</span><span class="tx">退房，行李寄住客專用投幣櫃<small>向櫃台拿代幣免費。旋轉木馬與遊戲區再玩一下。</small></span></li>
+          <li><span class="tt">11:00</span><span class="tx">出發往札幌<small>國道 230 中山峠，約 80 km、90 分。</small></span></li>
+          <li><span class="tt">12:30</span><span class="tx">札幌午餐</span></li>
+          <li><span class="tt">13:30</span><span class="tx">白い恋人パーク（宮の沢）<small>10:00–17:30、最後入館 16:30。有料區大人 ¥1,200、4 歲到國中生 ¥600、3 歲以下免費；巧克力筆畫心形白色戀人、餅乾裝飾等體驗要先在官網 webket 預約；小人國 Gulliver Town 小學生以下須家長陪同。雪太大想全室內就改新札幌的青少年科学館（9:30–16:30，隔壁有 Sunpiazza 水族館）。<a href="https://www.shiroikoibitopark.jp/" target="_blank" rel="noopener">官網</a></small></span></li>
+          <li><span class="tt">16:00</span><span class="tx">入住 クロスホテル札幌，車停館內<small>北 2 条西 2 丁目 23。館內立體停車場住客一次 ¥1,500，先到先停；車停到隔天，晚上靠地鐵。</small></span></li>
+          <li><span class="tt">18:00</span><span class="tx">薄野雪場蟹吃到飽<small>從大通駅搭東豐線 1 站到豊水すすきの（難陀），或南北線 1 站到すすきの。難陀 90 分 ¥9,980、5–11 歲 ¥6,500，最後入店 19:30；えびかに合戦 ¥10,000、小學生半價，營業到 23:00；HARBOR SAPPORO 60 分 ¥6,600 起最省。三家都要 11 月下旬才開放 1/23 訂位。</small></span></li>
+          <li><span class="tt">20:00</span><span class="tx">站前通白色燈節<small>點燈到 2/11。</small></span></li>
+        </ul>
+      </section>
+      </div>
       <div class="warnline"><b>晚餐時間</b><span>車停飯店過夜、不用趕還車，兩案都從容；要注意的是難陀最後入店 19:30，訂位時 A 案選 19:00、B 案選 18:00，或直接訂營業到 23:00 的えびかに合戦。</span></div>
       <div class="hintline"><span>💡</span><span><b>小樽提醒</b>——1/23 是週六，堺町通人多；運河、堺町、祝津水族館三點之間都開車移動，5 歲走雪地才不會太累。毛無峠是山路，路面壓雪結冰，跟著前車慢慢開；前面兩天在留壽都開過雪路再決定，怕就走 B 案，札幌一樣好玩。</span></div>
 
@@ -694,7 +848,7 @@ td .sub{display:block; font-size:12px; color:var(--ink-faint)}
           <div class="kv2 wide"><span class="k">ラウンジ</span>2F meetlounge <b>15:00–22:00</b>（LO 21:30），クロスフロア住客免費暢飲約 19 種飲品與 16 種北海道小點（兒童規定官網未載）</div>
           <div class="kv2 wide"><span class="k">停車</span>館內立體停車場先到先停，住客一次 <b>¥1,500</b>（15:00–翌 11:00 可進出）；限高 2.1 m、車長 5 m、車寬 1.85 m（訂房網站資料），SIENTA 停得進；滿車時櫃台介紹附近停車場</div>
         </div>
-        <div class="s-note"><b>方案：</b>【返金不可＆オンラインカード決済限定】60 日前まではキャンセル無料〈クロスフロア・ラウンジアクセス付〉朝食付。<b>取消：</b>11/24 前免費，之後 100% 不退。<b>人數登記：</b>大人 2＋Angela 佔床（¥18,300×3）＋Patty 添い寝免費。<b>現場另付：</b>宿泊稅每人每晚 ¥300–1,000。管理與收據：JTB Book&amp;Pay，取引番號 0016781756；2026/10/12 刷卡付清。</div>
+        <details class="s-more"><summary>取消規定與現場另付</summary><div class="s-note"><b>方案：</b>【返金不可＆オンラインカード決済限定】60 日前まではキャンセル無料〈クロスフロア・ラウンジアクセス付〉朝食付。<b>取消：</b>11/24 前免費，之後 100% 不退。<b>人數登記：</b>大人 2＋Angela 佔床（¥18,300×3）＋Patty 添い寝免費。<b>現場另付：</b>宿泊稅每人每晚 ¥300–1,000。管理與收據：JTB Book&amp;Pay，取引番號 0016781756；2026/10/12 刷卡付清。</div></details>
       </div>
 
       <div class="drive">
@@ -726,57 +880,57 @@ td .sub{display:block; font-size:12px; color:var(--ink-faint)}
 
 <section id="bookings" aria-label="訂購紀錄">
   <div class="sec-head"><span class="no">03</span><h2>訂購紀錄</h2><span class="en">Bookings</span></div>
-  <div class="tablebox"><table>
+  <div class="tablebox"><table class="t-book">
     <thead><tr><th>項目</th><th>日期</th><th>確認號</th><th>金額</th><th>狀態</th></tr></thead>
     <tbody>
       <tr>
-        <td>中華航空 CI130／CI131<span class="sub">2 大 2 小・經濟艙・去程 48DEFG、回程 49DEFG</span></td>
-        <td class="num">1/20 去・1/24 回</td>
-        <td class="num">D64TFT</td>
-        <td class="num">NT$116,904</td>
-        <td><span class="badge paid">已開票</span></td>
+        <td data-label="項目">中華航空 CI130／CI131<span class="sub">2 大 2 小・經濟艙・去程 48DEFG、回程 49DEFG</span></td>
+        <td data-label="日期" class="num">1/20 去・1/24 回</td>
+        <td data-label="確認號" class="num">D64TFT</td>
+        <td data-label="金額" class="num">NT$116,904</td>
+        <td data-label="狀態"><span class="badge paid">已開票</span></td>
       </tr>
       <tr>
-        <td>乃の風リゾート<span class="sub">野風俱樂部行政套房 112 ㎡・一泊二食・N Point 會員 5% 折後</span></td>
-        <td class="num">1/20–1/21（1 晚）</td>
-        <td class="num">T11A7C38063EA</td>
-        <td class="num">NT$34,020</td>
-        <td><span class="badge paid">已付清</span></td>
+        <td data-label="項目">乃の風リゾート<span class="sub">野風俱樂部行政套房 112 ㎡・一泊二食・N Point 會員 5% 折後</span></td>
+        <td data-label="日期" class="num">1/20–1/21（1 晚）</td>
+        <td data-label="確認號" class="num">T11A7C38063EA</td>
+        <td data-label="金額" class="num">NT$34,020</td>
+        <td data-label="狀態"><span class="badge paid">已付清</span></td>
       </tr>
       <tr>
-        <td>ルスツリゾートホテル＆コンベンション<span class="sub">トリプル 4 名・冬シンプル 夕食ブッフェ＆朝食付・不含纜車票</span></td>
-        <td class="num">1/21–1/23（2 晚）</td>
-        <td class="num">X-4TLQRR5WVIG</td>
-        <td class="num">¥264,960</td>
-        <td><span class="badge paid">已付清</span></td>
+        <td data-label="項目">ルスツリゾートホテル＆コンベンション<span class="sub">トリプル 4 名・冬シンプル 夕食ブッフェ＆朝食付・不含纜車票</span></td>
+        <td data-label="日期" class="num">1/21–1/23（2 晚）</td>
+        <td data-label="確認號" class="num">X-4TLQRR5WVIG</td>
+        <td data-label="金額" class="num">¥264,960</td>
+        <td data-label="狀態"><span class="badge paid">已付清</span></td>
       </tr>
       <tr>
-        <td>クロスホテル札幌<span class="sub">クロスフロア デラックスツイン グランデ 35 ㎡・4 名・朝食付＋ラウンジアクセス・JTB Book&amp;Pay</span></td>
-        <td class="num">1/23–1/24（1 晚）</td>
-        <td class="num">3988-3648-5764</td>
-        <td class="num">¥54,900</td>
-        <td><span class="badge paid">已付清</span></td>
+        <td data-label="項目">クロスホテル札幌<span class="sub">クロスフロア デラックスツイン グランデ 35 ㎡・4 名・朝食付＋ラウンジアクセス・JTB Book&amp;Pay</span></td>
+        <td data-label="日期" class="num">1/23–1/24（1 晚）</td>
+        <td data-label="確認號" class="num">3988-3648-5764</td>
+        <td data-label="金額" class="num">¥54,900</td>
+        <td data-label="狀態"><span class="badge paid">已付清</span></td>
       </tr>
       <tr>
-        <td>Toyota 租車<span class="sub">SIENTA Hybrid 4WD（W1 級、指定車型）・雪胎（本店冬季標配）・ETC 卡・成長型座椅 ×1・免責補償＋安心 W（含 NOC）・新千歳空港ポプラ店借還・1/20 14:30 → 1/24 11:30・7 天前取消免費</span></td>
-        <td class="num">1/20–1/24</td>
-        <td class="num">99943701700</td>
-        <td class="num">¥70,867</td>
-        <td><span class="badge paid">已付清</span></td>
+        <td data-label="項目">Toyota 租車<span class="sub">SIENTA Hybrid 4WD（W1 級、指定車型）・雪胎（本店冬季標配）・ETC 卡・成長型座椅 ×1・免責補償＋安心 W（含 NOC）・新千歳空港ポプラ店借還・1/20 14:30 → 1/24 11:30・7 天前取消免費</span></td>
+        <td data-label="日期" class="num">1/20–1/24</td>
+        <td data-label="確認號" class="num">99943701700</td>
+        <td data-label="金額" class="num">¥70,867</td>
+        <td data-label="狀態"><span class="badge paid">已付清</span></td>
       </tr>
       <tr>
-        <td>Rusutsu 滑雪課<span class="sub">1/22 上午・10 月上旬開放預約</span></td>
-        <td class="num">1/22</td>
-        <td class="num">—</td>
-        <td class="num">¥26,000–37,000</td>
-        <td><span class="badge onsite">待訂</span></td>
+        <td data-label="項目">Rusutsu 滑雪課<span class="sub">1/22 上午・10 月上旬開放預約</span></td>
+        <td data-label="日期" class="num">1/22</td>
+        <td data-label="確認號" class="num">—</td>
+        <td data-label="金額" class="num">¥26,000–37,000</td>
+        <td data-label="狀態"><span class="badge onsite">待訂</span></td>
       </tr>
       <tr>
-        <td>薄野雪場蟹吃到飽<span class="sub">難陀約 11/23、HARBOR 約 11/20 開放 1/23 訂位</span></td>
-        <td class="num">1/23 晚</td>
-        <td class="num">—</td>
-        <td class="num">約 ¥20,000–33,000</td>
-        <td><span class="badge onsite">待訂</span></td>
+        <td data-label="項目">薄野雪場蟹吃到飽<span class="sub">難陀約 11/23、HARBOR 約 11/20 開放 1/23 訂位</span></td>
+        <td data-label="日期" class="num">1/23 晚</td>
+        <td data-label="確認號" class="num">—</td>
+        <td data-label="金額" class="num">約 <span class="nw">¥20,000–33,000</span></td>
+        <td data-label="狀態"><span class="badge onsite">待訂</span></td>
       </tr>
     </tbody>
   </table></div>
@@ -786,35 +940,35 @@ td .sub{display:block; font-size:12px; color:var(--ink-faint)}
 <section id="essentials" aria-label="費用與交通速查">
   <div class="sec-head"><span class="no">04</span><h2>費用與交通速查</h2><span class="en">Prices &amp; Distances</span></div>
   <h3>門票與現場費用</h3>
-  <div class="tablebox"><table>
-    <thead><tr><th>項目</th><th>大人</th><th>Angela（8 歲）</th><th>Patty（5 歲）</th><th>備註</th></tr></thead>
+  <div class="tablebox"><table class="t-tix">
+    <thead><tr><th>項目</th><th>大人</th><th>Angela<span class="th-age">（8 歲）</span></th><th>Patty<span class="th-age">（5 歲）</span></th><th>備註</th></tr></thead>
     <tbody>
-      <tr><td>昭和新山熊牧場</td><td class="num">¥1,000</td><td class="num">¥500</td><td class="num">免費</td><td>8:30–16:30・餵食餅乾 ¥200・停車 ¥500</td></tr>
-      <tr><td>洞爺湖汽船（冬季周遊）</td><td class="num">¥1,800</td><td class="num">¥900</td><td class="num">未列</td><td>9:00–16:00 每小時一班・45 分・不登島</td></tr>
-      <tr><td>洞爺湖火山科學館</td><td class="num">¥800</td><td class="num">¥400</td><td class="num">免費</td><td>10:00–16:00・週一休</td></tr>
-      <tr><td>Rusutsu 纜車一日券（線上）</td><td class="num">¥13,200</td><td class="num">¥6,400</td><td class="num">¥6,400</td><td>窗口價 ¥16,700／¥8,300・夜滑 ¥4,000／¥1,400</td></tr>
-      <tr><td>Samurai Kids Park 一日券</td><td class="num">¥2,600</td><td class="num">¥2,600</td><td class="num">¥2,600</td><td>9:00–16:00・陪同大人同價・只收非現金</td></tr>
-      <tr><td>滑雪課</td><td class="num">私人 2h ¥30,000</td><td class="num">團體 2h ¥8,000</td><td class="num">Samurai Kids 2.5h ¥18,000</td><td>私人團體 2–5 人 2h ¥37,000・不含纜車與雪具</td></tr>
-      <tr><td>雪具全套 1 日</td><td class="num">雪具組 ¥10,800</td><td class="num">¥17,300</td><td class="num">¥17,300</td><td>大人雪衣另 ¥7,800・線上申請 11 月下旬開放</td></tr>
-      <tr><td>狗拉雪橇・雪上泛舟</td><td class="num">¥5,830・¥3,300</td><td class="num">¥5,830・¥2,500</td><td class="num">¥5,830・¥2,500</td><td>雪橇 4 歲以上、週四休・泛舟 3 歲以下免費同乘</td></tr>
-      <tr><td>Rusutsu 泳池溫泉（退房後）</td><td class="num">¥1,800</td><td class="num">¥900</td><td class="num">¥900</td><td>住宿期間免費</td></tr>
-      <tr><td>おたる水族館（A 案）</td><td class="num">¥1,800</td><td class="num">¥700</td><td class="num">¥350</td><td>冬季 10:00–16:00、最後入館 15:30・通常期票價，冬季未另列・停車另收費</td></tr>
-      <tr><td>白い恋人パーク 有料區（B 案）</td><td class="num">¥1,200</td><td class="num">¥600</td><td class="num">¥600</td><td>10:00–17:30、最後入館 16:30・3 歲以下免費・體驗另購</td></tr>
-      <tr><td>難陀 蟹吃到飽 90 分</td><td class="num">¥9,980</td><td class="num">¥6,500</td><td class="num">¥6,500</td><td>70 分 ¥7,980／¥4,580・最後入店 19:30</td></tr>
+      <tr><td data-label="項目">昭和新山熊牧場</td><td data-label="大人" class="num">¥1,000</td><td data-label="Angela（8 歲）" class="num">¥500</td><td data-label="Patty（5 歲）" class="num">免費</td><td data-label="備註">8:30–16:30・餵食餅乾 ¥200・停車 ¥500</td></tr>
+      <tr><td data-label="項目">洞爺湖汽船（冬季周遊）</td><td data-label="大人" class="num">¥1,800</td><td data-label="Angela（8 歲）" class="num">¥900</td><td data-label="Patty（5 歲）" class="num">未列</td><td data-label="備註">9:00–16:00 每小時一班・45 分・不登島</td></tr>
+      <tr><td data-label="項目">洞爺湖火山科學館</td><td data-label="大人" class="num">¥800</td><td data-label="Angela（8 歲）" class="num">¥400</td><td data-label="Patty（5 歲）" class="num">免費</td><td data-label="備註">10:00–16:00・週一休</td></tr>
+      <tr><td data-label="項目">Rusutsu 纜車一日券（線上）</td><td data-label="大人" class="num">¥13,200</td><td data-label="Angela（8 歲）" class="num">¥6,400</td><td data-label="Patty（5 歲）" class="num">¥6,400</td><td data-label="備註">窗口價 ¥16,700／¥8,300・夜滑 ¥4,000／¥1,400</td></tr>
+      <tr><td data-label="項目">Samurai Kids Park 一日券</td><td data-label="大人" class="num">¥2,600</td><td data-label="Angela（8 歲）" class="num">¥2,600</td><td data-label="Patty（5 歲）" class="num">¥2,600</td><td data-label="備註">9:00–16:00・陪同大人同價・只收非現金</td></tr>
+      <tr><td data-label="項目">滑雪課</td><td data-label="大人" class="num"><small>私人 2h</small> ¥30,000</td><td data-label="Angela（8 歲）" class="num"><small>團體 2h</small> ¥8,000</td><td data-label="Patty（5 歲）" class="num"><small>Samurai Kids 2.5h</small> ¥18,000</td><td data-label="備註">私人團體 2–5 人 2h ¥37,000・不含纜車與雪具</td></tr>
+      <tr><td data-label="項目">雪具全套 1 日</td><td data-label="大人" class="num"><small>雪具組</small> ¥10,800</td><td data-label="Angela（8 歲）" class="num">¥17,300</td><td data-label="Patty（5 歲）" class="num">¥17,300</td><td data-label="備註">大人雪衣另 ¥7,800・線上申請 11 月下旬開放</td></tr>
+      <tr><td data-label="項目">狗拉雪橇・雪上泛舟</td><td data-label="大人" class="num">¥5,830・¥3,300</td><td data-label="Angela（8 歲）" class="num">¥5,830・¥2,500</td><td data-label="Patty（5 歲）" class="num">¥5,830・¥2,500</td><td data-label="備註">雪橇 4 歲以上、週四休・泛舟 3 歲以下免費同乘</td></tr>
+      <tr><td data-label="項目">Rusutsu 泳池溫泉（退房後）</td><td data-label="大人" class="num">¥1,800</td><td data-label="Angela（8 歲）" class="num">¥900</td><td data-label="Patty（5 歲）" class="num">¥900</td><td data-label="備註">住宿期間免費</td></tr>
+      <tr><td data-label="項目">おたる水族館（A 案）</td><td data-label="大人" class="num">¥1,800</td><td data-label="Angela（8 歲）" class="num">¥700</td><td data-label="Patty（5 歲）" class="num">¥350</td><td data-label="備註">冬季 10:00–16:00、最後入館 15:30・通常期票價，冬季未另列・停車另收費</td></tr>
+      <tr><td data-label="項目">白い恋人パーク 有料區（B 案）</td><td data-label="大人" class="num">¥1,200</td><td data-label="Angela（8 歲）" class="num">¥600</td><td data-label="Patty（5 歲）" class="num">¥600</td><td data-label="備註">10:00–17:30、最後入館 16:30・3 歲以下免費・體驗另購</td></tr>
+      <tr><td data-label="項目">難陀 蟹吃到飽 90 分</td><td data-label="大人" class="num">¥9,980</td><td data-label="Angela（8 歲）" class="num">¥6,500</td><td data-label="Patty（5 歲）" class="num">¥6,500</td><td data-label="備註">70 分 ¥7,980／¥4,580・最後入店 19:30</td></tr>
     </tbody>
   </table></div>
   <h3>距離與時間</h3>
-  <div class="tablebox"><table>
+  <div class="tablebox"><table class="t-dist">
     <thead><tr><th>路段</th><th>距離</th><th>一般路況</th><th>備註</th></tr></thead>
     <tbody>
-      <tr><td>新千歳空港 → 洞爺湖溫泉</td><td class="num">約 110 km</td><td class="num">1.5 小時</td><td>道央道，過路費約 ¥3,100</td></tr>
-      <tr><td>洞爺湖溫泉 → 昭和新山</td><td class="num">約 7 km</td><td class="num">10 分</td><td>熊牧場・有珠山纜車同一區</td></tr>
-      <tr><td>洞爺湖溫泉 → Rusutsu</td><td class="num">30 km</td><td class="num">40–50 分（冬）</td><td>道道 2 號接國道 230・中途無商店</td></tr>
-      <tr><td>Rusutsu → 札幌市區</td><td class="num">約 80 km</td><td class="num">90 分</td><td>國道 230 中山峠，經定山溪</td></tr>
-      <tr><td>Rusutsu → 小樽（A 案）</td><td class="num">約 85 km</td><td class="num">1 小時 50 分</td><td>國道 230・276 經倶知安轉 393 翻毛無峠；預防性通行規制路段，出發前查</td></tr>
-      <tr><td>小樽 → 札幌市區（A 案）</td><td class="num">約 40 km</td><td class="num">55 分</td><td>札樽道 小樽 IC → 札幌北 IC</td></tr>
-      <tr><td>札幌市區 → 白い恋人パーク（B 案）</td><td class="num">約 8 km</td><td class="num">25 分</td><td>地鐵東西線宮の沢站步行 7 分</td></tr>
-      <tr><td>札幌市區 → Toyota 新千歳空港ポプラ店</td><td class="num">約 50 km</td><td class="num">1 小時</td><td>道央道・大雪封閉改國道 36 約 1.5–2 小時・還車後接送巴士 9 分到航廈</td></tr>
+      <tr><td data-label="路段">新千歳空港 → 洞爺湖溫泉</td><td data-label="距離" class="num">約 110 km</td><td data-label="一般路況" class="num">1.5 小時</td><td data-label="備註">道央道，過路費約 ¥3,100</td></tr>
+      <tr><td data-label="路段">洞爺湖溫泉 → 昭和新山</td><td data-label="距離" class="num">約 7 km</td><td data-label="一般路況" class="num">10 分</td><td data-label="備註">熊牧場・有珠山纜車同一區</td></tr>
+      <tr><td data-label="路段">洞爺湖溫泉 → Rusutsu</td><td data-label="距離" class="num">30 km</td><td data-label="一般路況" class="num">40–50 分（冬）</td><td data-label="備註">道道 2 號接國道 230・中途無商店</td></tr>
+      <tr><td data-label="路段">Rusutsu → 札幌市區</td><td data-label="距離" class="num">約 80 km</td><td data-label="一般路況" class="num">90 分</td><td data-label="備註">國道 230 中山峠，經定山溪</td></tr>
+      <tr><td data-label="路段">Rusutsu → 小樽（A 案）</td><td data-label="距離" class="num">約 85 km</td><td data-label="一般路況" class="num">1 小時 50 分</td><td data-label="備註">國道 230・276 經倶知安轉 393 翻毛無峠；預防性通行規制路段，出發前查</td></tr>
+      <tr><td data-label="路段">小樽 → 札幌市區（A 案）</td><td data-label="距離" class="num">約 40 km</td><td data-label="一般路況" class="num">55 分</td><td data-label="備註">札樽道 小樽 IC → 札幌北 IC</td></tr>
+      <tr><td data-label="路段">札幌市區 → 白い恋人パーク（B 案）</td><td data-label="距離" class="num">約 8 km</td><td data-label="一般路況" class="num">25 分</td><td data-label="備註">地鐵東西線宮の沢站步行 7 分</td></tr>
+      <tr><td data-label="路段">札幌市區 → Toyota 新千歳空港ポプラ店</td><td data-label="距離" class="num">約 50 km</td><td data-label="一般路況" class="num">1 小時</td><td data-label="備註">道央道・大雪封閉改國道 36 約 1.5–2 小時・還車後接送巴士 9 分到航廈</td></tr>
     </tbody>
   </table></div>
   <p class="map-cap">冬季實際車程要再加兩到三成。札幌 1 月下旬 07:00 日出、16:31 日落，每天移動盡量在下午 3 點前抵達。道央道大雪時會預防性封閉；國道 230 花和～留壽都段常有地吹雪管制。</p>
@@ -828,13 +982,13 @@ td .sub{display:block; font-size:12px; color:var(--ink-faint)}
 
   <div class="todo done"><label><input type="checkbox" checked disabled><div><div class="t-title">訂札幌 1/23 那一晚</div><div class="t-body">已於 10/12 訂妥 <b>クロスホテル札幌</b> クロスフロア デラックスツイン グランデ 35 ㎡，¥54,900 含早餐與ラウンジ，已刷卡；11/24 前可免費取消，之後不退。</div></div></label></div>
 
-  <div class="todo" data-key="lesson"><label><input type="checkbox"><div><div class="t-title">10 月上旬：訂 1/22 上午的滑雪課</div><div class="t-body">Rusutsu 滑雪學校 10 月上旬開放 2026-27 預約。Patty 走 <b>Samurai Kids</b>（4–7 歲、英語、2.5 小時 ¥18,000，須已完成如廁訓練）；Angela 走一般團體班（7 歲以上、日語、2 小時 ¥8,000）；或兩人一起上私人團體課 2 小時 ¥37,000。</div></div></label></div>
+  <div class="todo" data-key="lesson" data-from="2026-10-01"><label><input type="checkbox"><div><div class="t-title">10 月上旬：訂 1/22 上午的滑雪課</div><div class="t-body">Rusutsu 滑雪學校 10 月上旬開放 2026-27 預約。Patty 走 <b>Samurai Kids</b>（4–7 歲、英語、2.5 小時 ¥18,000，須已完成如廁訓練）；Angela 走一般團體班（7 歲以上、日語、2 小時 ¥8,000）；或兩人一起上私人團體課 2 小時 ¥37,000。</div></div></label></div>
 
-  <div class="todo" data-key="usuzan"><label><input type="checkbox"><div><div class="t-title">11 月：查有珠山纜車 2027 年 1 月的檢修日</div><div class="t-body">近五年有四年在 1 月中下旬停駛（2026 年是 1/12–1/31）。若 1/21 有開，往復大人 ¥2,000、小學生 ¥1,000，可取代汽船排在 13:00。</div></div></label></div>
+  <div class="todo" data-key="usuzan" data-from="2026-11-01"><label><input type="checkbox"><div><div class="t-title">11 月：查有珠山纜車 2027 年 1 月的檢修日</div><div class="t-body">近五年有四年在 1 月中下旬停駛（2026 年是 1/12–1/31）。若 1/21 有開，往復大人 ¥2,000、小學生 ¥1,000，可取代汽船排在 13:00。</div></div></label></div>
 
-  <div class="todo" data-key="crab"><label><input type="checkbox"><div><div class="t-title">11/20–11/23：訂 1/23 晚上的雪場蟹吃到飽</div><div class="t-body"><b>難陀</b>只開放 2 個月內訂位，約 11/23 才能訂 1/23，網路申請制要等店家確認；<b>HARBOR</b> 約 11/20 開放；<b>えびかに合戦</b> Hotpepper 月曆開到 1 月時即可訂，週六晚 18:00 四人。</div></div></label></div>
+  <div class="todo" data-key="crab" data-from="2026-11-20"><label><input type="checkbox"><div><div class="t-title">11/20–11/23：訂 1/23 晚上的雪場蟹吃到飽</div><div class="t-body"><b>難陀</b>只開放 2 個月內訂位，約 11/23 才能訂 1/23，網路申請制要等店家確認；<b>HARBOR</b> 約 11/20 開放；<b>えびかに合戦</b> Hotpepper 月曆開到 1 月時即可訂，週六晚 18:00 四人。</div></div></label></div>
 
-  <div class="todo" data-key="rental"><label><input type="checkbox"><div><div class="t-title">11 月下旬：Rusutsu 雪具線上申請</div><div class="t-body">兒童全套（板、靴、杖、雪衣、安全帽、手套、風鏡）1 日 ¥17,300；大人雪具組 ¥10,800，雪衣另 ¥7,800。線上申請 11 月下旬開放，比現場便宜。</div></div></label></div>
+  <div class="todo" data-key="rental" data-from="2026-11-21"><label><input type="checkbox"><div><div class="t-title">11 月下旬：Rusutsu 雪具線上申請</div><div class="t-body">兒童全套（板、靴、杖、雪衣、安全帽、手套、風鏡）1 日 ¥17,300；大人雪具組 ¥10,800，雪衣另 ¥7,800。線上申請 11 月下旬開放，比現場便宜。</div></div></label></div>
 
   <div class="todo" data-key="lift"><label><input type="checkbox"><div><div class="t-title">出發前：線上買 1/22 纜車一日券</div><div class="t-body">大人線上 ¥13,200、窗口 ¥16,700。小孩若只玩雪樂園與上課不一定需要纜車票，先問滑雪學校。</div></div></label></div>
 
@@ -882,6 +1036,50 @@ td .sub{display:block; font-size:12px; color:var(--ink-faint)}
   var KEY = 'hokkaido2027-checklist';
   var saved = {};
   try { saved = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch(e){}
+
+  // 主要待辦（有左側色條的 .todo 卡，依 DOM 順序）：「下一件要辦」提示帶與「現在可辦」徽章
+  var nextup = document.getElementById('nextup');
+  var mains = Array.prototype.slice.call(document.querySelectorAll('#todo .todo'));
+  function pad(n){ return (n < 10 ? '0' : '') + n; }
+  var now = new Date();
+  var today = now.getFullYear() + '-' + pad(now.getMonth() + 1) + '-' + pad(now.getDate());
+  mains.forEach(function(item, i){
+    if (!item.id) item.id = 'todo-' + (item.getAttribute('data-key') || i);
+    var t = item.querySelector('.t-title');
+    item._title = t ? t.textContent : '';
+  });
+  function nowBadge(){ var b = document.createElement('span'); b.className = 'badge now'; b.textContent = '現在可辦'; return b; }
+  function canDo(item){ var f = item.getAttribute('data-from'); return !!f && f <= today; }
+  function refresh(){
+    var pending = mains.filter(function(item){
+      var b = item.querySelector('input[type="checkbox"]'); return b && !b.checked;
+    });
+    mains.forEach(function(item){
+      var t = item.querySelector('.t-title'); if (!t) return;
+      var badge = t.querySelector('.badge.now');
+      var want = pending.indexOf(item) > -1 && canDo(item);
+      if (want && !badge) t.appendChild(nowBadge());
+      else if (!want && badge) t.removeChild(badge);
+    });
+    if (!nextup) return;
+    nextup.textContent = '';
+    function add(cls, text){ var s = document.createElement('span'); s.className = cls; s.textContent = text; nextup.appendChild(s); return s; }
+    if (pending.length){
+      var first = pending[0];
+      nextup.classList.remove('all-done');
+      nextup.setAttribute('href', '#' + first.id);
+      add('nu-label', '下一件要辦');
+      var title = add('nu-title', first._title);
+      if (canDo(first)) title.appendChild(nowBadge());
+      add('nu-more', '還有 ' + pending.length + ' 項 →');
+    } else {
+      nextup.classList.add('all-done');
+      nextup.setAttribute('href', '#todo');
+      add('nu-title', '行前必辦都完成了');
+    }
+    nextup.hidden = false;
+  }
+
   document.querySelectorAll('[data-key]').forEach(function(item){
     var box = item.querySelector('input[type="checkbox"]');
     if (!box) return;
@@ -892,25 +1090,53 @@ td .sub{display:block; font-size:12px; color:var(--ink-faint)}
       saved[k] = box.checked;
       try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch(e){}
       paint();
+      refresh();
     });
   });
+  refresh();
 })();
 </script>
 <script>
 (function(){
-  var links = document.querySelectorAll('.daynav a[href^="#day"]');
-  if (!('IntersectionObserver' in window) || !links.length) return;
-  var map = {}, cur = null;
-  links.forEach(function(a){ map[a.getAttribute('href').slice(1)] = a; });
-  var io = new IntersectionObserver(function(entries){
-    entries.forEach(function(e){
-      if (e.isIntersecting && map[e.target.id]) {
-        if (cur) cur.classList.remove('on');
-        cur = map[e.target.id]; cur.classList.add('on');
-      }
-    });
-  }, {rootMargin:'-15% 0px -70% 0px'});
-  Object.keys(map).forEach(function(id){ var el = document.getElementById(id); if (el) io.observe(el); });
+  // 導覽列：目前位置高亮（D1–D5、訂單、速查、必辦）、高亮項目捲進導覽列可視範圍、左右緣淡出
+  var nav = document.querySelector('.daynav');
+  var box = nav && nav.querySelector('.daynav-in');
+  if (!box) return;
+  var items = Array.prototype.slice.call(box.querySelectorAll('a[href^="#"]')).map(function(a){
+    return { a: a, el: document.getElementById(a.getAttribute('href').slice(1)) };
+  }).filter(function(x){ return x.el; });
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function fades(){
+    var max = box.scrollWidth - box.clientWidth;
+    nav.classList.toggle('fade-l', box.scrollLeft > 1);
+    nav.classList.toggle('fade-r', max - box.scrollLeft > 1);
+  }
+  function reveal(a){
+    // 只捲導覽列本身，不用 scrollIntoView（會帶動整頁）
+    var br = box.getBoundingClientRect(), ar = a.getBoundingClientRect(), edge = 32, to = null;
+    if (ar.left < br.left + edge) to = box.scrollLeft + ar.left - br.left - edge;
+    else if (ar.right > br.right - edge) to = box.scrollLeft + ar.right - br.right + edge;
+    if (to !== null) box.scrollTo({ left: Math.max(0, to), behavior: reduce ? 'auto' : 'smooth' });
+  }
+  var cur = null;
+  function spy(){
+    var pad = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
+    var line = pad + window.innerHeight * 0.2, next = null;
+    items.forEach(function(x){ if (x.el.getBoundingClientRect().top <= line) next = x.a; });
+    if (next === cur) return;
+    if (cur){ cur.classList.remove('on'); cur.removeAttribute('aria-current'); }
+    cur = next;
+    if (cur){ cur.classList.add('on'); cur.setAttribute('aria-current', 'location'); reveal(cur); }
+  }
+  var ticking = false;
+  function onScroll(){
+    if (ticking) return; ticking = true;
+    requestAnimationFrame(function(){ ticking = false; spy(); });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', function(){ fades(); onScroll(); });
+  box.addEventListener('scroll', fades, { passive: true });
+  fades(); spy();
 })();
 </script>
 
