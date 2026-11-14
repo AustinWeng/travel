@@ -207,6 +207,7 @@ section{margin-top:52px}
 .hintline{display:flex; gap:8px; background:var(--sun-wash); border-radius:9px; padding:9px 12px; font-size:13.5px; margin-top:12px; color:var(--ink-soft); align-items:flex-start}
 .hintline b{color:var(--ink)}
 .hintline > span:first-child{flex:none}
+.hintline a{white-space:nowrap}
 
 /* stay card */
 .stay{border:1px solid var(--line); border-radius:11px; margin-top:14px; padding:13px 15px; background:linear-gradient(0deg,var(--sea-wash),var(--sea-wash))}
@@ -362,14 +363,32 @@ section.plan-b{border-left-color:var(--sun-deep)}
   .plan .tl li{gap:10px}
   .plan .tl .tt{width:46px}
 }
-.maplink[data-route="d4b"]{background:var(--sun-deep)}
-.maplink[data-route="d4b"]:hover{background:#92400E}
-:root[data-theme="dark"] .maplink[data-route="d4b"]{background:var(--sun-wash); color:var(--sun-deep)}
-:root[data-theme="dark"] .maplink[data-route="d4b"]:hover{background:var(--line-soft)}
+.maplink[data-route^="d4b"]{background:var(--sun-deep)}
+.maplink[data-route^="d4b"]:hover{background:#92400E}
+:root[data-theme="dark"] .maplink[data-route^="d4b"]{background:var(--sun-wash); color:var(--sun-deep)}
+:root[data-theme="dark"] .maplink[data-route^="d4b"]:hover{background:var(--line-soft)}
 @media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]) .maplink[data-route="d4b"]{background:var(--sun-wash); color:var(--sun-deep)}
-  :root:not([data-theme="light"]) .maplink[data-route="d4b"]:hover{background:var(--line-soft)}
+  :root:not([data-theme="light"]) .maplink[data-route^="d4b"]{background:var(--sun-wash); color:var(--sun-deep)}
+  :root:not([data-theme="light"]) .maplink[data-route^="d4b"]:hover{background:var(--line-soft)}
 }
+
+/* 各日 A／B 案：.plans.stack 兩案永遠上下相疊（Day 1）；分歧前後的共用時間軸 */
+.plans + .tl{margin-top:16px}
+@media (min-width:740px){
+  .plans.stack{grid-template-columns:minmax(0,1fr); gap:20px}
+  .plans.stack .plan .tl li{gap:14px}
+  .plans.stack .plan .tl .tt{width:88px}
+}
+/* B 案下午三選一（屬於 B 案：琥珀色系、全寬） */
+.opts{margin-top:18px; background:var(--sun-wash); border-left:3px solid var(--sun-deep); border-radius:0 12px 12px 0; padding:12px 12px 12px 12px}
+.opts-h{font-size:15px; font-weight:700; color:var(--ink); margin:0 0 2px}
+.opt{background:var(--card); border:1px solid var(--line); border-radius:10px; padding:11px 14px 12px; margin-top:10px}
+.opt-h{display:flex; flex-wrap:wrap; align-items:baseline; gap:2px 8px}
+.opt-tag{align-self:center; display:inline-block; background:var(--sun-deep); color:var(--on-accent); font-size:11px; font-weight:800; line-height:1.5; letter-spacing:.04em; padding:0 8px; border-radius:999px; white-space:nowrap}
+.opt-name{font-size:15px; font-weight:700; color:var(--ink)}
+.opt-when{font-size:12.5px; color:var(--ink-soft); margin-top:3px; line-height:1.55}
+.opt-body{font-size:13px; color:var(--ink-soft); line-height:1.6; margin-top:6px}
+.opt-time{font-size:13px; color:var(--ink); font-variant-numeric:tabular-nums; margin-top:8px; padding-top:7px; border-top:1px dashed var(--line); line-height:1.55}
 
 /* S6 地圖區：標題與說明回到 760px 欄 */
 @media (min-width:1000px){
@@ -382,7 +401,8 @@ section.plan-b{border-left-color:var(--sun-deep)}
   .tablebox table{table-layout:fixed}
   .t-tix th:nth-child(1){width:24%} .t-tix th:nth-child(2){width:14%} .t-tix th:nth-child(3){width:15%} .t-tix th:nth-child(4){width:15%} .t-tix th:nth-child(5){width:32%}
   .t-book th:nth-child(1){width:30%} .t-book th:nth-child(2){width:19%} .t-book th:nth-child(3){width:18%} .t-book th:nth-child(4){width:21%} .t-book th:nth-child(5){width:12%}
-  .t-dist th:nth-child(1){width:34%} .t-dist th:nth-child(2){width:12%} .t-dist th:nth-child(3){width:16%} .t-dist th:nth-child(4){width:38%}
+  .t-dist th:nth-child(1){width:32%} .t-dist th:nth-child(2){width:11%} .t-dist th:nth-child(3){width:21%} .t-dist th:nth-child(4){width:36%}
+  .t-dist td:nth-child(3){white-space:normal}
   .t-tix th:nth-child(n+2):nth-child(-n+4), .t-tix td:nth-child(n+2):nth-child(-n+4),
   .t-book th:nth-child(4), .t-book td:nth-child(4){text-align:right; font-variant-numeric:tabular-nums; padding-right:22px}
   .t-book th:nth-child(4), .t-book td:nth-child(4){padding-left:6px; padding-right:18px}
@@ -693,6 +713,9 @@ section.plan-b{border-left-color:var(--sun-deep)}
   <article class="day" id="day1">
     <div class="day-band"><span class="dnum">DAY 1</span><span class="ddate">1/20（三）</span><span class="dtheme">抵達・洞爺湖湖畔溫泉</span></div>
     <div class="day-inner">
+      <div class="plans stack">
+      <section class="plan plan-a" aria-labelledby="d1-plan-a">
+        <div class="plan-h" id="d1-plan-a"><span class="plan-tag">A 案</span><span class="vh">・</span><span class="plan-name">準時抵達</span><small>道央道約 110 km、1.5 小時</small></div>
       <ul class="tl">
         <li><span class="tt">13:20</span><span class="tx">抵達新千歳機場<small>入境、提行李約 1 小時。國際線航廈 I。</small></span></li>
         <li><span class="tt">14:30</span><span class="tx">Toyota 新千歳空港ポプラ店取車<small>入境後到航廈的 Toyota 櫃台報到，搭免費接送巴士到店約 9 分。SIENTA Hybrid 4WD（7 人座，已指定車型）、雪胎、ETC 卡、成長型座椅 1 張。證件：台灣駕照正本＋日文譯本＋護照。預約號 99943701700。</small></span></li>
@@ -701,6 +724,17 @@ section.plan-b{border-left-color:var(--sun-deep)}
         <li><span class="tt">17:30</span><span class="tx">Le Vent 湖景自助晚餐<small>17:00–21:00，含在房價內。</small></span></li>
         <li><span class="tt">晚上</span><span class="tx">洞爺湖溫泉街燈光隧道<small>17:00–22:00 點燈，走路可到。2026-27 期程官方標「預定」。</small></span></li>
       </ul>
+      </section>
+      <section class="plan plan-b" aria-labelledby="d1-plan-b">
+        <div class="plan-h" id="d1-plan-b"><span class="plan-tag">B 案</span><span class="vh">・</span><span class="plan-name">班機延誤或道央道封閉</span><small>先查封閉區間，再決定怎麼走</small></div>
+        <ul class="tl">
+          <li><span class="tt">先查</span><span class="tx">ドラとら看道央道封閉區間<small>封閉多半只是部分區間，能分段走高速就分段走，封閉段改走國道 36、37 號繞過去。</small></span></li>
+          <li><span class="tt">改道</span><span class="tx">整段封閉走沿海國道 36、37 號<small>苫小牧 → 白老 → 登別 → 室蘭 → 伊達 → 洞爺湖溫泉，約 125–135 km，冬季抓 3–3.5 小時（估）。不走支笏湖、美笛峠（國道 276），那段大雪會預防性封閉，又是夜間山路。</small></span></li>
+          <li><span class="tt">晚餐</span><span class="tx">Le Vent 21:00 收餐<small>走高速最晚約 18:30 取車出發才趕得上；17:30 後才走一般道就趕不上，先在機場或 Seicomart 買晚餐。預計 19:00 後才到就打給乃の風 0570-026571（受理 10:00–17:00，確定延誤就在機場先打）。</small></span></li>
+          <li><span class="tt">取車</span><span class="tx">Toyota ポプラ店冬季營業到 20:00<small>班機延誤超過約 5 小時，先打 0123-23-0100。</small></span></li>
+        </ul>
+      </section>
+      </div>
       <div class="hintline"><span>💡</span><span><b>泡湯規則</b>——7 歲以上不能進異性浴場：Angela 跟媽媽，Patty 跟誰都可以。屋頂露天 15:00 開到隔天 11:00，凌晨 1:30–4:00 清掃。</span></div>
 
       <div class="stay">
@@ -740,8 +774,27 @@ section.plan-b{border-left-color:var(--sun-deep)}
         <li><span class="tt">11:00</span><span class="tx">退房，溫泉街先加滿油<small>往留壽都途中約 30 km 沒有商店。溫泉街有 Seicomart、7-11 與兩家加油站。</small></span></li>
         <li><span class="tt">11:15</span><span class="tx">昭和新山熊牧場<small>車程約 10 分，8:30–16:30。大人 ¥1,000、6 歲以上 ¥500、未滿 6 歲免費；餵食餅乾 ¥200。全程露天，抓 45 分鐘。<a href="https://kumakuma.co.jp/" target="_blank" rel="noopener">官網</a></small></span></li>
         <li><span class="tt">12:15</span><span class="tx">午餐 わかさいも本舗 2F 仙堂庵<small>11:00–15:00，和室座位，扇貝茶碗蒸御膳 ¥1,298，停車免費。備案：望羊蹄（週四有開，11:00–15:30）。</small></span></li>
-        <li><span class="tt">13:00</span><span class="tx">洞爺湖汽船 或 火山科學館（二選一）<small>汽船 9:00–16:00 每小時一班，45 分鐘繞湖不登島，甲板可餵海鷗，大人 ¥1,800、小學生 ¥900。天氣差改火山科學館，10:00–16:00，大人 ¥800、中小學生 ¥400、未就學免費，室內有防災模擬與三面銀幕。</small></span></li>
-        <li><span class="tt">14:15</span><span class="tx">出發往留壽都<small>道道 2 號接國道 230 號，30 km，冬季 40–50 分。</small></span></li>
+      </ul>
+      <div class="plans">
+      <section class="plan plan-a" aria-labelledby="d2-plan-a">
+        <div class="plan-h" id="d2-plan-a"><span class="plan-tag">A 案</span><span class="vh">・</span><span class="plan-name">天氣好，下午玩雪上泛舟</span><small>晴或小雪・國道 230 順路</small></div>
+        <ul class="tl">
+          <li><span class="tt">13:15</span><span class="tx">サイロ展望台雪遊廣場<small>國道 230 上、往留壽都順路，離溫泉街約 7 km。雪上泛舟（雪地摩托車拖著跑的雪橇）約 10 分，大人 ¥2,000、12 歲以下 ¥1,500，兩個小孩都能玩；雪地摩托車同乘 15 分，駕駛 ¥5,000＋後座 ¥2,500，後座限 6 歲以上。10:00–15:30、不定休，今季最快 12 月底開場。<a href="https://snow.toyako.biz/" target="_blank" rel="noopener">官網</a></small></span></li>
+          <li><span class="tt">備選</span><span class="tx">洞爺湖汽船（サイロ沒開時）<small>汽船 9:00–16:00 每小時一班，45 分鐘繞湖不登島，甲板可餵海鷗，大人 ¥1,800、小學生 ¥900。搭 13:00 那班。</small></span></li>
+          <li><span class="tt">14:15</span><span class="tx">レークヒル・ファーム<small>牧場直營義式冰淇淋，同在國道 230 上。冬季 9:00–17:00（官網未標年度，咖啡廳冬季可能休息）。</small></span></li>
+          <li><span class="tt">14:45</span><span class="tx">出發往留壽都<small>沿國道 230 繼續往北，15:15 前後到 Rusutsu。</small></span></li>
+        </ul>
+      </section>
+      <section class="plan plan-b" aria-labelledby="d2-plan-b">
+        <div class="plan-h" id="d2-plan-b"><span class="plan-tag">B 案</span><span class="vh">・</span><span class="plan-name">大雪或強風，室內為主</span><small>趁白天早點開到留壽都</small></div>
+        <ul class="tl">
+          <li><span class="tt">13:00</span><span class="tx">洞爺湖火山科學館<small>10:00–16:00，大人 ¥800、中小學生 ¥400、未就學免費，室內有防災模擬與三面銀幕。熊牧場全程露天，雪大就跳過、午餐後直接來。</small></span></li>
+          <li><span class="tt">13:45</span><span class="tx">出發往留壽都<small>道道 2 號接國道 230 號，30 km，冬季 40–50 分。花和到留壽都一段容易地吹雪，趁白天慢慢開；道の駅 230ルスツ（冬季 9:00–17:00，出發前再確認）可以上廁所。</small></span></li>
+          <li><span class="tt">入住後</span><span class="tx">Rusutsu 蠟燭手作<small>到活動櫃台當天報名，14:30、15:30 都有場次，每人 ¥3,000 含材料、約 1 小時。</small></span></li>
+        </ul>
+      </section>
+      </div>
+      <ul class="tl">
         <li><span class="tt">15:00</span><span class="tx">Rusutsu 本館入住<small>行李放好，從房間拿毛巾去サウスウイング 1F 造浪池，14:00–21:00 住客免費。</small></span></li>
         <li><span class="tt">17:30</span><span class="tx">Oktoberfest 自助晚餐<small>開門就進場避開叫號等候。本ズワイガニ吃到飽已含在方案內。</small></span></li>
         <li><span class="tt">20:00</span><span class="tx">溫泉 ことぶきの湯・旋轉木馬<small>ことぶきの湯 在ノースウイング 6F，14:00–25:00；旋轉木馬在ノース地面層，免費。</small></span></li>
@@ -781,21 +834,39 @@ section.plan-b{border-left-color:var(--sun-deep)}
     <div class="day-inner">
       <ul class="tl">
         <li><span class="tt">07:00</span><span class="tx">早餐<small>Oktoberfest 最豐富但最擠；Crescent Hall 兒童菜色多、座位好入座。</small></span></li>
+      </ul>
+      <div class="plans">
+      <section class="plan plan-a" aria-labelledby="d3-plan-a">
+        <div class="plan-h" id="d3-plan-a"><span class="plan-tag">A 案</span><span class="vh">・</span><span class="plan-name">滑雪日</span><small>天氣好・上午上課、下午雪樂園</small></div>
+        <ul class="tl">
         <li><span class="tt">08:30</span><span class="tx">雪具租借・纜車票<small>租借櫃台在ノースウイング 2F，8:15 起。大人纜車一日券線上買 ¥13,200（窗口 ¥16,700）。</small></span></li>
-        <li><span class="tt">10:00</span><span class="tx">小孩滑雪課，大人自己滑<small>Patty：Samurai Kids 4–7 歲英語班 2.5 小時 ¥18,000。Angela：一般團體班 7 歲以上 2 小時 ¥8,000。或兩姊妹一起上 2 小時私人團體課 ¥37,000。10 月上旬開放預約。</small></span></li>
+        <li><span class="tt">10:00</span><span class="tx">小孩滑雪課，大人自己滑<small>Patty：Samurai Kids 4–7 歲英語班 2.5 小時 ¥18,000。Angela：一般團體班 7 歲以上 2 小時 ¥8,000，日語授課。兩姊妹同班的私人團體課 2 小時 ¥37,000 也是日語授課；英語私人課是 14:00–16:00 ¥51,000，或 9:30–12:30 ¥61,000。第一次滑雪的人前 2 小時不用買纜車票。官網已開放預約。</small></span></li>
         <li><span class="tt">12:30</span><span class="tx">午餐<small>Pub Cricket（サウス 1F，蛋包飯、炸魚薯條）或 Neve Cafe（ノース 2F，有兒童草皮區）。</small></span></li>
-        <li><span class="tt">13:30</span><span class="tx">Samurai Kids Park・狗拉雪橇・雪上泛舟<small>雪樂園 9:00–16:00，一日券每人 ¥2,600，陪同大人同價，只收非現金。狗拉雪橇 10:00–14:30，¥5,830，4 歲以上可坐。雪上泛舟大人 ¥3,300、小孩 ¥2,500。</small></span></li>
+        <li><span class="tt">13:30</span><span class="tx">Samurai Kids Park・狗拉雪橇・雪上泛舟<small>雪樂園 9:00–16:00，一日券每人 ¥2,600，陪同大人同價，只收非現金。狗拉雪橇 10:00–14:30，¥5,830，4 歲以上可坐。雪上泛舟大人 ¥3,300、小孩 ¥2,500。狗拉雪橇每週四休，前一天 17:00 前預約並付款。</small></span></li>
         <li><span class="tt">16:00</span><span class="tx">造浪池或溫泉<small>想再滑的人夜滑 16:00–20:00，大人 ¥4,000。</small></span></li>
+        </ul>
+      </section>
+      <section class="plan plan-b" aria-labelledby="d3-plan-b">
+        <div class="plan-h" id="d3-plan-b"><span class="plan-tag">B 案</span><span class="vh">・</span><span class="plan-name">室內日</span><small>風大纜車停駛，或小孩累了</small></div>
+        <ul class="tl">
+          <li><span class="tt">10:30</span><span class="tx">蠟燭手作<small>場次 9:00／10:30／13:00／14:30／15:30，每場 1 小時，每人 ¥3,000 含材料，活動櫃台當天可報名。</small></span></li>
+          <li><span class="tt">13:00</span><span class="tx">繩編手環，或攀岩<small>繩編每人 ¥3,500、1 小時，Patty 要大人幫忙。攀岩 14:15 場 30 分 ¥2,300，限 7 歲以上，只有 Angela 能玩。</small></span></li>
+          <li><span class="tt">15:00</span><span class="tx">造浪池<small>サウスウイング 1F，14:00–21:00 住客免費。</small></span></li>
+          <li><span class="tt">晚餐後</span><span class="tx">Multi-Ball 互動球牆<small>15:00–21:00 每場 50 分，每組 ¥5,000，全家一起玩；要前一天 16:30 前預約並付款。活動櫃台 0136-46-3332（8:00–17:00）。</small></span></li>
+        </ul>
+      </section>
+      </div>
+      <ul class="tl">
         <li><span class="tt">17:30</span><span class="tx">自助晚餐<small>第二晚可換 Crescent Hall 避開排隊。</small></span></li>
       </ul>
-      <div class="hintline"><span>💡</span><span><b>Angela 的課</b>——Samurai Kids 只收 4–7 歲，8 歲要上一般班（日語授課）；想兩人一起、用英語，就訂 2–5 人的私人團體課。滑雪課都不含纜車票與雪具。</span></div>
+      <div class="hintline"><span>💡</span><span><b>Angela 的課</b>——Samurai Kids 只收 4–7 歲，8 歲要上一般班（日語授課）；2–5 人的私人團體課 ¥37,000 也是日語授課，想兩人一起、用英語要訂英語私人課（2 小時 ¥51,000 起）。滑雪課都不含纜車票與雪具。<a href="https://rusutsu.com/en/international-ski-lessons/" target="_blank" rel="noopener">英語課程頁</a></span></div>
     </div>
   </article>
 
   <article class="day" id="day4">
     <div class="day-band"><span class="dnum">DAY 4</span><span class="ddate">1/23（六）</span><span class="dtheme">看天氣：A 案小樽／B 案直接札幌・雪場蟹</span></div>
     <div class="day-inner">
-      <div class="warnline"><b>7:30 先決定走哪案</b><span>查三件事：① <a href="https://info-road.hdb.hkd.mlit.go.jp/" target="_blank" rel="noopener">北海道道路情報</a>（国道 393 毛無峠是預防性通行規制路段，大雪會提前封；台灣 IP 可能被擋，備援看 <a href="https://www.northern-road.jp/" target="_blank" rel="noopener">北の道ナビ</a>）② <a href="https://tenki.jp/forecast/1/2/1600/1203/" target="_blank" rel="noopener">tenki.jp 小樽</a> 當天降雪、風速與警報 ③ <a href="https://www.drivetraffic.jp/" target="_blank" rel="noopener">ドラとら</a> 札樽道與道央道。毛無峠有規制、小樽有大雪或暴風雪警報、或開車的人覺得不安，就走 B 案直接進札幌。兩案都 10:00 退房。</span></div>
+      <div class="warnline"><b>7:30 先決定走哪案</b><span>查三件事：① <a href="https://info-road.hdb.hkd.mlit.go.jp/" target="_blank" rel="noopener">北海道道路情報</a>（国道 393 毛無峠與国道 230 中山峠都是預防性通行規制路段，大雪會提前封；台灣 IP 可能被擋，備援看 <a href="https://www.northern-road.jp/" target="_blank" rel="noopener">北の道ナビ</a>）② <a href="https://tenki.jp/forecast/1/2/1600/1203/" target="_blank" rel="noopener">tenki.jp 小樽</a> 當天降雪、風速與警報 ③ <a href="https://www.drivetraffic.jp/" target="_blank" rel="noopener">ドラとら</a> 札樽道與道央道。毛無峠有規制、小樽有大雪或暴風雪警報、或開車的人覺得不安，就走 B 案直接進札幌。中山峠也封的話，只剩國道 230、276 到倶知安轉國道 5 號，經余市、小樽接札樽道，抓 2.5 小時以上。兩案都 10:00 退房。</span></div>
 
       <div class="plans">
       <section class="plan plan-a" aria-labelledby="d4-plan-a">
@@ -803,30 +874,52 @@ section.plan-b{border-left-color:var(--sun-deep)}
         <ul class="tl">
           <li><span class="tt">07:30</span><span class="tx">早餐後收行李</span></li>
           <li><span class="tt">10:00</span><span class="tx">退房出發<small>國道 230、276 到倶知安，轉國道 393 經赤井川翻毛無峠下小樽，約 85 km、冬天抓 1 小時 50 分。</small></span></li>
-          <li><span class="tt">11:50</span><span class="tx">小樽午餐<small>小樽駅旁三角市場海鮮丼，或壽司屋通的壽司店；停車用市場或堺町通周邊的投幣停車場。</small></span></li>
+          <li><span class="tt">11:50</span><span class="tx">小樽午餐<small>小樽駅旁三角市場海鮮丼，或壽司屋通的壽司店；停車用市場或堺町通周邊的投幣停車場。帶小孩也可以改若鶏時代なると本店（JR 小樽駅步行約 6 分，炸半雞；營業時間出發前再確認）。</small></span></li>
           <li><span class="tt">13:15</span><span class="tx">おたる水族館<small>祝津，從運河開車約 15 分。冬季 2026/12/12–2027/2/23 開館 10:00–16:00、最後入館 15:30；企鵝雪中散步上一季每天 11:30／12:40／13:30／14:40 四場，2026-27 場次 11 月公布。大人 ¥1,800、小學生 ¥700、3–5 歲 ¥350（通常期票價）。<a href="https://otaru-aq.jp/" target="_blank" rel="noopener">官網</a></small></span></li>
-          <li><span class="tt">15:00</span><span class="tx">堺町通與運河<small>LeTAO、六花亭、北菓楼試吃，音樂盒堂整點蒸氣鐘；16:30 前後天黑，運河瓦斯燈點亮最好拍。</small></span></li>
+          <li><span class="tt">15:00</span><span class="tx">堺町通與運河<small>LeTAO、六花亭、北菓楼試吃，音樂盒堂整點蒸氣鐘；16:30 前後天黑，運河瓦斯燈點亮最好拍。想搭運河遊船：冬季船上有頂棚，日間每 30 分一班、約 40 分，大人 ¥1,800、小學生 ¥500，每位大人可帶 1 名幼兒免費；開船前 15 分到中央橋售票處（1 月班次看官網）。</small></span></li>
           <li><span class="tt">16:45</span><span class="tx">出發回札幌<small>札樽道 小樽 IC → 札幌北 IC，到 クロスホテル札幌 約 55 分。</small></span></li>
           <li><span class="tt">17:40</span><span class="tx">入住 クロスホテル札幌，車停館內<small>北 2 条西 2 丁目 23。館內立體停車場住客一次 ¥1,500，先到先停；車停到隔天開去機場還，這晚不用還車。</small></span></li>
           <li><span class="tt">19:00</span><span class="tx">薄野雪場蟹吃到飽<small>從大通駅搭東豐線 1 站到豊水すすきの（難陀在南 5 条西 2 丁目サイバーシティビル B2F，只收現金，最後入店 19:30）；時間來不及就改えびかに合戦（南 4 条西 5 丁目，營業到 23:00）。</small></span></li>
         </ul>
       </section>
       <section class="plan plan-b" aria-labelledby="d4-plan-b">
-        <div class="plan-h" id="d4-plan-b"><span class="plan-tag">B 案</span><span class="vh">・</span><span class="plan-name">下大雪直接進札幌</span><small>約 95 km・中山峠</small></div>
+        <div class="plan-h" id="d4-plan-b"><span class="plan-tag">B 案</span><span class="vh">・</span><span class="plan-name">不去小樽，走中山峠進札幌</span><small>約 95 km・中山峠</small></div>
         <ul class="tl">
           <li><span class="tt">07:30</span><span class="tx">早餐後收行李</span></li>
           <li><span class="tt">10:00</span><span class="tx">退房，行李寄住客專用投幣櫃<small>向櫃台拿代幣免費。旋轉木馬與遊戲區再玩一下。</small></span></li>
-          <li><span class="tt">11:00</span><span class="tx">出發往札幌<small>國道 230 中山峠，約 80 km、90 分。</small></span></li>
-          <li><span class="tt">12:30</span><span class="tx">札幌午餐</span></li>
-          <li><span class="tt">13:30</span><span class="tx">白い恋人パーク（宮の沢）<small>10:00–17:30、最後入館 16:30。有料區大人 ¥1,200、4 歲到國中生 ¥600、3 歲以下免費；巧克力筆畫心形白色戀人、餅乾裝飾等體驗要先在官網 webket 預約；小人國 Gulliver Town 小學生以下須家長陪同。雪太大想全室內就改新札幌的青少年科学館（9:30–16:30，隔壁有 Sunpiazza 水族館）。<a href="https://www.shiroikoibitopark.jp/" target="_blank" rel="noopener">官網</a></small></span></li>
-          <li><span class="tt">16:00</span><span class="tx">入住 クロスホテル札幌，車停館內<small>北 2 条西 2 丁目 23。館內立體停車場住客一次 ¥1,500，先到先停；車停到隔天，晚上靠地鐵。</small></span></li>
+          <li><span class="tt">11:00</span><span class="tx">出發往札幌<small>國道 230 中山峠，約 80 km、90 分。峠頂的道の駅望羊中山可停 15–20 分吃炸馬鈴薯（あげいも），冬季外帶與商店 9:00–17:00。</small></span></li>
+          <li><span class="tt">午後</span><span class="tx">下午三選一<small>看天氣和小孩想玩什麼，從下面 B1、B2、B3 挑一個。</small></span></li>
+          <li><span class="tt">傍晚</span><span class="tx">入住 クロスホテル札幌，車停館內<small>北 2 条西 2 丁目 23。館內立體停車場住客一次 ¥1,500，先到先停；車停到隔天，晚上靠地鐵。</small></span></li>
           <li><span class="tt">18:00</span><span class="tx">薄野雪場蟹吃到飽<small>從大通駅搭東豐線 1 站到豊水すすきの（難陀），或南北線 1 站到すすきの。難陀 90 分 ¥9,980、5–11 歲 ¥6,500，最後入店 19:30；えびかに合戦 ¥10,000、小學生半價，營業到 23:00；HARBOR SAPPORO 60 分 ¥6,600 起最省。三家都要 11 月下旬才開放 1/23 訂位。</small></span></li>
           <li><span class="tt">20:00</span><span class="tx">站前通白色燈節<small>點燈到 2/11。</small></span></li>
         </ul>
       </section>
       </div>
-      <div class="warnline"><b>晚餐時間</b><span>車停飯店過夜、不用趕還車，兩案都從容；要注意的是難陀最後入店 19:30，訂位時 A 案選 19:00、B 案選 18:00，或直接訂營業到 23:00 的えびかに合戦。</span></div>
+      <section class="opts" aria-labelledby="d4-opts">
+        <div class="opts-h" id="d4-opts">B 案下午三選一</div>
+        <div class="opt">
+          <div class="opt-h"><span class="opt-tag">B1</span><span class="opt-name">白い恋人パーク（宮の沢）</span></div>
+          <div class="opt-when">什麼時候選：下雪、想待室內</div>
+          <div class="opt-body">冬季點燈期間（12/1–3/31）營業到 19:00，有料區最後入館 16:30，入館後可以留到天黑看中庭點燈（官網平常時段寫 17:30，出發前再確認）。有料區大人 ¥1,200、4 歲到國中生 ¥600、3 歲以下免費；巧克力筆畫心形白色戀人、餅乾裝飾等體驗要先在官網 webket 預約；小人國 Gulliver Town 小學生以下須家長陪同。雪太大想全室內就改新札幌的青少年科学館（9:30–16:30，隔壁有 Sunpiazza 水族館）。<a href="https://www.shiroikoibitopark.jp/" target="_blank" rel="noopener">官網</a></div>
+          <div class="opt-time">12:30 札幌午餐 → 13:30 入館 → 16:00 入住</div>
+        </div>
+        <div class="opt">
+          <div class="opt-h"><span class="opt-tag">B2</span><span class="opt-name">滝野スノーワールド</span></div>
+          <div class="opt-when">什麼時候選：天氣好、沒風，還想玩雪</div>
+          <div class="opt-body">国営滝野すずらん丘陵公園的冬季雪樂園，今季 12/23 開園，9:00–16:00、入園免費、停車 ¥500（只收現金）。免費的雪上甜甜圈（チューブそり）滑道 100–200 m，4 歲以上可以自己坐，拖繩 9:15–15:30（時間與滑道長度是官網往年資料；上一季 1 月第 3 週才全面開放，出發前看官網）；另有兒童雪橇區、可堆雪人的雪地和室內遊具「虹の巣ドーム」。午餐在園內カントリーハウス（營業時間官網未列）。下中山峠經定山渓過去，從 Rusutsu 約 70 km、冬季約 1.5 小時（估）；回飯店約 19 km、40–50 分（估）。<a href="https://takinopark.com/" target="_blank" rel="noopener">官網</a></div>
+          <div class="opt-time">10:00 退房就出發 → 10:45 望羊中山 → 12:05 到園午餐 → 12:50–15:30 玩雪 → 16:40 入住 → 18:30 晚餐</div>
+        </div>
+        <div class="opt">
+          <div class="opt-h"><span class="opt-tag">B3</span><span class="opt-name">円山動物園＋藻岩山夜景</span></div>
+          <div class="opt-when">什麼時候選：天氣好，但不想再玩雪</div>
+          <div class="opt-body">円山動物園冬季 9:30–16:00、最後入園 15:30，大人 ¥800（部分資料仍寫 ¥600，以現場為準）、國中以下免費，停車 ¥700（出發前再確認）；北極熊等室內館多。15:40 轉藻岩山纜車看日落與夜景：纜車加迷你纜車來回大人 ¥2,100、小學生 ¥1,050、學齡前免費，冬季營業到 22:00，強風會停駛。<a href="https://mt-moiwa.jp/" target="_blank" rel="noopener">藻岩山官網</a></div>
+          <div class="opt-time">10:00 退房就出發 → 12:15 円山午餐 → 13:00–15:20 動物園 → 15:40 藻岩山 → 17:30 入住 → 19:00 晚餐</div>
+        </div>
+      </section>
+      <div class="warnline"><b>晚餐時間</b><span>車停飯店過夜、不用趕還車，兩案都從容；要注意的是難陀最後入店 19:30，訂位時 A 案選 19:00、B 案選 18:00（B2、B3 比較晚回飯店，要訂 18:30–19:00），或直接訂營業到 23:00 的えびかに合戦。</span></div>
       <div class="hintline"><span>💡</span><span><b>小樽提醒</b>——1/23 是週六，堺町通人多；運河、堺町、祝津水族館三點之間都開車移動，5 歲走雪地才不會太累。毛無峠是山路，路面壓雪結冰，跟著前車慢慢開；前面兩天在留壽都開過雪路再決定，怕就走 B 案，札幌一樣好玩。</span></div>
+      <div class="hintline"><span>💡</span><span><b>晚上加碼</b>——中島公園新會場 SNOWFISH，可以觸摸的光雕，2027/1/9–1/28、10:00–20:00，費用未公布；從薄野搭地鐵南北線 1 站。飯店旁的アカプラ與赤れんが庁舎也有點燈（16:30–22:00），大通會場 12/25 已結束。</span></div>
+      <div class="hintline"><span>💡</span><span><b>停車</b>——クロスホテル立體停車場不接受預約，高頂車位只有 19 個（訂房網站資料），SIENTA 屬高頂車，早點到。</span></div>
 
       <div class="stay">
         <div class="s-label">今晚住宿 · 1 晚（1/23–1/24）</div>
@@ -855,6 +948,8 @@ section.plan-b{border-left-color:var(--sun-deep)}
         <span class="km">A 案 Rusutsu → 水族館 → 運河 → クロスホテル札幌 約 130 km｜B 案 Rusutsu → 白い恋人パーク → クロスホテル札幌 約 95 km</span>
         <a class="maplink" data-route="d4a" href="#" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>A 案路線（小樽）</a>
         <a class="maplink" data-route="d4b" href="#" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>B 案路線（直達）</a>
+        <a class="maplink" data-route="d4b2" href="#" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>B2 路線（滝野）</a>
+        <a class="maplink" data-route="d4b3" href="#" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>B3 路線（円山）</a>
       </div>
     </div>
   </article>
@@ -862,14 +957,33 @@ section.plan-b{border-left-color:var(--sun-deep)}
   <article class="day" id="day5">
     <div class="day-band"><span class="dnum">DAY 5</span><span class="ddate">1/24（日）</span><span class="dtheme">札幌早上・開車回機場還車</span></div>
     <div class="day-inner">
-      <ul class="tl">
-        <li><span class="tt">07:30</span><span class="tx">飯店 hache 自助早餐（已含）<small>想吃海鮮丼就改二条市場，步行約 10 分；狸小路買伴手禮。</small></span></li>
-        <li><span class="tt">10:15</span><span class="tx">退房，從立體停車場取車出發<small>停車場 11:00 前要出庫。走道央道到新千歳空港 IC，約 50 km、1 小時，過路費約 ¥1,000（估）。</small></span></li>
-        <li><span class="tt">11:15</span><span class="tx">機場附近加滿油<small>Toyota 要加滿油還車，沒加滿由店家換算油錢另收。</small></span></li>
-        <li><span class="tt">11:30</span><span class="tx">Toyota 新千歳空港ポプラ店還車<small>千歳市美々 758-137，<a href="tel:+81123230100">0123-23-0100</a>。預約還車 11:30。ETC 過路費還車時一起結清，還車檢查後搭免費接送巴士到航廈，約 9 分。</small></span></li>
-        <li><span class="tt">12:00</span><span class="tx">抵新千歳，國際線報到<small>CI131 14:40 起飛。</small></span></li>
-      </ul>
-      <div class="warnline"><b>道央道大雪風險</b><span>大雪時道央道會預防性封閉。前一晚與當天早上查 <a href="https://www.drivetraffic.jp/" target="_blank" rel="noopener">ドラとら</a>；封閉就改走國道 36 號一般道，約 1.5–2 小時，9:30 前出發。</span></div>
+      <div class="plans">
+      <section class="plan plan-a" aria-labelledby="d5-plan-a">
+        <div class="plan-h" id="d5-plan-a"><span class="plan-tag">A 案</span><span class="vh">・</span><span class="plan-name">先去 F Village 玩雪橇</span><small>天氣好、有精神・要先確認兩件事</small></div>
+        <ul class="tl">
+          <li><span class="tt">先確認</span><span class="tx">12 月公布的營業時間，還車改 12:00<small>今季營業時間還沒公布；要 9:30 或更早開門才走這案，10:00 才開就走 B 案。Toyota 還車先從 11:30 改到 12:00。</small></span></li>
+          <li><span class="tt">07:00</span><span class="tx">飯店早餐</span></li>
+          <li><span class="tt">08:15</span><span class="tx">退房，從立體停車場取車<small>08:25 出發，到北廣島冬季抓 60 分（估）。</small></span></li>
+          <li><span class="tt">09:35</span><span class="tx">F Village Snow Park<small>エスコンフィールド旁，今季 12/5 開到 2 月（預定）。上一季 9:30–16:00，雪橇 2 小時 ¥1,000、Tubing 2 小時 ¥2,000（4 歲以上）；今季價格未公布。玩到 10:45。</small></span></li>
+          <li><span class="tt">10:55</span><span class="tx">出發往機場<small>北廣島 IC 上道央道，到還車店冬季抓 45 分（估）。</small></span></li>
+          <li><span class="tt">11:40</span><span class="tx">機場附近加滿油</span></li>
+          <li><span class="tt">11:55</span><span class="tx">Toyota 新千歳空港ポプラ店還車<small>千歳市美々 758-137，0123-23-0100。還車檢查後搭免費接送巴士到航廈，約 9 分。</small></span></li>
+          <li><span class="tt">12:25</span><span class="tx">抵新千歳，國際線報到<small>CI131 14:40 起飛。</small></span></li>
+        </ul>
+      </section>
+      <section class="plan plan-b" aria-labelledby="d5-plan-b">
+        <div class="plan-h" id="d5-plan-b"><span class="plan-tag">B 案</span><span class="vh">・</span><span class="plan-name">直接去機場</span><small>一般天氣，或小孩累了</small></div>
+        <ul class="tl">
+          <li><span class="tt">07:30</span><span class="tx">飯店 hache 自助早餐（已含）<small>想吃海鮮丼就改二条市場（7:00 起），雪天帶小孩步行抓 20 分；狸小路買伴手禮。</small></span></li>
+          <li><span class="tt">09:45</span><span class="tx">退房，從立體停車場取車出發<small>停車場 11:00 前要出庫。走道央道到新千歳空港 IC，約 50 km，冬季限速 50–80 km/h，抓 80 分，過路費約 ¥1,000（估）。最晚 9:55 開出去。</small></span></li>
+          <li><span class="tt">11:15</span><span class="tx">機場附近加滿油<small>Toyota 要加滿油還車，沒加滿由店家換算油錢另收。</small></span></li>
+          <li><span class="tt">11:30</span><span class="tx">Toyota 新千歳空港ポプラ店還車<small>千歳市美々 758-137，<a href="tel:+81123230100">0123-23-0100</a>。預約還車 11:30。ETC 過路費還車時一起結清，還車檢查後搭免費接送巴士到航廈，約 9 分。</small></span></li>
+          <li><span class="tt">12:00</span><span class="tx">抵新千歳，國際線報到<small>CI131 14:40 起飛。</small></span></li>
+          <li><span class="tt">12:15</span><span class="tx">午餐：北海道拉麵道場<small>國內線 3F，各店約 9:00 起營業。連絡設施 3F 整修到 2027 年 6 月底，不能經 3F 往返兩個航廈，改走 2F 連絡通道（估）；哆啦A夢樂園與 Hello Kitty 樂園都已結束營業。13:15 前回國際線過安檢。</small></span></li>
+        </ul>
+      </section>
+      </div>
+      <div class="warnline"><b>大雪案</b><span>前一晚和當天 6:30 各查一次 <a href="https://www.drivetraffic.jp/" target="_blank" rel="noopener">ドラとら</a>；2026/1/25 那次是當天 9:30 才宣布封閉。封閉就 8:10 出發改走國道 36 號，抓 2–2.5 小時（估）；北廣島 IC 以南沒封，就走一般道到那裡再上高速。會晚到先打ポプラ店 0123-23-0100，沒聯絡就超時的違約金是超過費的 2 倍。不要把車留在飯店改搭 JR。</span></div>
       <div class="drive">
         <span class="km">クロスホテル札幌 → 道央道 → Toyota 新千歳空港ポプラ店 約 50 km・1 小時</span>
         <a class="maplink" data-route="d5" href="#" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>開車路線</a>
@@ -946,15 +1060,21 @@ section.plan-b{border-left-color:var(--sun-deep)}
       <tr><td data-label="項目">昭和新山熊牧場</td><td data-label="大人" class="num">¥1,000</td><td data-label="Angela（8 歲）" class="num">¥500</td><td data-label="Patty（5 歲）" class="num">免費</td><td data-label="備註">8:30–16:30・餵食餅乾 ¥200・停車 ¥500</td></tr>
       <tr><td data-label="項目">洞爺湖汽船（冬季周遊）</td><td data-label="大人" class="num">¥1,800</td><td data-label="Angela（8 歲）" class="num">¥900</td><td data-label="Patty（5 歲）" class="num">未列</td><td data-label="備註">9:00–16:00 每小時一班・45 分・不登島</td></tr>
       <tr><td data-label="項目">洞爺湖火山科學館</td><td data-label="大人" class="num">¥800</td><td data-label="Angela（8 歲）" class="num">¥400</td><td data-label="Patty（5 歲）" class="num">免費</td><td data-label="備註">10:00–16:00・週一休</td></tr>
+      <tr><td data-label="項目">サイロ雪上泛舟（Day 2 A 案）</td><td data-label="大人" class="num">¥2,000</td><td data-label="Angela（8 歲）" class="num">¥1,500</td><td data-label="Patty（5 歲）" class="num">¥1,500</td><td data-label="備註">約 10 分・10:00–15:30・不定休・今季最快 12 月底開場</td></tr>
       <tr><td data-label="項目">Rusutsu 纜車一日券（線上）</td><td data-label="大人" class="num">¥13,200</td><td data-label="Angela（8 歲）" class="num">¥6,400</td><td data-label="Patty（5 歲）" class="num">¥6,400</td><td data-label="備註">窗口價 ¥16,700／¥8,300・夜滑 ¥4,000／¥1,400</td></tr>
       <tr><td data-label="項目">Samurai Kids Park 一日券</td><td data-label="大人" class="num">¥2,600</td><td data-label="Angela（8 歲）" class="num">¥2,600</td><td data-label="Patty（5 歲）" class="num">¥2,600</td><td data-label="備註">9:00–16:00・陪同大人同價・只收非現金</td></tr>
-      <tr><td data-label="項目">滑雪課</td><td data-label="大人" class="num"><small>私人 2h</small> ¥30,000</td><td data-label="Angela（8 歲）" class="num"><small>團體 2h</small> ¥8,000</td><td data-label="Patty（5 歲）" class="num"><small>Samurai Kids 2.5h</small> ¥18,000</td><td data-label="備註">私人團體 2–5 人 2h ¥37,000・不含纜車與雪具</td></tr>
+      <tr><td data-label="項目">滑雪課</td><td data-label="大人" class="num"><small>私人 2h</small> ¥30,000</td><td data-label="Angela（8 歲）" class="num"><small>團體 2h</small> ¥8,000</td><td data-label="Patty（5 歲）" class="num"><small>Samurai Kids 2.5h</small> ¥18,000</td><td data-label="備註">私人團體 2–5 人 2h ¥37,000（日語）・英語私人 2h ¥51,000・不含纜車與雪具</td></tr>
       <tr><td data-label="項目">雪具全套 1 日</td><td data-label="大人" class="num"><small>雪具組</small> ¥10,800</td><td data-label="Angela（8 歲）" class="num">¥17,300</td><td data-label="Patty（5 歲）" class="num">¥17,300</td><td data-label="備註">大人雪衣另 ¥7,800・線上申請 11 月下旬開放</td></tr>
       <tr><td data-label="項目">狗拉雪橇・雪上泛舟</td><td data-label="大人" class="num">¥5,830・¥3,300</td><td data-label="Angela（8 歲）" class="num">¥5,830・¥2,500</td><td data-label="Patty（5 歲）" class="num">¥5,830・¥2,500</td><td data-label="備註">雪橇 4 歲以上、週四休・泛舟 3 歲以下免費同乘</td></tr>
       <tr><td data-label="項目">Rusutsu 泳池溫泉（退房後）</td><td data-label="大人" class="num">¥1,800</td><td data-label="Angela（8 歲）" class="num">¥900</td><td data-label="Patty（5 歲）" class="num">¥900</td><td data-label="備註">住宿期間免費</td></tr>
+      <tr><td data-label="項目">Rusutsu 蠟燭手作（B 案）</td><td data-label="大人" class="num">¥3,000</td><td data-label="Angela（8 歲）" class="num">¥3,000</td><td data-label="Patty（5 歲）" class="num">¥3,000</td><td data-label="備註">1 小時・活動櫃台當天可報名</td></tr>
       <tr><td data-label="項目">おたる水族館（A 案）</td><td data-label="大人" class="num">¥1,800</td><td data-label="Angela（8 歲）" class="num">¥700</td><td data-label="Patty（5 歲）" class="num">¥350</td><td data-label="備註">冬季 10:00–16:00、最後入館 15:30・通常期票價，冬季未另列・停車另收費</td></tr>
-      <tr><td data-label="項目">白い恋人パーク 有料區（B 案）</td><td data-label="大人" class="num">¥1,200</td><td data-label="Angela（8 歲）" class="num">¥600</td><td data-label="Patty（5 歲）" class="num">¥600</td><td data-label="備註">10:00–17:30、最後入館 16:30・3 歲以下免費・體驗另購</td></tr>
+      <tr><td data-label="項目">白い恋人パーク 有料區（B 案）</td><td data-label="大人" class="num">¥1,200</td><td data-label="Angela（8 歲）" class="num">¥600</td><td data-label="Patty（5 歲）" class="num">¥600</td><td data-label="備註">冬季點燈期間到 19:00（平常 17:30，出發前再確認）・最後入館 16:30・3 歲以下免費・體驗另購</td></tr>
+      <tr><td data-label="項目">滝野スノーワールド（Day 4 B2）</td><td data-label="大人" class="num">免費</td><td data-label="Angela（8 歲）" class="num">免費</td><td data-label="Patty（5 歲）" class="num">免費</td><td data-label="備註">停車 ¥500 現金・9:00–16:00・雪上甜甜圈免費・滑道開放範圍看官網</td></tr>
+      <tr><td data-label="項目">円山動物園（Day 4 B3）</td><td data-label="大人" class="num">¥800</td><td data-label="Angela（8 歲）" class="num">免費</td><td data-label="Patty（5 歲）" class="num">免費</td><td data-label="備註">9:30–16:00・最後入園 15:30・停車 ¥700・票價與停車費出發前再確認</td></tr>
+      <tr><td data-label="項目">藻岩山纜車（Day 4 B3）</td><td data-label="大人" class="num">¥2,100</td><td data-label="Angela（8 歲）" class="num">¥1,050</td><td data-label="Patty（5 歲）" class="num">免費</td><td data-label="備註">含迷你纜車來回・冬季到 22:00・強風停駛</td></tr>
       <tr><td data-label="項目">難陀 蟹吃到飽 90 分</td><td data-label="大人" class="num">¥9,980</td><td data-label="Angela（8 歲）" class="num">¥6,500</td><td data-label="Patty（5 歲）" class="num">¥6,500</td><td data-label="備註">70 分 ¥7,980／¥4,580・最後入店 19:30</td></tr>
+      <tr><td data-label="項目">F Village 雪橇（Day 5 A 案）</td><td data-label="大人" class="num">未公布</td><td data-label="Angela（8 歲）" class="num">未公布</td><td data-label="Patty（5 歲）" class="num">未公布</td><td data-label="備註">上一季 2 小時 ¥1,000・今季 12 月公布</td></tr>
     </tbody>
   </table></div>
   <h3>距離與時間</h3>
@@ -963,12 +1083,17 @@ section.plan-b{border-left-color:var(--sun-deep)}
     <tbody>
       <tr><td data-label="路段">新千歳空港 → 洞爺湖溫泉</td><td data-label="距離" class="num">約 110 km</td><td data-label="一般路況" class="num">1.5 小時</td><td data-label="備註">道央道，過路費約 ¥3,100</td></tr>
       <tr><td data-label="路段">洞爺湖溫泉 → 昭和新山</td><td data-label="距離" class="num">約 7 km</td><td data-label="一般路況" class="num">10 分</td><td data-label="備註">熊牧場・有珠山纜車同一區</td></tr>
+      <tr><td data-label="路段">洞爺湖溫泉 → サイロ展望台</td><td data-label="距離" class="num">約 7 km</td><td data-label="一般路況" class="num">10–15 分（估）</td><td data-label="備註">國道 230・往留壽都順路</td></tr>
       <tr><td data-label="路段">洞爺湖溫泉 → Rusutsu</td><td data-label="距離" class="num">30 km</td><td data-label="一般路況" class="num">40–50 分（冬）</td><td data-label="備註">道道 2 號接國道 230・中途無商店</td></tr>
       <tr><td data-label="路段">Rusutsu → 札幌市區</td><td data-label="距離" class="num">約 80 km</td><td data-label="一般路況" class="num">90 分</td><td data-label="備註">國道 230 中山峠，經定山溪</td></tr>
       <tr><td data-label="路段">Rusutsu → 小樽（A 案）</td><td data-label="距離" class="num">約 85 km</td><td data-label="一般路況" class="num">1 小時 50 分</td><td data-label="備註">國道 230・276 經倶知安轉 393 翻毛無峠；預防性通行規制路段，出發前查</td></tr>
       <tr><td data-label="路段">小樽 → 札幌市區（A 案）</td><td data-label="距離" class="num">約 40 km</td><td data-label="一般路況" class="num">55 分</td><td data-label="備註">札樽道 小樽 IC → 札幌北 IC</td></tr>
       <tr><td data-label="路段">札幌市區 → 白い恋人パーク（B 案）</td><td data-label="距離" class="num">約 8 km</td><td data-label="一般路況" class="num">25 分</td><td data-label="備註">地鐵東西線宮の沢站步行 7 分</td></tr>
-      <tr><td data-label="路段">札幌市區 → Toyota 新千歳空港ポプラ店</td><td data-label="距離" class="num">約 50 km</td><td data-label="一般路況" class="num">1 小時</td><td data-label="備註">道央道・大雪封閉改國道 36 約 1.5–2 小時・還車後接送巴士 9 分到航廈</td></tr>
+      <tr><td data-label="路段">Rusutsu → 滝野（B2）</td><td data-label="距離" class="num">約 70 km</td><td data-label="一般路況" class="num">約 1.5 小時（冬・估）</td><td data-label="備註">國道 230 中山峠、定山渓</td></tr>
+      <tr><td data-label="路段">滝野 → クロスホテル札幌（B2）</td><td data-label="距離" class="num">約 19 km</td><td data-label="一般路況" class="num">40–50 分（冬・估）</td><td data-label="備註">週六傍晚進市區</td></tr>
+      <tr><td data-label="路段">札幌市區 → Toyota 新千歳空港ポプラ店</td><td data-label="距離" class="num">約 50 km</td><td data-label="一般路況" class="num">1 小時（冬季抓 80 分）</td><td data-label="備註">道央道・大雪封閉改國道 36 抓 2–2.5 小時・還車後接送巴士 9 分到航廈</td></tr>
+      <tr><td data-label="路段">札幌市區 → F Village（Day 5 A 案）</td><td data-label="距離" class="num">—</td><td data-label="一般路況" class="num">60 分（冬・估）</td><td data-label="備註">北廣島</td></tr>
+      <tr><td data-label="路段">F Village → Toyota 新千歳空港ポプラ店</td><td data-label="距離" class="num">—</td><td data-label="一般路況" class="num">45 分（冬・估）</td><td data-label="備註">北廣島 IC 上道央道</td></tr>
     </tbody>
   </table></div>
   <p class="map-cap">冬季實際車程要再加兩到三成。札幌 1 月下旬 07:00 日出、16:31 日落，每天移動盡量在下午 3 點前抵達。道央道大雪時會預防性封閉；國道 230 花和～留壽都段常有地吹雪管制。</p>
@@ -982,7 +1107,7 @@ section.plan-b{border-left-color:var(--sun-deep)}
 
   <div class="todo done"><label><input type="checkbox" checked disabled><div><div class="t-title">訂札幌 1/23 那一晚</div><div class="t-body">已於 10/12 訂妥 <b>クロスホテル札幌</b> クロスフロア デラックスツイン グランデ 35 ㎡，¥54,900 含早餐與ラウンジ，已刷卡；11/24 前可免費取消，之後不退。</div></div></label></div>
 
-  <div class="todo" data-key="lesson" data-from="2026-10-01"><label><input type="checkbox"><div><div class="t-title">10 月上旬：訂 1/22 上午的滑雪課</div><div class="t-body">Rusutsu 滑雪學校 10 月上旬開放 2026-27 預約。Patty 走 <b>Samurai Kids</b>（4–7 歲、英語、2.5 小時 ¥18,000，須已完成如廁訓練）；Angela 走一般團體班（7 歲以上、日語、2 小時 ¥8,000）；或兩人一起上私人團體課 2 小時 ¥37,000。</div></div></label></div>
+  <div class="todo" data-key="lesson" data-from="2026-10-01"><label><input type="checkbox"><div><div class="t-title">10 月上旬：訂 1/22 上午的滑雪課</div><div class="t-body">Rusutsu 滑雪學校官網已開放 2026-27 預約。Patty 走 <b>Samurai Kids</b>（4–7 歲、英語、2.5 小時 ¥18,000，須已完成如廁訓練）；Angela 走一般團體班（7 歲以上、日語、2 小時 ¥8,000）。兩人同班的私人團體課 2 小時 ¥37,000 是日語授課；要英語就訂英語私人課，14:00–16:00 ¥51,000 或 9:30–12:30 ¥61,000。</div></div></label></div>
 
   <div class="todo" data-key="usuzan" data-from="2026-11-01"><label><input type="checkbox"><div><div class="t-title">11 月：查有珠山纜車 2027 年 1 月的檢修日</div><div class="t-body">近五年有四年在 1 月中下旬停駛（2026 年是 1/12–1/31）。若 1/21 有開，往復大人 ¥2,000、小學生 ¥1,000，可取代汽船排在 13:00。</div></div></label></div>
 
@@ -990,25 +1115,31 @@ section.plan-b{border-left-color:var(--sun-deep)}
 
   <div class="todo" data-key="rental" data-from="2026-11-21"><label><input type="checkbox"><div><div class="t-title">11 月下旬：Rusutsu 雪具線上申請</div><div class="t-body">兒童全套（板、靴、杖、雪衣、安全帽、手套、風鏡）1 日 ¥17,300；大人雪具組 ¥10,800，雪衣另 ¥7,800。線上申請 11 月下旬開放，比現場便宜。</div></div></label></div>
 
+  <div class="todo" data-key="recheck" data-from="2026-12-25"><label><input type="checkbox"><div><div class="t-title">12 月底：再查四個今季還沒公布的時間</div><div class="t-body">サイロ展望台雪遊廣場開場了沒（Day 2 A 案）、有珠山纜車 1 月檢修日、F Village Snow Park 營業時間（Day 5 A 案要 9:30 開門）、小樽水族館企鵝雪中散步場次。</div></div></label></div>
+
   <div class="todo" data-key="lift"><label><input type="checkbox"><div><div class="t-title">出發前：線上買 1/22 纜車一日券</div><div class="t-body">大人線上 ¥13,200、窗口 ¥16,700。小孩若只玩雪樂園與上課不一定需要纜車票，先問滑雪學校。</div></div></label></div>
+
+  <div class="todo" data-key="d5return"><label><input type="checkbox"><div><div class="t-title">想走 Day 5 A 案：把 Toyota 還車改到 12:00</div><div class="t-body">現在訂的是 11:30。打ポプラ店 0123-23-0100 或線上改；順便問燃費精算（不用加滿油還車）的單價。</div></div></label></div>
 
   <div class="todo" data-key="license"><label><input type="checkbox"><div><div class="t-title">辦台灣駕照日文譯本</div><div class="t-body">監理站現場辦。取車要帶<b>台灣駕照正本＋日文譯本＋護照</b>三樣。</div></div></label></div>
 
   <div class="todo" data-key="confirm"><label><input type="checkbox"><div><div class="t-title">出發前一週：向兩家飯店再確認</div><div class="t-body">Rusutsu：Patty 5 歲以小學生費率預約的備註、サウスウイング泳池側房間、床護欄（本館免費出借）。乃の風：預計 16:30 前後抵達。</div></div></label></div>
 
-  <div class="todo" data-key="d4weather"><label><input type="checkbox"><div><div class="t-title">1/23 早上 7:30：查路況與天氣，決定小樽或直接札幌</div><div class="t-body">看 <a href="https://info-road.hdb.hkd.mlit.go.jp/" target="_blank" rel="noopener">北海道道路情報</a>（国道 393 毛無峠；被擋就看 <a href="https://www.northern-road.jp/" target="_blank" rel="noopener">北の道ナビ</a>）、<a href="https://tenki.jp/forecast/1/2/1600/1203/" target="_blank" rel="noopener">tenki.jp 小樽</a> 與 <a href="https://www.drivetraffic.jp/" target="_blank" rel="noopener">ドラとら</a>；有規制、大雪或暴風雪警報就走 B 案。11 月下旬順便記下 <a href="https://otaru-aq.jp/" target="_blank" rel="noopener">小樽水族館</a> 公布的 2026-27 企鵝雪中散步場次。</div></div></label></div>
+  <div class="todo" data-key="dogsled"><label><input type="checkbox"><div><div class="t-title">1/21 下午 5 點前：預約 1/22 狗拉雪橇</div><div class="t-body">每人 ¥5,830、4 歲以上，前一天 17:00 前預約並付款；一預約就收 10% 取消費、前一天 50%。Multi-Ball 要前一天 16:30 前預約。活動櫃台 0136-46-3332。</div></div></label></div>
+
+  <div class="todo" data-key="d4weather"><label><input type="checkbox"><div><div class="t-title">1/23 早上 7:30：查路況與天氣，決定小樽或直接札幌</div><div class="t-body">看 <a href="https://info-road.hdb.hkd.mlit.go.jp/" target="_blank" rel="noopener">北海道道路情報</a>（国道 393 毛無峠與国道 230 中山峠；被擋就看 <a href="https://www.northern-road.jp/" target="_blank" rel="noopener">北の道ナビ</a>）、<a href="https://tenki.jp/forecast/1/2/1600/1203/" target="_blank" rel="noopener">tenki.jp 小樽</a> 與 <a href="https://www.drivetraffic.jp/" target="_blank" rel="noopener">ドラとら</a>；有規制、大雪或暴風雪警報就走 B 案。11 月下旬順便記下 <a href="https://otaru-aq.jp/" target="_blank" rel="noopener">小樽水族館</a> 公布的 2026-27 企鵝雪中散步場次。</div></div></label></div>
 
   <div class="checks" id="checks">
     <label data-key="pack"><input type="checkbox"><span><b>行李</b>——泳衣、泳圈（Rusutsu 不租）、防滑雪靴、雪衣手套、Rusutsu 泳池自帶房間毛巾。</span></label>
     <label data-key="road"><input type="checkbox"><span><b>每天出發前</b>——查道央道與國道 230 即時路況（NEXCO 東日本 iHighway）；1/21 離開洞爺湖前加滿油。</span></label>
-    <label data-key="d5road"><input type="checkbox"><span><b>1/23 晚</b>——查道央道 1/24 早上的路況與降雪；大雪就提早到 9:30 出發，還車前記得加滿油。</span></label>
+    <label data-key="d5road"><input type="checkbox"><span><b>1/23 晚</b>——查道央道 1/24 早上的路況與降雪；大雪就 8:10 出發改走國道 36 號，還車前記得加滿油。</span></label>
     <label data-key="tax"><input type="checkbox"><span><b>現場付款</b>——乃の風與 Rusutsu 的入湯稅與宿泊稅、札幌宿泊稅，都在櫃台現場付。</span></label>
-    <label data-key="snowpark"><input type="checkbox"><span><b>選配</b>——Snow Park Toya（月浦，前一天 17:00 前預約）與サイロ展望台雪遊廣場 2026-27 季日程 11 月後再看，1/21 中午若想玩雪可替換汽船。</span></label>
+    <label data-key="snowpark"><input type="checkbox"><span><b>選配</b>——Snow Park Toya（月浦，前一天 17:00 前預約）與サイロ展望台雪遊廣場 2026-27 季日程 11 月後再看，1/21 中午若想玩雪可替換汽船。（Snow Park Toya 在 11/14 查不到官方頁，訂之前再確認。）</span></label>
   </div>
 </section>
 
 <div class="foot">
-  住宿訂單與操作資訊核對於 2026/9/22，札幌住宿、租車還車資訊、Day 4 A／B 案與花費估算於 2026/10/12 補入，Toyota 租車訂單於 2026/10/23 依確認信與變更信更新（D4 改停飯店、D5 改開車回機場還車）（來源：Gmail 訂房與租車確認信＋各飯店、Toyota 官方網站與訂房引擎）；景點營運資訊查證於各官方網站與 2025–2026 冬季住客評論，出發前建議再確認。行車距離與時間為估算值，實際以當天導航與路況為準。家庭內部使用。
+  住宿訂單與操作資訊核對於 2026/9/22，札幌住宿、租車還車資訊、Day 4 A／B 案與花費估算於 2026/10/12 補入，Toyota 租車訂單於 2026/10/23 依確認信與變更信更新（D4 改停飯店、D5 改開車回機場還車）（來源：Gmail 訂房與租車確認信＋各飯店、Toyota 官方網站與訂房引擎）；景點營運資訊查證於各官方網站與 2025–2026 冬季住客評論，出發前建議再確認。行車距離與時間為估算值，實際以當天導航與路況為準。家庭內部使用。各日 A／B 方案與路況、滑雪課更正查證於 2026/11/14（各設施官網、北海道開發局、NEXCO、Toyota 租車約款）；標「估」「未公布」的項目出發前再確認。
 </div>
 
 </div>
@@ -1027,6 +1158,8 @@ section.plan-b{border-left-color:var(--sun-deep)}
     d4: dir('ルスツリゾートホテル＆コンベンション', 'クロスホテル札幌', ['白い恋人パーク']),
     d4a: dir('ルスツリゾートホテル＆コンベンション', 'クロスホテル札幌', ['おたる水族館', '小樽運河']),
     d4b: dir('ルスツリゾートホテル＆コンベンション', 'クロスホテル札幌', ['白い恋人パーク']),
+    d4b2: dir('ルスツリゾートホテル＆コンベンション', 'クロスホテル札幌', ['国営滝野すずらん丘陵公園']),
+    d4b3: dir('ルスツリゾートホテル＆コンベンション', 'クロスホテル札幌', ['札幌市円山動物園', 'もいわ山ロープウェイ 山麓駅']),
     d5: dir('クロスホテル札幌', 'トヨタレンタカー 新千歳空港ポプラ店')
   };
   document.querySelectorAll('.maplink[data-route]').forEach(function(a){
